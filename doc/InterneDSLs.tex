@@ -1,0 +1,218 @@
+%------------------------------------------------------------------------%
+%---------------------------   Find a part     --------------------------%
+%------------------------------------------------------------------------%
+
+\documentclass[12pt,a4paper,oneside]{scrreprt}	% "scrreprt" is a more european A4 template for reports
+\pdfminorversion=4              				% tell pdflatex to generate PDF in version 1.4
+\pdfpagewidth=\paperwidth%
+\pdfpageheight=\paperheight%
+\pdfobjcompresslevel=0							% Prohibit LZW Compression
+\pdfinclusioncopyfonts=1						% Copy fonts
+
+\input{glyphtounicode.tex}						% Mapping to unicode
+\input{glyphtounicode-cmr.tex}
+\pdfgentounicode=1
+
+
+%------------------------      OWN COMMANDS      ------------------------%
+\providecommand{\main}{.}							% Relative path to the main file, to that file pathes in subfiles stay correct
+\newcommand*\lstinputpath[1]{\lstset{inputpath=#1}}	% Set path to the souce code listings
+\newcommand{\gqq}[1]{\glqq #1\grqq{}}				% German quotation marks
+%\newcommand{\gq}[1]{\glq #1\grq{}}
+
+
+%--------------  Information about the author and company  --------------%
+\title{Find~a~part}
+\author{Etienne~Gramlich}
+\newcommand{\topic}{Erstellung interner DSLs aus EBNF-Grammatiken}
+\newcommand{\Subject}{Bachelor Thesis}
+\newcommand{\keywords}{HTWG, Java, DSL, Interne DSL}
+\newcommand{\documentLanguage}{de}
+\newcommand{\authorName}{Etienne Gramlich}
+\newcommand{\authorBirthday}{10.07.1993}
+\newcommand{\authorBirthdayCity}{Singen}
+\newcommand{\closingdate}{01.04.2020}
+\newcommand{\issuedate}{1.10.2019}
+\newcommand{\authorCity}{Gailingen}
+\newcommand{\authorCityNumber}{78262}
+\newcommand{\authorStreet}{Auestr. 9b}
+\newcommand{\authorFederalState}{Baden-Württemberg}
+\newcommand{\authorCountry}{Deutschland}
+\newcommand{\authorStudyTopic}{Master Informatik - Software Engineering}
+\newcommand{\autorEmail}{etgramlich@gmx.de}
+\newcommand{\proffessor}{Prof.\ Dr.\ Heiko Drachenfels}
+\newcommand{\university}{HTWG Konstanz}
+\newcommand{\universityName}{Hochschule f\"{u}r Technik, Wirtschaft und Gestaltung}
+\newcommand{\universityCity}{Konstanz}
+\newcommand{\universityCityNumber}{78462}
+\newcommand{\universityStreet}{Brauneggerstr. 55}
+\newcommand{\universityFaculty}{Fakult\"{a}t Informatik}
+\newcommand{\carer}{Marko Boger}
+\newcommand{\companyName}{HTWG Konstanz}
+\newcommand{\companyCity}{Konstanz}
+\newcommand{\companyCityNumber}{78462}
+\newcommand{\companyCityStreet}{Brauneggerstr. 55}
+
+
+%---------------------------     PACKAGES     ---------------------------%
+\usepackage{subfiles}				% So that chapters in included files can be comipled separately
+\usepackage[english,ngerman]{babel}	% German syllables, plus english (for URLs)
+\usepackage[utf8]{inputenc}			% Input encoding to use umlauts directly in the file(s)
+\usepackage{lmodern}					% Include Latin Modern T1 font
+\usepackage[T1]{fontenc}				% Use type 1 fonts
+\usepackage{graphicx}				% Include images (png, jpg, eps, pdf)
+\graphicspath{{10_Pictures/}{../10_Pictures/}}	% Specify image location (for main and subfile)
+\usepackage{textcomp}
+\usepackage[hypcap=true]{caption}	% Move references of tables/images to the top
+\usepackage[printonlyused]{acronym}	% To print only used acronyms
+\usepackage{tabulary}				% Create tables with a specified width
+\usepackage{booktabs}				% Better tables (using \toprule, \midrule, bottomrule)
+\usepackage[numbers,sort]{natbib}	% Maybe replace later with BibLaTex & Biber
+\bibliographystyle{alphadin}			% DIN references
+\usepackage{scrhack}					% Avoids warning that \float@addtolists is deprecated in KOMA
+\usepackage{listings}				% Print source code in the document
+\lstinputpath{\main/11_Code/}		% Set directory for code listings
+\renewcommand{\lstlistlistingname}{Listingverzeichnis}
+\usepackage[usenames]{xcolor}		% Define and use colors
+\usepackage{hyperxmp}				% XMP data in hypersetup
+\usepackage[hyphens]{url}			% Allows hyphenation of URLs
+\usepackage[unicode,					% Use unicode
+			pdftex,					% Use pdfTeX driver
+			bookmarks,				% Creates bookmarks
+			bookmarksnumbered=true,	% Numbers in PDF bookmarks
+			bookmarksopen=true,		% Don't show bookmaks when opened
+			hidelinks,				% Links in black and without borders
+			hyperindex=true,			% Numbers in index are links
+			pdfpagelabels=true,		% Set PDF page labels
+			pdfa]{hyperref}			% Clickable links and TOC (respects PDF/A-1b)
+\usepackage[toc]{glossaries}			% Glossaries (plus better acronyms)
+\makeglossaries%
+\input{\main/01_Main_Part/glossaryentries.tex}
+\usepackage{pgfplots}				% Package for plots, graphs and diagramms
+\pgfplotsset{compat=1.8,width=0.65\columnwidth}
+
+
+%-------------------- LISTING CONFIGURATION  --------------------%
+\definecolor{grey}		{rgb}{0.25, 0.25, 0.25}
+\definecolor{lightbeige}{rgb}{0.80, 0.60, 0.30}
+\definecolor{lightgrey}	{rgb}{0.90, 0.90, 0.90}
+\definecolor{lightgreen}{rgb}{0.00, 0.50, 0.00}
+\definecolor{darkgrey}	{rgb}{0.20, 0.20, 0.20}
+
+% Taken from Lena Herrmann at 
+% http://lenaherrmann.net/2010/05/20/javascript-syntax-highlighting-in-the-latex-listings-package
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{blue}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{lightgreen}\ttfamily,
+  stringstyle=\color{lightbeige}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{%
+	aboveskip			= 3mm,
+	belowskip			= 3mm,
+	backgroundcolor		= \color{lightgrey},
+	basicstyle			= {\scriptsize\ttfamily},
+	breakatwhitespace	= true,
+	breaklines			= true,
+	columns				= flexible,
+	commentstyle		= {\color{lightgreen}},
+	emptylines			= *1,	% Print >1 empty lines as one (line numbers from origial file)
+	frame				= tb,
+	identifierstyle		= {\color{darkgrey}},
+	inputencoding		= utf8,
+	keywordstyle		= {\color{blue}},
+	language			= Java,
+	numbers				= none,
+	numberstyle			= {\tiny\color{grey}},
+	showstringspaces	= false,
+	stepnumber			= 1,
+	stringstyle			= {\color{lightbeige}},
+	tabsize				= 4
+}
+
+
+%---------------- Hyperlink- and PDF-Metadata-generation (for PDF/A)
+\hypersetup{%
+	colorlinks			= false,	% boxed links
+	hypertexnames		= false,	% Guessable names for links
+	pdftitle			= {\topic},
+	pdfauthor			= {\authorName},
+	pdfsubject			= {\Subject},
+	pdfkeywords			= {\keywords},
+	pdfcaptionwriter	= {\authorName},
+	pdfcontactaddress	= {\authorStreet},
+	pdfcontactcity		= {\authorCity},
+	pdfcontactpostcode	= {\authorCityNumber},
+	pdfcontactcountry	= {\authorCountry},
+	pdfcontactregion	= {\authorFederalState},
+	pdfcontactemail		= {\autorEmail},
+	pdflang				= {\documentLanguage},
+	pdfmetalang			= {\documentLanguage},
+	pdfstartview		= {FitV},	% Fit to screen width when opening
+	pdftoolbar			= false,	% Hide Toolbar
+	pdfdisplaydoctitle	= true,		% Display TOC
+	plainpages			= false,	% Helps with links to pages prior to 1
+	unicode				= true,		% Allow Unicode characters in bookmarks
+}
+
+
+%---------------- Include Color Profile (from MikTeX)
+\immediate\pdfobj stream attr{/N 3} file{\main/sRGB_IEC61966-2-1_black_scaled.icc}
+\pdfcatalog{%
+/OutputIntents [ <<
+/Type /OutputIntent
+/S/GTS_PDFA1
+/DestOutputProfile \the\pdflastobj\space 0 R
+/OutputConditionIdentifier (sRGB IEC61966-2.1)
+/Info(sRGB IEC61966-2.1)
+>> ]
+}
+
+
+
+%-----------------------      BEGIN       -----------------------%
+\begin{document}
+
+\hyphenation{platt-form-un-ab-hän-gig Re-ti-na Ten-sor-flow}
+
+
+%-----------------------     Titelseiten
+\input{00_Introduction/00_Cover}
+\input{00_Introduction/01_Titlepage}
+\input{00_Introduction/02_Danksagung}
+\input{00_Introduction/04_Erklaerung}
+\input{00_Introduction/03_Abbreviations}
+
+\tableofcontents\newpage
+
+
+%-----------------------     Hauptteil
+\subfile{01_Main_Part/00_Abstract}
+\subfile{01_Main_Part/01_Einleitung}
+
+
+%-----------------------     Ende
+\subfile{02_Result/00_Conclusion}
+
+
+%-----------------------     Verzeichnisse
+\listoffigures\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoftables\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\lstlistoflistings\addcontentsline{toc}{chapter}{Listingverzeichnis}
+
+\printglossaries%
+
+\clearpage
+\bibliography{literature}\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+
+
+\end{document}
+%-----------------------       END        -----------------------%
