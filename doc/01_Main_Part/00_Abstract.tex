@@ -16,11 +16,11 @@
 \end{center}
 
 \bigskip
-Das Warten von Maschinen wird mit deren Komplexität immer schwieriger und die Vielfalt der Einzelteile steigt. Um die Arbeiten an den eigenen Maschinen zu erleichtern, müssen neue Prozesse und Werkzeuge geschaffen werden.
+Domain Specifi Languages (DSLs) are used to express only the problems of a specific domain and no others, unlike General Purpose Languages (GPLs) such as Java, Scala and C++. Thus such a language is easier to learn for a domain expert than a GPL.
 
-Um Bestandteile eigener Maschinen leicht identifizieren und Ersatzteile nachbestellen zu können, soll eine mobile Applikation entwickelt werden. Ziel ist es mit Teilbildern von der Maschine, auf denen ihre Bestandteile zu sehen sind, deren Komponenten identifizieren können. Das wird durch Abgleichen von Eigenschaften der Bilder (Features) in einer Datenbank realisiert. Weitergehend sollen danach Vorschläge in einem Online-Shop, nach Übereinstimmung sortiert, angezeigt werden.
+There are internal and external DSLs, of which external DSLs require its own tools to use. So for an agile environment an internal DSL is favorable because the tools and pipeline already exist and so the language itself can change more easily.
 
-Bisherige mobile Anwendungen der Bilderkennung taggen die Bilder mit allgemeinen Bezeichnungen, wie \gqq{Person} oder \gqq{Zahnrad}. Das Ziel dieser Arbeit ist es, spezifische Objekte wiederzufinden, statt die grobe Kategorie den Bildern zuzuordnen.
+To easily generate a DSL from an EBNF grammar, a tool should be implemented to generate an internal DSL in a certaini host language. The suggested host language for this tool is Java, as it is widely adopted. If shortcomings of Java are detected, Scala may another good choice, as it is a more flexible language and also runs on the JVM.
 \newpage
 
 \end{document}
