@@ -1,4 +1,6 @@
-InterneDSLs.pdf: InterneDSLs.tex
+SOURCES:=InterneDSLs.tex $(foreach dir,./, $(wildcard $(dir)/*/*.tex))
+
+InterneDSLs.pdf: InterneDSLs.tex $(SOURCES)
 	latexmk -pdf $<
 
 .PHONY: clean cleanup
