@@ -6,7 +6,7 @@ InterneDSLs.pdf: InterneDSLs.tex $(SOURCES)
 .PHONY: clean cleanup
 
 cleanup: clean
-	rm -rf *.pdf
+	rm -rf *.pdf 0*/*.pdf
 
 clean:
 	rm -f *.aux *.bbl *.blg *.fls *.fdb_latexmk *.glo *.idx *.ilg *.ind *.ist *.lof *.log *.lol *.lot *.out *.synctex.gz *.toc */*.aux */*.bbl */*.blg */*.fls */*.fdb_latexmk */*.glo */*.idx */*.ilg */*.ind */*.ist */*.lof */*.log */*.lol */*.lot */*.out */*.synctex.gz */*.toc
