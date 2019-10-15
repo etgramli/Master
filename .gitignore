@@ -7,7 +7,9 @@ Recherche/
 *.blg
 *.fls
 *.fdb_latexmk
+*.glg
 *.glo
+*.gls
 *.idx
 *.ilg
 *.ind
