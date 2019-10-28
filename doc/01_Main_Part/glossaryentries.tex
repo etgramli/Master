@@ -1,47 +1,66 @@
 % Glossaries to be used from 'glossaries' package
 
 \newglossaryentry{ANTLR4}{%
-  name={ANTLR 4},
-  description={Ein in Java geschriebener Parsergenerator, der verschiedene Zeilsprachen unterstützt (z.B. Java, C++, C\#, Python). Es werden auch LL(*)-Grammatiken unterstützt}
+name={ANTLR 4},
+description={Ein in Java geschriebener Parsergenerator, der verschiedene Zeilsprachen unterstützt (z.B. Java, C++, C\#, Python). Es werden auch LL(*)-Grammatiken unterstützt}
 }
 
-\newglossaryentry{GitHub}{%
-  name={GitHub},
-  description={Eine Plattform auf der man Projekte hosten kann, die mit Git verwaltet werden}
+\newglossaryentry{Domaenenspezifische Sprache}{%
+name={Dom\"anenspezifische Sprache},
+description={Eine Programmiersprache, die für eine spezifische Domäne zugeschnitten wurde und somit nur Probleme der Domäne, und keine darüber hinaus, beschreiben lassen. Dadurch können Domänenexperten einfach damit arbeiten und syntaktischer Ballast (Boilerplate Code) wird verhindert}
 }
 
 \newglossaryentry{Hostsprache}{%
-  name={Hostsprache},
-  description={Eine General-Purpose Programmiersprache, in die eine interne DSL eingebettet ist}
+name={Hostsprache},
+description={Eine General-Purpose Programmiersprache, in die eine interne DSL eingebettet ist}
 }
 
 \newglossaryentry{Java Virtual Machine}{%
-  name={Java Virtual Machine},
-  description={Die Laufzeitumgebung der Sprache Java; es gibt verschiedene Implementierungen für unterschiedliche Plattformen. Darunter sind Windows, Linux Mac OS X, Android und Solaris}
+name={Java Virtual Machine},
+description={Die Laufzeitumgebung der Sprache Java; es gibt verschiedene Implementierungen für unterschiedliche Plattformen. Darunter sind Windows, Linux Mac OS X, Android und Solaris}
 }
 
 \newglossaryentry{Kontextfreie Grammatik}{%
-  name={Kontextfreie Grammatik},
-  description={Kontextfreie Grammatiken (\ac{CFG}) sind identisch mit den Typ-2-Grammatiken. Es folgt auf eine Folge von Terminal- und Nichtterminalsymbolen immer ein Nichtterminalsymbol}
+name={Kontextfreie Grammatik},
+description={Kontextfreie Grammatiken (\ac{CFG}) sind identisch mit den Typ-2-Grammatiken. Es folgt auf eine Folge von Terminal- und Nichtterminalsymbolen immer ein Nichtterminalsymbol}
 }
 
-\newglossaryentry{Reguläre Grammatik}{%
-  name={Reguläre Grammatik},
-  description={Reguläre Grammatiken sind identisch mit den Typ-3-Grammatiken der Chomsky-Hierarchie. Es sind kontextfreie Grammatiken, die weiteren Einschränkungen unterliegen. Die linke Seite der Regel darf nur ein nichtterminales Symbol beinhalten, die Rechte Seite höchstens ein Nichtterminales.}
+\newglossaryentry{Regulaere Grammatik}{%
+name={Reguläre Grammatik},
+description={Reguläre Grammatiken sind identisch mit den Typ-3-Grammatiken der Chomsky-Hierarchie. Es sind kontextfreie Grammatiken, die weiteren Einschränkungen unterliegen. Die linke Seite der Regel darf nur ein nichtterminales Symbol beinhalten, die Rechte Seite höchstens ein Nichtterminales.}
 }
 
-\newglossaryentry{Semantische Lücke}{%
-  name={Semantische Lücke},
-  plural={Semantische Lücken},
-  description={Damit wird der Sachverhalt bezeichnet, dass eine maschinelle oder logische Beschreibung einer Sache nicht alle Aspekte abdeckt, die für einen Nutzer oder das reale Leben relevant sind}
+\newglossaryentry{Semantische Luecke}{%
+name={Semantische Lücke},
+description={Damit wird der Sachverhalt bezeichnet, dass eine maschinelle oder logische Beschreibung einer Sache nicht alle Aspekte abdeckt, die für einen Nutzer oder das reale Leben relevant sind}
+}
+
+\newglossaryentry{Konkrete Syntax}{%
+name={Konkrete Syntax},
+description={Legt durch Notation (Schlüsselworte, Symbole, \ldots) fest, wie etwas formuliert werden kann. Dazu können reguläre Ausdrücke oder EBNF-Grammatiken verwendet werden}
+}
+
+\newglossaryentry{Abstrakte Syntax}{%
+name={Abstrakte Syntax},
+description={Beschreibt die Struktur der Sprache, bzw. was mit ihr formuliert werden kann. Kann durch abstrakten Syntax-Baum dargestellt werden}
+}
+
+\newglossaryentry{Statische Semantik}{%
+name={Statische Semantik},
+description={Zusätzliche Einschränkungen für die Wohlgeformtheit von Formulierungen. Konsistenzregeln für abstrakte Syntaxgrafen, die zur übersetzungszeit geprüft werden könne. Zum Beispiel müssen alle Bezeichner in einem Bereich eindeutig sein}
+}
+
+\newglossaryentry{Dynamische Semantik}{%
+name={Dynamische Semantik},
+description={Regelt die Bedeutung von Formulierungen, und welches Verhalten von den Formulierungen erzeugt wird. Zum Beispiel wird aus einer Variablendefinition durch den Compiler eine Speicherreservierung}
 }
 
 \newglossaryentry{Tagging}{%
-  name={Tagging},
-  description={Das Versehen eines Objektes mit einem aussagekräftigen Wort}
+name={Tagging},
+description={Das Versehen eines Objektes mit einem aussagekräftigen Wort}
 }
 
 \newglossaryentry{Tag}{%
-  name={Tag},
-  description={Ein aussagekräftiges Wort, das als Meta-Information einem Objekt zugeordnet wird}
+name={Tag},
+description={Ein aussagekräftiges Wort, das als Meta-Information einem Objekt zugeordnet wird}
 }

@@ -1,5 +1,6 @@
 # Research folder
 Recherche/
+*.ods
 
 # LaTeX files
 *.aux
