@@ -20,28 +20,31 @@ DSLs können auch in der Art der Notation unterschieden werden, es gibt grafisch
 
 
 \subsection{Grammatiken}
-Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hie"-rar"-chie (Abbildung~\ref{FIG:Chomksky-Hierarchie}) wiederfinden. Diese formalen Sprachen legen durch Regeln fest, welche Zeichenketten gültig sind und damit zur Sprache gehören. Jede Klasse von Grammatiken beinhaltet auch die Grammatiken tiefer in der Chomsky-Hierarchie. (Überführung ineinander?)
+Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hie"-rar"-chie (Abbildung~\ref{fig:chomkskyhierarchie}) wiederfinden. Diese formalen Sprachen legen durch Regeln fest, welche Zeichenketten gültig sind und damit zur Sprache gehören. Jede Klasse von Grammatiken beinhaltet auch die Grammatiken tiefer in der Chomsky-Hierarchie. (Überführung ineinander?)
 
 \begin{figure}
 \centering
 \def\svgwidth{0.5\textwidth}
 \input{\main/10_Pictures/Grammatiken.eps_tex}
 \caption{Chomsky-Hierarchie}
-\label{FIG:Chomksky-Hierarchie}
+\label{fig:chomkskyhierarchie}
 \end{figure}
 
-\subsubsection{Typ-3-Grammatiken}
-Reguläre Grammatik
+\subsubsection{Typ-3-Grammatiken}\label{sec:refulaeregrammatik}
+Typ-3-Grammatiken entsprechen regulären Grammatiken, die spezielle kontextfreie Grammatiken (siehe Abschnitt~\ref{sec:kontextfreiegrammatik}) mit Einschränkungen sind. Es gibt links- und rechtsreguläre Grammatiken, obwohl meistens rechtsreguläre Grammatiken gemeint sind. Bei linksregulären Grammatiken sind auf der rechten Seite der Bildungsregeln Nicht-Terminale nur links von den Terminalen erlaubt; bei rechtsregulären Grammatiken dürfen Nicht-Terminale entsprechend nur rechts von den Terminalen stehen. Ein Beispiel für reguläre Grammatiken sind reguläre Ausdrücke.
 
-\subsubsection{Typ-2-Grammatiken}
-Kontextfrei
+\subsubsection{Typ-2-Grammatiken}\label{sec:kontextfreiegrammatik}
+Kontextfreie Grammatiken erlauben auf der rechten Seite der Bildungsregeln eine beliebige Folge von Terminalen und Nicht-Terminalen; auf der linken Seite darf nur ein Nicht-Terminal stehen, das also keinen Kontext hat. Es sind aber mehrere Bildungsregeln für dasselbe Nicht-Terminal erlaubt.
 
-\subsubsection{Typ-1-Grammatiken}
-Kontextsensitiv
+\subsubsection{Typ-1-Grammatiken}\label{sec:kontextsensitivegrammatik}
+Kontextsensitive Grammatiken erlauben auf der linken Seite der Bildungsregeln links und rechts von dem Nicht-Terminal weitere Terminal- und Nicht-Terminal-Symbole. Dadurch können diese Nicht-Terminale nur im Kontext zu anderen Symbolen auftreten. Auch sollte die rechte Seite der Bildungsregel mindestens gleich lang sein wie die linke. Analog wie bei Regulären Grammatiken (siehe Abschnitt~\ref{sec:refulaeregrammatik}) gibt es links-kontextsensitive und rechts-kontextsensitive Grammatiken, bei denen links respektive rechts vom Nicht-Terminal-Symbol weitere Symbole stehen.
 
-\subsubsection{Typ-0-Grammatiken}
-Beliebige formale Grammatik
+\subsubsection{Typ-0-Grammatiken}\label{sec:beliebigegrammatik}
+Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner Bildungsregel auf der linke Seite die leere Zeichenkette stehen darf. Der einzige Unterschied zu kontextsensitiven Grammatiken ist der, dass das Nicht-Terminal-Symbol neben einem Kontext auf der rechten Seite auch der leere String werden darf.
 
+
+\section{Design von DSLs}
+\subsection{Einschränkungen bei DSLs}
 
 
 \end{document}
