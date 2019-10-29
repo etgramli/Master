@@ -8,13 +8,15 @@
 Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Zuerst kann man sie in externe und interne DSLs einteilen, und zum Anderen kann man sie in ihrer Notation unterscheiden.
 
 \subsubsection{Externe DSLs}
-Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX und SQL.
+Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX und SQL.
 
 \subsubsection{Interne DSLs}
 Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
 
+Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
+
 \subsubsection{Notation}
-DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX.
+DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\footcite[][S. 22ff]{Fowler.2010}
 
 
 \subsection{Grammatiken}

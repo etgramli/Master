@@ -57,7 +57,8 @@
 %---------------------------     PACKAGES     ---------------------------%
 \usepackage{subfiles}                          % So that chapters in included files can be comipled separately
 \usepackage[english,ngerman]{babel}            % German syllables, plus english (for URLs)
-\usepackage[utf8]{inputenc}	                    % Input encoding to use umlauts directly in the file(s)
+\usepackage{csquotes}                          % Multi-language quotes
+\usepackage[utf8]{inputenc}	                    % UTF-8 files
 \usepackage{lmodern}                           % Include Latin Modern T1 font
 \usepackage[T1]{fontenc}                       % Use type 1 fonts
 \usepackage{graphicx}                          % Include images
@@ -68,15 +69,18 @@
 \usepackage[printonlyused,smaller]{acronym}    % To print only used acronyms
 \usepackage{tabulary}				            % Specify width of table rows
 \usepackage{booktabs}                          % Better table rules
-\usepackage[numbers,sort]{natbib}              % Maybe replace later with BibLaTex & Biber
-\bibliographystyle{alphadin}                   % DIN references
+%\usepackage{footbib}
+\usepackage[natbib,    % Allow natnbib commands
+            style=authoryear]{biblatex}
+\addbibresource{literature.bib}
+%\bibliographystyle{alphadin}                   % DIN references
 \usepackage{scrhack}                           % Avoids warning that \float@addtolists is deprecated in KOMA
 \usepackage{listings}                          % Print source code in the document
 \lstinputpath{\main/11_Code/}                  % Set directory for code listings
 \renewcommand{\lstlistlistingname}{Listingverzeichnis}
 \usepackage[usenames]{xcolor}                  % Define and use colors
 \usepackage{hyperxmp}                          % XMP data in hypersetup
-\usepackage[hyphens]{url}                      % Allows hyphenation of URLs
+\PassOptionsToPackage{hyphens}{url}                      % Allows hyphenation of URLs
 \usepackage[unicode,                % Use unicode
 			pdftex,                 % Use pdfTeX driver
 			bookmarks,              % Creates bookmarks
@@ -212,11 +216,11 @@
 \lstlistoflistings\addcontentsline{toc}{chapter}{Listingverzeichnis}
 
 
-\glsaddall%Print all glossary entries
+%\glsaddall%Print all glossary entries
 \printglossaries%
 
 \clearpage
-\bibliography{literature}\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\printbibliography\addcontentsline{toc}{chapter}{Literaturverzeichnis}
 
 
 \end{document}

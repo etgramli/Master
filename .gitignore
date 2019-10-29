@@ -5,6 +5,7 @@ Recherche/
 # LaTeX files
 *.aux
 *.bbl
+*.bcf
 *.blg
 *.fls
 *.fdb_latexmk
@@ -20,6 +21,7 @@ Recherche/
 *.lol
 *.lot
 *.out
+*.run.xml
 *.synctex.gz
 *.toc
 *.xdy
