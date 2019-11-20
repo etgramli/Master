@@ -35,6 +35,7 @@ Recherche/
 *.JPG
 *.png
 *.PNG
+*.uxf.eps
 
 # IntelliJ IDEA files
 /target/

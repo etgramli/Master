@@ -38,8 +38,7 @@ Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hi
 
 \begin{figure}
 \centering
-\def\svgwidth{0.5\textwidth}
-\input{\main/10_Pictures/Grammatiken.eps_tex}
+\includegraphics[width=0.5\textwidth]{\main/10_Pictures/Grammatiken.eps}
 \caption{Chomsky-Hierarchie}
 \label{fig:chomkskyhierarchie}
 \end{figure}
@@ -58,13 +57,28 @@ Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner
 
 
 \section{Design von DSLs}
+
+\subsection{Einschränkung der Grammatik}
+
+\subsection{Semantic Model}
+
+\subsection{Formulierung innerhalb der Hostsprache}
+Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
+\begin{itemize}
+	\item Object Scoping (bzw. Nested function calls)
+	\item Method Chaining
+	\item Method Sequence
+\end{itemize}
+Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
+
+\subsubsection{Object Scoping}
+\subsubsection{Method Chaining}
+\subsubsection{Method Sequence}
+
+
 Wohlgeformtheit in Syntax oder statischer Semantik?
 
 OCL!
-
-\subsection{Interne DSLs}
-
-\subsubsection{Einschränkungen}
 
 
 \end{document}
