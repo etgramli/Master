@@ -2,14 +2,14 @@
 %---------------------------   Find a part     --------------------------%
 %------------------------------------------------------------------------%
 
-\documentclass[12pt,a4paper,oneside]{scrreprt} % "scrreprt" is a more european A4 template for reports
-\pdfminorversion=4                             % tell pdflatex to generate PDF in version 1.4
+\documentclass[12pt,a4paper,oneside]{scrreprt}        % "scrreprt" is a more european A4 template for reports
+\pdfminorversion=4                                    % tell pdflatex to generate PDF in version 1.4
 \pdfpagewidth=\paperwidth%
 \pdfpageheight=\paperheight%
-\pdfobjcompresslevel=0                        % Prohibit LZW Compression
-\pdfinclusioncopyfonts=1                      % Copy fonts
+\pdfobjcompresslevel=0                                % Prohibit LZW Compression
+\pdfinclusioncopyfonts=1                              % Copy fonts
 
-\input{glyphtounicode.tex}                    % Mapping to unicode
+\input{glyphtounicode.tex}                            % Mapping to unicode
 \input{glyphtounicode-cmr.tex}
 \pdfgentounicode=1
 
@@ -57,17 +57,18 @@
 %---------------------------     PACKAGES     ---------------------------%
 \usepackage{subfiles}                          % So that chapters in included files can be comipled separately
 \usepackage[english,ngerman]{babel}            % German syllables, plus english (for URLs)
-\usepackage[utf8]{inputenc}	                    % UTF-8 files
+\usepackage[utf8]{inputenc}	                   % UTF-8 files
 \usepackage{lmodern}                           % Include Latin Modern T1 font
 \usepackage[T1]{fontenc}                       % Use type 1 fonts
 \usepackage{csquotes}                          % Multi-language quotes
+\usepackage{subcaption}                        % Subfigure
 \usepackage{graphicx}                          % Include images
 \graphicspath{{10_Pictures/}{../10_Pictures/}} % Specify image location (for main and subfile)
 \usepackage{textcomp}
 \usepackage[hypcap=true]{caption}              % Rreferences above tables/images
 \usepackage{relsize}                           % Dependency of option "smaller" of "acronym"
 \usepackage[printonlyused,smaller]{acronym}    % To print only used acronyms
-\usepackage{tabulary}				            % Specify width of table rows
+\usepackage{tabulary}				           % Specify width of table rows
 \usepackage{booktabs}                          % Better table rules
 \usepackage[natbib,         % Allow natnbib commands
             sorting=nty,    % Sort by Name, Title, year
@@ -79,7 +80,7 @@
 \renewcommand{\lstlistlistingname}{Listingverzeichnis}
 \usepackage[usenames]{xcolor}                  % Define and use colors
 \usepackage{hyperxmp}                          % XMP data in hypersetup
-\PassOptionsToPackage{hyphens}{url}                      % Allows hyphenation of URLs
+\PassOptionsToPackage{hyphens}{url}            % Allows hyphenation of URLs
 \usepackage[unicode,                % Use unicode
 			pdftex,                 % Use pdfTeX driver
 			bookmarks,              % Creates bookmarks
@@ -92,7 +93,7 @@
 \usepackage[xindy,toc]{glossaries}             % Glossaries (plus better acronyms)
 \makeglossaries%
 \input{\main/01_Main_Part/glossaryentries.tex}
-\usepackage{pgfplots}				% Package for plots, graphs and diagramms
+\usepackage{pgfplots}				           % Package for plots, graphs and diagramms
 \pgfplotsset{compat=1.8,width=0.65\columnwidth}
 
 

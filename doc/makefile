@@ -6,9 +6,9 @@ INKSCAPE_IMGS:=$(INKSCAPE_SVGS:.svg=.eps)
 UMLET_XMLS   :=$(wildcard $(IMG_DIR)/*.uxf)
 UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.uxf.eps)
 
-
 InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS)
-	latexmk -pdf $<
+	pdflatex InterneDSLs.tex
+	xindy -L german -I xindy -M InterneDSLs -t InterneDSLs.glg -o InterneDSLs.gls InterneDSLs.glo
 
 $(IMG_DIR)/%.eps: $(IMG_DIR)/*.svg
 	inkscape $< -E $@ --export-ignore-filters --export-ps-level=3

@@ -1,0 +1,3 @@
+interface ScopeSequenzKnoten {
+	nextScope SequenzKnoten();
+}
