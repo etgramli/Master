@@ -4,17 +4,18 @@ IMG_DIR      :=10_Pictures
 INKSCAPE_SVGS:=$(wildcard $(IMG_DIR)/*.svg)
 INKSCAPE_IMGS:=$(INKSCAPE_SVGS:.svg=.eps)
 UMLET_XMLS   :=$(wildcard $(IMG_DIR)/*.uxf)
-UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.uxf.eps)
+UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.eps)
 
-InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS)
+InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS)
 	pdflatex InterneDSLs.tex
 	xindy -L german -I xindy -M InterneDSLs -t InterneDSLs.glg -o InterneDSLs.gls InterneDSLs.glo
 
 $(IMG_DIR)/%.eps: $(IMG_DIR)/*.svg
 	inkscape $< -E $@ --export-ignore-filters --export-ps-level=3
 
-$(IMG_DIR)/%.uxf.eps: $(IMG_DIR)/*.uxf
+$(IMG_DIR)/%.eps: $(IMG_DIR)/*.uxf
 	umlet -action=convert -format=eps -filename=$<
+	mv $< $@
 
 .PHONY: clean cleanup
 

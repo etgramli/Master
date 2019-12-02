@@ -26,6 +26,7 @@ Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten t
 \subsubsection{Abbildung von Kanten auf Interfaces}
 Um die Interfaces generieren zu können, müssen die Kanten der Graphen zwischen den Scopes, auf Interfaces abgebildet werden.
 
+\paragraph{Kante mit einem Knoten}
 Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, kann man den ein Interface mit dem Namen des Knotens und dem nächsten Scope als Rückgabewert erstellen. Grafik~\ref{FIG:SequenceNode} zeigt, wie eine Abbildung aussehen kann.
 \begin{figure}[ht]
 \centering
@@ -43,6 +44,7 @@ Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, ka
   \label{FIG:SequenceNode}
 \end{figure}
 
+\paragraph{Kante mit Alternativen}
 Falls eine Kante mehrere Alternativen enthält, können die alternativen je als eine Methode in einem Interface implementiert werden, die jeweils den folgenden Scope zurück geben (siehe Abbildung~\ref{FIG:AlternativeNode}).
 \begin{figure}[ht]
 \centering
@@ -59,6 +61,8 @@ Falls eine Kante mehrere Alternativen enthält, können die alternativen je als 
   \caption{Diagramm und Interface eines Sequenz-Knotens}
   \label{FIG:AlternativeNode}
 \end{figure}
+
+\paragraph{Kante mit Schleife}
 
 
 \subsection{Sprachdesign}
