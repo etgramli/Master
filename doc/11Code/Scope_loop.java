@@ -1,7 +1,7 @@
-interface LoopKnoten {
-	MoreLoopKnoten loop();
+interface SchleifenKnoten {
+	MehrSchleifenKnoten sequenzKnoten();
 }
 
-interface MoreLoopKnoten extends nextScope {
-	nextScope loop();
+interface MehrSchleifenKnoten extends NextScope {
+	NextScope sequenzKnoten();
 }

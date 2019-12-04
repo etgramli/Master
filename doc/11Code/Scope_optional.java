@@ -1,3 +1,3 @@
-interface ScopeSequenzKnoten extends nextScope {
-	nextScope SequenzKnoten();
+interface ScopeSequenzKnoten extends NextScope {
+	NextScope SequenzKnoten();
 }

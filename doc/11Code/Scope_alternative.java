@@ -1,4 +1,4 @@
 interface ScopeAlternativKnoten {
-	nextScope SequenzKnotenEins();
-	nextScope SequenzKnotenZwei();
+	NextScope sequenzKnotenEins();
+	NextScope sequenzKnotenZwei();
 }

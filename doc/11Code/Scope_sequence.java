@@ -1,7 +1,7 @@
 interface SequenzEins {
-	SequenzZwei SequenzEins();
+	SequenzZwei sequenzEins();
 }
 
 interface SequenzZwei {
-	nextScope SequenzZwei();
+	NextScope sequenzZwei();
 }
