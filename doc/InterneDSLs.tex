@@ -192,8 +192,6 @@
 %-----------------------     Titelseiten
 \input{00_Introduction/00_Cover}
 \input{00_Introduction/01_Titlepage}
-\input{00_Introduction/02_Danksagung}
-\input{00_Introduction/04_Erklaerung}
 \input{00_Introduction/03_Abbreviations}
 
 \tableofcontents\newpage
@@ -217,11 +215,13 @@
 
 
 %\glsaddall%Print all glossary entries
-\printglossaries%
+%\printglossaries%
 
 \clearpage
 \printbibliography\addcontentsline{toc}{chapter}{Literaturverzeichnis}
 
+\input{00_Introduction/02_Danksagung}
+\input{00_Introduction/04_Erklaerung}
 
 \end{document}
 %-----------------------       END        -----------------------%

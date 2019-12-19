@@ -2,38 +2,9 @@
 \documentclass[../InterneDSLs.tex]{subfiles}
 \begin{document}
 
-\section{Einführung}
+\chapter{Domänenspezifische Bedarfe}
 
-\subsection{Arten von DSLs}
-Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Zuerst kann man sie in externe und interne DSLs einteilen, und zum Anderen kann man sie in ihrer Notation unterscheiden.
-
-\subsubsection{Externe DSLs}
-Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
-
-\subsubsection{Interne DSLs}
-Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
-
-Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
-
-\subsubsection{Notation}
-DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\footcite[][S. 22ff]{Fowler.2010}
-
-\subsubsection{Vorteile von DSLs}
-\begin{itemize}
-	\item Verbesserte Produktivität
-	\item Domänenexperten haben teil an Entwicklung
-	\item Änderung des Ausführungskontextes
-\end{itemize}
-
-\subsubsection{Nachteile von DSLs}
-\begin{itemize}
-	\item Viele einzelne DSLs für jeden Einsatzbereich
-	\item Implementierungsaufwand
-	\item Eigene DSL, die nirgendwo anders verwendet wird
-\end{itemize}
-
-
-\subsection{Grammatiken}
+\chapter{Grammatiken}
 Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hie"-rar"-chie (Abbildung~\ref{fig:chomkskyhierarchie}) wiederfinden. Diese formalen Sprachen legen durch Regeln fest, welche Zeichenketten gültig sind und damit zur Sprache gehören. Jede Klasse von Grammatiken beinhaltet auch die Grammatiken tiefer in der Chomsky-Hierarchie. (Überführung ineinander?)
 
 \begin{figure}
@@ -43,26 +14,55 @@ Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hi
 \label{fig:chomkskyhierarchie}
 \end{figure}
 
-\subsubsection{Typ-3-Grammatiken}\label{sec:refulaeregrammatik}
+\section{Typ-3-Grammatiken}\label{sec:refulaeregrammatik}
 Typ-3-Grammatiken entsprechen regulären Grammatiken, die kontextfreie Grammatiken (siehe Abschnitt~\ref{sec:kontextfreiegrammatik}) mit speziellem Einschränkungen sind. Es gibt links- und rechtsreguläre Grammatiken, jedoch ist mit \gqq{regulär} meistens \gqq{rechtsregulär} gemeint. Bei linksregulären Grammatiken sind auf der rechten Seite der Bildungsregeln Nicht-Terminale nur links von den Terminalen erlaubt; bei rechtsregulären Grammatiken dürfen Nicht-Terminale entsprechend nur rechts von den Terminalen stehen. Ein Beispiel für reguläre Grammatiken sind reguläre Ausdrücke.
 
-\subsubsection{Typ-2-Grammatiken}\label{sec:kontextfreiegrammatik}
+\section{Typ-2-Grammatiken}\label{sec:kontextfreiegrammatik}
 Kontextfreie Grammatiken erlauben auf der rechten Seite der Bildungsregeln eine beliebige Folge von Terminalen und Nicht-Terminalen; auf der linken Seite darf nur ein Nicht-Terminal stehen, das also keinen Kontext hat. Es sind aber mehrere Bildungsregeln für dasselbe Nicht-Terminal erlaubt. Die meisten Programmiersprachen verwenden kontextfreie Grammatiken.\footcite{Fowler.2010}
 
-\subsubsection{Typ-1-Grammatiken}\label{sec:kontextsensitivegrammatik}
+\section{Typ-1-Grammatiken}\label{sec:kontextsensitivegrammatik}
 Kontextsensitive Grammatiken erlauben auf der linken Seite der Bildungsregeln links und rechts von dem Nicht-Terminal weitere Terminal- und Nicht-Terminal-Symbole. Dadurch können diese Nicht-Terminale nur im Kontext zu anderen Symbolen auftreten. Auch sollte die rechte Seite der Bildungsregel mindestens gleich lang sein wie die linke. Analog wie bei Regulären Grammatiken (siehe Abschnitt~\ref{sec:refulaeregrammatik}) gibt es links-kontextsensitive und rechts-kontextsensitive Grammatiken, bei denen links respektive rechts vom Nicht-Terminal-Symbol weitere Symbole stehen.
 
-\subsubsection{Typ-0-Grammatiken}\label{sec:beliebigegrammatik}
+\section{Typ-0-Grammatiken}\label{sec:beliebigegrammatik}
 Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner Bildungsregel auf der linke Seite die leere Zeichenkette stehen darf. Der einzige Unterschied zu kontextsensitiven Grammatiken ist der, dass das Nicht-Terminal-Symbol neben einem Kontext auf der rechten Seite auch der leere String werden darf.
 
 
-\section{Design von DSLs}
+\chapter{Interne und Externe Umsetzung}
+Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Zuerst kann man sie in externe und interne DSLs einteilen, und zum Anderen kann man sie in ihrer Notation unterscheiden.
 
-\subsection{Einschränkung der Grammatik}
+\section{Externe DSLs}
+Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
 
-\subsection{Semantic Model}
+\section{Interne DSLs}
+Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
 
-\subsection{Formulierung innerhalb der Hostsprache}
+Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
+
+\chapter{Notation}
+DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\footcite[][S. 22ff]{Fowler.2010}
+
+\section{Vorteile von DSLs}
+\begin{itemize}
+	\item Verbesserte Produktivität
+	\item Domänenexperten haben teil an Entwicklung
+	\item Änderung des Ausführungskontextes
+\end{itemize}
+
+\section{Nachteile von DSLs}
+\begin{itemize}
+	\item Viele einzelne DSLs für jeden Einsatzbereich
+	\item Implementierungsaufwand
+	\item Eigene DSL, die nirgendwo anders verwendet wird
+\end{itemize}
+
+
+\chapter{Design von DSLs}
+
+\section{Einschränkung der Grammatik}
+
+\section{Semantic Model}
+
+\section{Formulierung innerhalb der Hostsprache}
 Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
 \begin{itemize}
 	\item Object Scoping (bzw. Nested function calls)
@@ -80,5 +80,7 @@ Wohlgeformtheit in Syntax oder statischer Semantik?
 
 OCL!
 
+
+\subsection{Probleme bei Abbildung von EBNF auf Sprachkonstrukte}
 
 \end{document}
