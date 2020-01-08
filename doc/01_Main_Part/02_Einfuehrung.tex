@@ -4,6 +4,28 @@
 
 \chapter{Domänenspezifische Bedarfe}
 
+\section{Vorteile von DSLs}
+\begin{itemize}
+	\item Verbesserte Produktivität
+	\item Domänenexperten haben teil an Entwicklung
+	\item Änderung des Ausführungskontextes
+\end{itemize}
+
+\section{Nachteile von DSLs}
+\begin{itemize}
+	\item Viele einzelne DSLs für jeden Einsatzbereich
+	\item Implementierungsaufwand
+	\item Eigene DSL, die nirgendwo anders verwendet wird
+\end{itemize}
+
+
+\section{Domäne}
+
+\section{Terminologie}
+
+\section{Probleme und Anwendungsfälle}
+
+
 \chapter{Grammatiken}
 Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hie"-rar"-chie (Abbildung~\ref{fig:chomkskyhierarchie}) wiederfinden. Diese formalen Sprachen legen durch Regeln fest, welche Zeichenketten gültig sind und damit zur Sprache gehören. Jede Klasse von Grammatiken beinhaltet auch die Grammatiken tiefer in der Chomsky-Hierarchie. (Überführung ineinander?)
 
@@ -41,46 +63,13 @@ Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
 \chapter{Notation}
 DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\footcite[][S. 22ff]{Fowler.2010}
 
-\section{Vorteile von DSLs}
-\begin{itemize}
-	\item Verbesserte Produktivität
-	\item Domänenexperten haben teil an Entwicklung
-	\item Änderung des Ausführungskontextes
-\end{itemize}
-
-\section{Nachteile von DSLs}
-\begin{itemize}
-	\item Viele einzelne DSLs für jeden Einsatzbereich
-	\item Implementierungsaufwand
-	\item Eigene DSL, die nirgendwo anders verwendet wird
-\end{itemize}
+\section{EBNF}
 
 
-\chapter{Design von DSLs}
+\subsection{Parser}
+Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert.
 
-\section{Einschränkung der Grammatik}
+Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
 
-\section{Semantic Model}
-
-\section{Formulierung innerhalb der Hostsprache}
-Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
-\begin{itemize}
-	\item Object Scoping (bzw. Nested function calls)
-	\item Method Chaining
-	\item Method Sequence
-\end{itemize}
-Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
-
-\subsubsection{Object Scoping}
-\subsubsection{Method Chaining}
-\subsubsection{Method Sequence}
-
-
-Wohlgeformtheit in Syntax oder statischer Semantik?
-
-OCL!
-
-
-\subsection{Probleme bei Abbildung von EBNF auf Sprachkonstrukte}
 
 \end{document}
