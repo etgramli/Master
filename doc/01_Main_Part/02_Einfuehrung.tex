@@ -39,11 +39,20 @@ Die Domäne kann aus der Informatik selbst kommen oder eine fremde Domäne sein.
 
 \section{Terminologie}
 
-\subsubsection{Hostsprache}
+\subsection{Hostsprache}
+Eine Hostsprache ist eine General-Purpose Programmiersprache, in die eine interne DSL eingebettet ist.
+
 \subsection{Konkrete Syntax}
+Die konkrete Syntax legt durch eine Notation (Schlüsselworte, Symbole, \ldots) fest, wie etwas formuliert werden kann. Dazu können reguläre Ausdrücke oder EBNF-Gram"-ma"-tiken verwendet werden.
+
 \subsection{Abstrakte Syntax}
+Die abstrakte Syntax beschreibt die Struktur der Sprache, bzw. was mit ihr formuliert werden kann. Sie kann durch abstrakten Syntax-Baum dargestellt werden.
+
 \subsection{Statische Semantik}
+Die statische Semantik sind zusätzliche Einschränkungen für die Wohlgeformtheit von Formulierungen. Konsistenzregeln für abstrakte Syntaxgrafen, die zur Übersetzungszeit geprüft werden könne. Zum Beispiel müssen alle Bezeichner in einem Bereich eindeutig sein-
+
 \subsection{Dynamische Semantik}
+Die dynamische Semantik regelt die Bedeutung von Formulierungen, und welches Verhalten von den Formulierungen erzeugt wird. Zum Beispiel wird aus einer Variablendefinition durch den Compiler eine Speicherreservierung.
 
 \section{Probleme und Anwendungsfälle}
 
@@ -52,7 +61,7 @@ Die Domäne kann aus der Informatik selbst kommen oder eine fremde Domäne sein.
 Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Zuerst kann man sie in externe und interne DSLs einteilen, und zum Anderen kann man sie in ihrer Notation unterscheiden.
 
 \subsection{Externe DSLs}
-Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
+Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die Konkrete Syntax und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
 
 \subsection{Interne DSLs}
 Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
