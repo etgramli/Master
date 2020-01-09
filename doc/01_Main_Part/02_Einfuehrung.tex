@@ -3,27 +3,61 @@
 \begin{document}
 
 \chapter{Domänenspezifische Bedarfe}
+Domänenspezifische Sprachen sind formale Sprachen, die für eine bestimmte Domäne (Fachbereich) entworfen wurden. Durch diese Modellierung soll eine hohe Spezifität im Bezug auf die Probleme der Domäne gewährleistet werden; und daneben soll nichts anderes ausgedrückt werden können.
 
-\section{Vorteile von DSLs}
-\begin{itemize}
-	\item Verbesserte Produktivität
-	\item Domänenexperten haben teil an Entwicklung
-	\item Änderung des Ausführungskontextes
-\end{itemize}
+Dadurch soll die Sprache für Domänenexperten leicht zu verwenden sein, im Gegensatz zu einer General Purpose Language (siehe~\ref{FIG:DslAdvantages}). Daraus ergibt sich auch, dass der Code besser lesbar ist und weniger Redundanz enthält.
 
-\section{Nachteile von DSLs}
-\begin{itemize}
-	\item Viele einzelne DSLs für jeden Einsatzbereich
-	\item Implementierungsaufwand
-	\item Eigene DSL, die nirgendwo anders verwendet wird
-\end{itemize}
+Bei der Entwicklung einer eigenen DSL läuft man aber auch Gefahr, dass diese nur in einer kleinen Nische verwendet wird. Dadurch könnte es auftreten, dass mit vielen DSLs gearbeitet wird, die jeweils nur ihre eigene Domäne abdecken, und man unter Umständen viele Sprachen lernen muss (\ref{FIG:DslDisadvantages}).
+
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+    \begin{itemize}
+	  \item Domänenexperten entwickeln mit
+	  \item Lesbarkeit, weniger Redundanz
+	  \item Änderung des Ausführungskontextes
+    \end{itemize}
+    \caption{Vorteile von DSLs}
+    \label{FIG:DslAdvantages}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \begin{itemize}
+	  \item Viele fragmentierte DSLs
+	  \item Implementierungsaufwand
+	  \item Eigene DSL in kleiner Nische
+    \end{itemize}
+    \caption{Nachteile von DSLs}
+    \label{FIG:DslDisadvantages}
+  \end{subfigure}
+  \caption{Vor- und Nachteile von DSLs}
+  \label{FIG:DslAdvantagesDisadvantages}
+\end{figure}
 
 
 \section{Domäne}
+Die Domäne kann aus der Informatik selbst kommen oder eine fremde Domäne sein. Beispiele aus der Informatik sind Build-Systeme (Make, Maven, ...) und SQL.
 
 \section{Terminologie}
 
+\subsubsection{Hostsprache}
+\subsection{Konkrete Syntax}
+\subsection{Abstrakte Syntax}
+\subsection{Statische Semantik}
+\subsection{Dynamische Semantik}
+
 \section{Probleme und Anwendungsfälle}
+
+
+\section{Interne und Externe Umsetzung}
+Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Zuerst kann man sie in externe und interne DSLs einteilen, und zum Anderen kann man sie in ihrer Notation unterscheiden.
+
+\subsection{Externe DSLs}
+Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
+
+\subsection{Interne DSLs}
+Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
+
+Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
 
 
 \chapter{Grammatiken}
@@ -49,27 +83,11 @@ Kontextsensitive Grammatiken erlauben auf der linken Seite der Bildungsregeln li
 Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner Bildungsregel auf der linke Seite die leere Zeichenkette stehen darf. Der einzige Unterschied zu kontextsensitiven Grammatiken ist der, dass das Nicht-Terminal-Symbol neben einem Kontext auf der rechten Seite auch der leere String werden darf.
 
 
-\chapter{Interne und Externe Umsetzung}
-Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Zuerst kann man sie in externe und interne DSLs einteilen, und zum Anderen kann man sie in ihrer Notation unterscheiden.
-
-\section{Externe DSLs}
-Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die \gls{Konkrete Syntax} und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) aufgewandt werden. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
-
-\section{Interne DSLs}
-Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
-
-Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
-
-\chapter{Notation}
+\section{Notation}
 DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\footcite[][S. 22ff]{Fowler.2010}
 
-\section{EBNF}
+\subsection{EBNF}
 
-
-\subsection{Parser}
-Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert.
-
-Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
-
+\subsection{Grafisch}
 
 \end{document}
