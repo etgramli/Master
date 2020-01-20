@@ -37,6 +37,7 @@ Bei der Entwicklung einer eigenen DSL läuft man aber auch Gefahr, dass diese nu
 \section{Domäne}
 Die Domäne kann aus der Informatik selbst kommen oder eine fremde Domäne sein. Beispiele aus der Informatik sind Build-Systeme (Make, Maven, ...) und SQL.
 
+
 \section{Terminologie}
 
 \subsection{Hostsprache}
@@ -54,7 +55,11 @@ Die statische Semantik sind zusätzliche Einschränkungen für die Wohlgeformthe
 \subsection{Dynamische Semantik}
 Die dynamische Semantik regelt die Bedeutung von Formulierungen, und welches Verhalten von den Formulierungen erzeugt wird. Zum Beispiel wird aus einer Variablendefinition durch den Compiler eine Speicherreservierung.
 
+
 \section{Probleme und Anwendungsfälle}
+DSLs können zum Beispiel für spezielle Unternehmensbereiche (Fakturierung, Lohnabrechnung, ...) oder auch für spezielle Probleme in der Informatik (Datenbankabfragesprachen, Build-Systeme).
+
+Ein Problem kann sein, dass eine DSL nur für eine Nische entwickelt wird und kaum angewandt wird oder nicht rentabel ist. Auch können ähnliche DSLs für denselben Anwendungsfall erstellt worden sein und konkurrieren direkt miteinander. Ein weiteres Problem kann schon beim Design der DSL auftreten, etwa dass die Domäne nicht richtig von der Hostsprache abgegrenzt wurde und mehr als nur Probleme der Hostsprache formuliert werden können.
 
 
 \section{Interne und Externe Umsetzung}
@@ -96,7 +101,13 @@ Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner
 DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\footcite[][S. 22ff]{Fowler.2010}
 
 \subsection{EBNF}
+Die erweiterte Backus-Naur-Form ist eine Erweiterung der Backus-Naur-Form, um die Syntax von kontextfreien Grammatiken zu notieren. Sie wurde ursprünglich für die Syntax von Pascal eingeführt.
+
+Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen, wodurch keine zusätzlichen Regeln benötigt werden.
 
 \subsection{Grafisch}
+Es gibt auch grafische Notationen für DSLs, etwas das Eclipse Modeling Framework\footnote{\url{http://www.eclipse.org/emf/}}, das sich an der Notation für Klassen von UML anlehnt.
+
+Wegen der weiten Verbreitung der EBNF und einfachen Implementierbarkeit einer Textverarbeitung im Vergleich zu einem grafischen Editor wird in dieser Arbeit die EBNF zur Notation verwendet.
 
 \end{document}
