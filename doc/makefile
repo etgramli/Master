@@ -1,7 +1,7 @@
 LATEXMK      :=latexmk
 LATEXMKARGS  :=-pdf
 
-SOURCES      :=InterneDSLs.tex $(foreach dir,./, $(wildcard $(dir)/*/*.tex))
+SOURCES      :=InterneDSLs.tex $(foreach dir,./, $(wildcard $(dir)/*/*.tex)) literature.bib
 
 IMG_DIR      :=10_Pictures
 INKSCAPE_SVGS:=$(wildcard $(IMG_DIR)/*.svg)
