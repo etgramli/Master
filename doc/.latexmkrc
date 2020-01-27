@@ -1,4 +1,1 @@
-add_cus_dep('glo', 'gls', 1, 'makeglo2gls');
-sub makeglo2gls {
-    system("makeglossaries '$_[0]'");
-}
+$makeindex = 'xindy -I xindy -M %B -t %B.glg %O -o %D %S'; #$

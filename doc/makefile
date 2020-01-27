@@ -1,3 +1,6 @@
+LATEXMK      :=latexmk
+LATEXMKARGS  :=-pdf
+
 SOURCES      :=InterneDSLs.tex $(foreach dir,./, $(wildcard $(dir)/*/*.tex))
 
 IMG_DIR      :=10_Pictures
@@ -7,8 +10,7 @@ UMLET_XMLS   :=$(wildcard $(IMG_DIR)/*.uxf)
 UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.eps)
 
 InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS)
-	pdflatex InterneDSLs.tex
-	xindy -I xindy -M InterneDSLs -t InterneDSLs.glg -o InterneDSLs.gls InterneDSLs.glo
+	$(LATEXMK) $(LATEXMKARGS) $<
 
 $(IMG_DIR)/%.eps: $(IMG_DIR)/*.svg
 	inkscape $< -E $@ --export-ignore-filters --export-ps-level=3
