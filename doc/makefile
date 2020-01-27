@@ -10,7 +10,7 @@ UMLET_XMLS   :=$(wildcard $(IMG_DIR)/*.uxf)
 UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.eps)
 
 InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS)
-	$(LATEXMK) $(LATEXMKARGS) $<
+	$(LATEXMK) $(LATEXMKARGS) InterneDSLs
 
 $(IMG_DIR)/%.eps: $(IMG_DIR)/*.svg
 	inkscape $< -E $@ --export-ignore-filters --export-ps-level=3
