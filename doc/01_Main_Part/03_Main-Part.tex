@@ -10,13 +10,19 @@ Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik 
 Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
 
 \section{Abbildung von EBNF auf Interfaces}
-Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten transformiert. Dadurch wird eine Typ-Sicherheit hergestellt und Methoden implementiert werden, die das Traversieren des Baumes vereinfachen. Abbildung~\ref{FIG:TypesBNF} zeigt die Typen und ihre Beziehungen untereinander.
+Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten transformiert. Dadurch wird eine Typ-Sicherheit hergestellt und Methoden implementiert werden, die das Traversieren des Baumes vereinfachen. Abbildung~\ref{FIG:TypesBNF} zeigt die Typen und ihre Beziehungen untereinander. Diese Typen finden sich auch in den Regeln der EBNF-Grammatik (Abbildung~\ref{FIG:EBNFGrammar}) wieder.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{\main/10_Pictures/BNF-Types}
 \caption{Typen des BNF-Baumes}
 \label{FIG:TypesBNF}
+\end{figure}
+
+\begin{figure}[ht]
+\lstinputlisting[linerange={3-28,38-45}]{Bnf.g4}
+\caption{EBNF-Grammatik (Auszug)}
+\label{FIG:EBNFGrammar}
 \end{figure}
 
 \subsection{Abbildung von Kanten auf Interfaces}
