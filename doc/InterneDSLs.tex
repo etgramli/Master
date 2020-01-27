@@ -119,26 +119,27 @@
   morestring=[b]"
 }
 \lstset{%
-  aboveskip         = 3mm,
-  belowskip         = 3mm,
+  aboveskip         = 3mm,   % Space above listing
+  belowskip         = 3mm,   % Space below listing
   backgroundcolor   = \color{lightgrey},
   basicstyle        = {\scriptsize\ttfamily},
-  breakatwhitespace = true,
-  breaklines        = true,
+  breakatwhitespace = true,  % Only break at whitespaces
+  breaklines        = true,  % Automatic line break
+  captionpos        = b,     % Captions on bottom
   columns           = flexible,
   commentstyle      = {\color{lightgreen}},
   emptylines        = *1,    % Print >1 empty lines as one (line numbers from origial file)
-  frame             = tb,
+  frame             = tb,    % Frame at top and bottom
   identifierstyle   = {\color{darkgrey}},
   inputencoding     = utf8,
   keywordstyle      = {\color{blue}},
   language          = Java,
-  numbers           = none,
+  numbers           = none,  % No line numbers
   numberstyle       = {\tiny\color{grey}},
-  showstringspaces  = false,
-  stepnumber        = 1,
+  showstringspaces  = false, % Do not highlight spaces in strings
   stringstyle       = {\color{lightbeige}},
-  tabsize           = 4
+  tabsize           = 4,
+  title             = \lstname
 }
 
 
