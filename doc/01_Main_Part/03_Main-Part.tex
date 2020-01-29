@@ -22,8 +22,7 @@ Um die Interfaces generieren zu können, müssen die Kanten der Graphen zwischen
 \end{figure}
 
 \begin{figure}[ht]
-\lstinputlisting[linerange={3-28,38-45},caption={EBNF-Grammatik (Auszug)}]{Bnf.g4}
-\label{FIG:EBNFGrammar}
+\lstinputlisting[linerange={3-28,38-45},caption={EBNF-Grammatik (Auszug)\label{FIG:EBNFGrammar}}]{Bnf.g4}
 \end{figure}
 
 \subsection{Kante mit einem Knoten}
@@ -36,8 +35,7 @@ Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, ka
     \label{FIG:DiagramOneElementNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einem Sequenz-Knoten}]{Scope_one-element.java}
-    \label{FIG:JInterfaceOneElementNode}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einem Sequenz-Knoten\label{FIG:JInterfaceOneElementNode}}]{Scope_one-element.java}
   \end{subfigure}
   \caption{Diagramm und Interface eines Sequenz-Knotens}
   \label{FIG:OneElementNode}
@@ -52,8 +50,7 @@ Falls man einen Knoten überspringen kann (bzw. optional ist), muss man vom folg
     \label{FIG:DiagramOptionalNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einem optionalen Sequenz-Knoten}]{Scope_optional.java}
-    \label{FIG:JInterfaceOptionalNode}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einem optionalen Sequenz-Knoten\label{FIG:JInterfaceOptionalNode}}]{Scope_optional.java}
   \end{subfigure}
   \caption{Diagramm und Interface eines optionalen Sequenz-Knotens}
   \label{FIG:OptionalNode}
@@ -69,8 +66,7 @@ Falls eine Kante mehrere Alternativen enthält, können die alternativen je als 
     \label{FIG:DiagramAlternativeNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Knoten}]{Scope_alternative.java}
-    \label{FIG:JInterfaceAlternativeNode}
+    \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Knoten\label{FIG:JInterfaceAlternativeNode}}]{Scope_alternative.java}
   \end{subfigure}
   \caption{Diagramm und Interface alternativer Knotens}
   \label{FIG:AlternativeNode}
@@ -88,8 +84,7 @@ Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlich
     \label{FIG:DiagramLoopNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten}]{Scope_loop.java}
-    \label{FIG:JInterfaceLoopNode}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten\label{FIG:JInterfaceLoopNode}}]{Scope_loop.java}
   \end{subfigure}
   \caption{Diagramm und Interface eines Schleifen-Knotens}
   \label{FIG:LoopNode}
@@ -105,8 +100,7 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
     \label{FIG:DiagramSequenceNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten}]{Scope_sequence.java}
-    \label{FIG:JInterfaceSequenceNode}
+    \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten\label{FIG:JInterfaceSequenceNode}}]{Scope_sequence.java}
   \end{subfigure}
   \caption{Diagramm und Interface einer Sequenz von Knotens}
   \label{FIG:SequenceNode}
@@ -122,6 +116,7 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 
 \subsubsection{Mapping auf Typen der Hostsprache}
 - NTs -> Methoden (Einschränungen)
+
 - Interfacenamen beliebig
 
 \subsubsection{Generierung von Typen aus EBNF-Regeln}
