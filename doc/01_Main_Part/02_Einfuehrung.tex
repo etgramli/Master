@@ -2,7 +2,7 @@
 \documentclass[../InterneDSLs.tex]{subfiles}
 \begin{document}
 
-\chapter{Domänenspezifische Bedarfe}
+\chapter{Domänenspezifische Sprachen}
 Domänenspezifische Sprachen sind formale Sprachen, die für eine bestimmte Domäne (Fachbereich) entworfen wurden. Durch diese Modellierung soll eine hohe Spezifität im Bezug auf die Probleme der Domäne gewährleistet werden; und daneben soll nichts anderes ausgedrückt werden können.
 
 Dadurch soll die Sprache für Domänenexperten leicht zu verwenden sein, im Gegensatz zu einer General Purpose Language (siehe~\ref{FIG:DslAdvantages}). Daraus ergibt sich auch, dass der Code besser lesbar ist und weniger Redundanz enthält.
@@ -72,6 +72,20 @@ Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die Konkrete Syntax 
 Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
 
 Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
+
+
+\section{Formulierung innerhalb der Hostsprache}
+Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
+\begin{itemize}
+	\item Object Scoping (bzw. Nested function calls)
+	\item Method Chaining
+	\item Method Sequence
+\end{itemize}
+Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
+
+\subsection{Object Scoping}
+\subsection{Method Chaining}
+\subsection{Method Sequence}
 
 
 \chapter{Grammatiken}

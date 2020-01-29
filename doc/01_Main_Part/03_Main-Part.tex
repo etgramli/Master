@@ -121,6 +121,8 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 \subsection{Typen}
 
 \subsubsection{Mapping auf Typen der Hostsprache}
+- NTs -> Methoden (Einschränungen)
+- Interfacenamen beliebig
 
 \subsubsection{Generierung von Typen aus EBNF-Regeln}
 
@@ -129,24 +131,12 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 Die EBNF-Grammatik kann nicht beliebig formuliert sein.
 
 \subsection{Startregel}
-
+In der Grammatik muss eine Startregel definiert sein, die nur ein Nicht-Terminal beinhaltet. Daraus wird das erste Interface als Einstiegspunkt generiert.
 
 \subsection{Lexer-Regeln}
-Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur die jeweilige Lexer-Regel beinhaltet.
+Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur die jeweilige Lexer-Regel beinhaltet. Dadurch kann der Listener des Parsers die Typen auch verarbeiten.
 
-
-\section{Formulierung innerhalb der Hostsprache}
-Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
-\begin{itemize}
-	\item Object Scoping (bzw. Nested function calls)
-	\item Method Chaining
-	\item Method Sequence
-\end{itemize}
-Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
-
-\subsection{Object Scoping}
-\subsection{Method Chaining}
-\subsection{Method Sequence}
+Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer anderen, darf es ebenfalls keine Lexer-Regel sein, um vom Listener erkannt zu werden.
 
 
 \chapter{Testlauf mit anschaulichem Beispiel}
