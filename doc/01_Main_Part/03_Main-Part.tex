@@ -12,6 +12,8 @@ Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den E
 \section{Abbildung von EBNF auf Interfaces}
 Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten transformiert. Dadurch wird eine Typ-Sicherheit hergestellt und Methoden implementiert werden, die das Traversieren des Baumes vereinfachen. Abbildung~\ref{FIG:TypesBNF} zeigt die Typen und ihre Beziehungen untereinander. Diese Typen finden sich auch in den Regeln der EBNF-Grammatik (Abbildung~\ref{FIG:EBNFGrammar}) wieder.
 
+Um die Interfaces generieren zu können, müssen die Kanten der Graphen zwischen den Scopes, auf Interfaces abgebildet werden.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{\main/10_Pictures/BNF-Types}
@@ -24,10 +26,7 @@ Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten t
 \label{FIG:EBNFGrammar}
 \end{figure}
 
-\subsection{Abbildung von Kanten auf Interfaces}
-Um die Interfaces generieren zu können, müssen die Kanten der Graphen zwischen den Scopes, auf Interfaces abgebildet werden.
-
-\paragraph{Kante mit einem Knoten}
+\subsection{Kante mit einem Knoten}
 Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, kann man den ein Interface mit dem Namen des Knotens und dem nächsten Scope als Rückgabewert erstellen. Grafik~\ref{FIG:OneElementNode} zeigt, wie eine Abbildung aussehen kann.
 \begin{figure}[ht]
 \centering
@@ -44,7 +43,6 @@ Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, ka
   \label{FIG:OneElementNode}
 \end{figure}
 
-\subsubsection{Kante mit einem Knoten}
 Falls man einen Knoten überspringen kann (bzw. optional ist), muss man vom folgenden Scope (Listing~\ref{FIG:JInterfaceOptionalNode}) erben, um dessen Methoden aufrufen zu können und damit die eigene(n) auslassen zu können.
 \begin{figure}[ht]
 \centering
@@ -61,7 +59,7 @@ Falls man einen Knoten überspringen kann (bzw. optional ist), muss man vom folg
   \label{FIG:OptionalNode}
 \end{figure}
 
-\subsubsection{Kante mit Alternativen}
+\subsection{Kante mit Alternativen}
 Falls eine Kante mehrere Alternativen enthält, können die alternativen je als eine Methode in einem Interface implementiert werden, die jeweils den folgenden Scope zurück geben (siehe Abbildung~\ref{FIG:AlternativeNode}).
 \begin{figure}[ht]
 \centering
@@ -78,7 +76,7 @@ Falls eine Kante mehrere Alternativen enthält, können die alternativen je als 
   \label{FIG:AlternativeNode}
 \end{figure}
 
-\subsubsection{Kante mit Schleife}
+\subsection{Kante mit Schleife}
 Eine Wiederholung wird mit einem Schleifen-Knoten modelliert, der einen Sequenz-Knoten beinhaltet. Für eine Wiederholung, die kein Vorkommen erlaubt, reicht ein Scope, der vom Folge-Scope erbt; damit kann der Methodenaufruf vom Schleifen-Scope übersprungen werden.
 
 Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlichen Interface eingeführt werden, das dieselbe Methode deklariert und nicht vom Folge-Interface erbt, um einen Methodenaufruf zu erzwingen (Listing~\ref{FIG:JInterfaceLoopNode}).
@@ -97,7 +95,7 @@ Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlich
   \label{FIG:LoopNode}
 \end{figure}
 
-\subsubsection{Sequenz von Knoten}
+\subsection{Sequenz von Knoten}
 Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit einer Methode generiert werden, um die Aufruf-Reihenfolge zu gewährleisten. Abbildung~\ref{FIG:SequenceNode} zeigt ein Beispiel mit zwei Knoten in einer Sequenz.
 \begin{figure}[ht]
 \centering
@@ -114,15 +112,18 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
   \label{FIG:SequenceNode}
 \end{figure}
 
-\subsubsection{Probleme}
-\begin{itemize}
-	\item Benamung der Scopes und Knoten
-	\item Bestimmung des Start-Scopes
-	\item Abbildung von Lexer-Regeln auf Typen der Wirtssprache
-\end{itemize}
-
 
 \section{Schwierigkeiten beim Bau}
+Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten werden in diesem Abschnitt besprochen: die Behandlung der Rekursion der EBNF-Grammatik und die der Typen.
+
+\subsection{Behandlung der Rekursion}
+
+\subsection{Typen}
+
+\subsubsection{Mapping auf Typen der Hostsprache}
+
+\subsubsection{Generierung von Typen aus EBNF-Regeln}
+
 
 \section{Einschränkungen bei der Grammatik}
 
@@ -141,7 +142,11 @@ Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte einge
 
 
 \chapter{Testlauf mit anschaulichem Beispiel}
+
+
 \section{Optimierungspotenzial}
+
+
 \section{Varianten}
 
 
