@@ -12,12 +12,12 @@ UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.pdf)
 InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS)
 	$(LATEXMK) $(LATEXMKARGS) InterneDSLs
 
-$(IMG_DIR)/%.pdf: $(IMG_DIR)/*.svg
+$(IMG_DIR)/%.pdf: $(IMG_DIR)/%.svg
 	inkscape $< -A $@ --export-ignore-filters --without-gui --export-pdf-version=1.4
 
-$(IMG_DIR)/%.pdf: $(IMG_DIR)/*.uxf
+$(IMG_DIR)/%.pdf: $(IMG_DIR)/%.uxf
 	umlet -action=convert -format=pdf -filename=$<
-	mv $< $@
+	mv $<.pdf $@
 
 .PHONY: clean cleanup
 
