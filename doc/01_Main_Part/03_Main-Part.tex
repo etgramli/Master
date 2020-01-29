@@ -126,6 +126,14 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 
 
 \section{Einschränkungen bei der Grammatik}
+Die EBNF-Grammatik kann nicht beliebig formuliert sein.
+
+\subsection{Startregel}
+
+
+\subsection{Lexer-Regeln}
+Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur die jeweilige Lexer-Regel beinhaltet.
+
 
 \section{Formulierung innerhalb der Hostsprache}
 Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
@@ -136,9 +144,9 @@ Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und S
 \end{itemize}
 Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
 
-\subsubsection{Object Scoping}
-\subsubsection{Method Chaining}
-\subsubsection{Method Sequence}
+\subsection{Object Scoping}
+\subsection{Method Chaining}
+\subsection{Method Sequence}
 
 
 \chapter{Testlauf mit anschaulichem Beispiel}
