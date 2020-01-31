@@ -4,6 +4,15 @@
 
 \chapter{Bau des Prototypen}
 
+\section{Aufbau}
+Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
+\begin{itemize}
+	\item Parsen der Grammatik
+	\item Aufbau des Syntax-Baumes (aus Java-Typen)
+	\item Abbildung in einen Graphen, der die Aufrufreihenfolge abbildet
+	\item Generierung der Interfaces
+\end{itemize}
+
 \section{Parser}
 Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert.
 
