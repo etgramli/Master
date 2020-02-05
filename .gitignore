@@ -37,6 +37,9 @@ Recherche/
 *.PNG
 *.eps
 
+# Office files
+*.ods
+
 # IntelliJ IDEA files
 /target/
 out/
