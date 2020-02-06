@@ -21,7 +21,8 @@ Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den E
 \section{Abbildung von EBNF auf Interfaces}
 Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten transformiert. Dadurch wird eine Typ-Sicherheit hergestellt und Methoden implementiert werden, die das Traversieren des Baumes vereinfachen. Abbildung~\ref{FIG:TypesBNF} zeigt die Typen und ihre Beziehungen untereinander. Diese Typen finden sich auch in den Regeln der EBNF-Grammatik (Abbildung~\ref{FIG:EBNFGrammar}) wieder.
 
-Um die Interfaces generieren zu können, müssen die Kanten der Graphen zwischen den Scopes, auf Interfaces abgebildet werden.
+Danach wird aus dem Baum ein Graph generiert, der eine Abfolge aus Knoten und Kanten darstellt. Die Knoten repräsentieren die Scopes (die durchnummerierte Namen erhalten), die Kanten repräsentierten die Methoden. In den folgenden Abschnitten wird die Abbildung der EBNF-Konstrukte auf die des Graphen und Interfaces erklärt.
+
 
 \begin{figure}[ht]
 \centering
@@ -70,7 +71,7 @@ Falls eine Kante mehrere Alternativen enthält, können die alternativen je als 
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_alternative}
+    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_alternative_different-nodes}
     \caption{Diagramm alternativer Knoten}
     \label{FIG:DiagramAlternativeNode}
   \end{subfigure}
@@ -88,7 +89,7 @@ Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlich
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_loop}
+    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_loop_single_node}
     \caption{Diagramm eines Schleifen-Knotens}
     \label{FIG:DiagramLoopNode}
   \end{subfigure}
