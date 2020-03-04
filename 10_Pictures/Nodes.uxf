@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
-  <zoom_level>8</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>344</x>
-      <y>248</y>
-      <w>136</w>
-      <h>72</h>
+      <x>380</x>
+      <y>560</y>
+      <w>170</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>/Node/
 --
@@ -20,93 +20,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>136</x>
-      <y>376</y>
-      <w>256</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>AlternativeNode
---
--alternatives:List&lt;Node&gt;
---
-+AlternativeNode(name:String)
-+AlternativeNode(name:String, nodes:List)
-+getAlternatives():List&lt;Node&gt;</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>472</x>
-      <y>376</y>
-      <w>216</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>LoopNode
---
--child:Node
---
-+LoopNode(name:String,child:Node)
-+getChild():Node</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>248</x>
-      <y>312</y>
-      <w>144</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>160.0;10.0;160.0;50.0;10.0;50.0;10.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>448</x>
-      <y>312</y>
-      <w>152</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0;170.0;50.0;170.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>264</x>
-      <y>472</y>
-      <w>336</w>
-      <h>88</h>
-    </coordinates>
-    <panel_attributes>SequenceNode
---
--successor:SequenceNode
---
-+SequenceNode(name:String)
-+SequenceNode(name:String,successor:SequenceNode)
-+getSuccessor():SequenceNode</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>416</x>
-      <y>312</y>
-      <w>24</w>
-      <h>176</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>336</x>
-      <y>96</y>
-      <w>160</w>
-      <h>88</h>
+      <x>680</x>
+      <y>410</y>
+      <w>200</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>ScopeEdge
 --
@@ -120,10 +37,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>120</x>
-      <y>96</y>
-      <w>136</w>
-      <h>72</h>
+      <x>380</x>
+      <y>410</y>
+      <w>170</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Scope
 --
@@ -136,40 +53,110 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>248</x>
-      <y>96</y>
-      <w>104</w>
-      <h>40</h>
+      <x>540</x>
+      <y>410</y>
+      <w>160</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 source
 m1=1</panel_attributes>
-    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>248</x>
-      <y>120</y>
-      <w>104</w>
-      <h>40</h>
+      <x>540</x>
+      <y>440</y>
+      <w>160</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 target
 m1=1</panel_attributes>
-    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>400</x>
-      <y>176</y>
-      <w>40</w>
-      <h>88</h>
+      <x>540</x>
+      <y>570</y>
+      <w>70</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1..n
+m1=1
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>50.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>590</x>
+      <y>560</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>NodeEdge
+--
+-node: Node
+--
++getNode(): Node</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>560</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>RepetitionEdge</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>560</y>
+      <w>110</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>OptionalEdge</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>510</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>510</y>
+      <w>150</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0;130.0;30.0;130.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>510</y>
+      <w>110</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>90.0;10.0;90.0;30.0;10.0;30.0;10.0;50.0</additional_attributes>
   </element>
 </diagram>
