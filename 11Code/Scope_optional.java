@@ -1,3 +1,3 @@
-interface ScopeSequenzKnoten extends NextScope {
-	NextScope SequenzKnoten();
+interface A implements B {
+	B nodeEdge();
 }

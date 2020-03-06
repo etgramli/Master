@@ -1,7 +1,7 @@
-interface SchleifenKnoten {
-	MehrSchleifenKnoten sequenzKnoten();
+interface A implements B{
+	B nodeEdge();
 }
 
-interface MehrSchleifenKnoten extends NextScope {
-	NextScope sequenzKnoten();
+interface B {
+	// Evt. Methode zum folgenden Scope
 }

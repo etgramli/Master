@@ -1,7 +1,7 @@
-interface SequenzEins {
-	SequenzZwei sequenzEins();
+interface A {
+	B nodeEdgeA();
 }
 
-interface SequenzZwei {
-	NextScope sequenzZwei();
+interface B {
+	C nodeEdgeB();
 }

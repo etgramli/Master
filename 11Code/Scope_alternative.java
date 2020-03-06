@@ -1,4 +1,4 @@
-interface ScopeAlternativKnoten {
-	NextScope sequenzKnotenEins();
-	NextScope sequenzKnotenZwei();
+interface A {
+	B nodeEdgeA();
+	B nodeEdgeB();
 }

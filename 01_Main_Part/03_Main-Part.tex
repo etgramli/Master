@@ -44,7 +44,13 @@ Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, ka
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_one-element}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (6,0) {B};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
+	\end{tikzpicture}
     \caption{Diagramm eines Sequenz-Knotens}
     \label{FIG:DiagramOneElementNode}
   \end{subfigure}
@@ -59,7 +65,14 @@ Falls man einen Knoten überspringen kann (bzw. optional ist), muss man vom folg
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_optional}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (6,0) {B};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+	\end{tikzpicture}
     \caption{Diagramm eines optionalen Sequenz-Knotens}
     \label{FIG:DiagramOptionalNode}
   \end{subfigure}
@@ -75,7 +88,14 @@ Falls eine Kante mehrere Alternativen enthält, können die alternativen je als 
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_alternative_different-nodes}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (6,0) {B};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick, bend left] (a) edge node[above] {NodeEdgeB} (b);
+	\end{tikzpicture}
     \caption{Diagramm alternativer Knoten}
     \label{FIG:DiagramAlternativeNode}
   \end{subfigure}
@@ -93,7 +113,15 @@ Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlich
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_loop_single_node}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (6,0) {B};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {RepetitionEdge} (a);
+	\end{tikzpicture}
     \caption{Diagramm eines Schleifen-Knotens}
     \label{FIG:DiagramLoopNode}
   \end{subfigure}
@@ -109,7 +137,15 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
-    \includegraphics[width=.95\linewidth]{\main/10_Pictures/Nodes_sequence}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (3,0) {B};
+		\node[vertex] (c) at  (6,0) {C};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick] (b) edge node[above] {NodeEdgeB} (c);
+	\end{tikzpicture}
     \caption{Diagramm einer Sequenz von Knoten}
     \label{FIG:DiagramSequenceNode}
   \end{subfigure}

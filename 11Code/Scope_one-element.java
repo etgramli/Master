@@ -1,3 +1,3 @@
-interface ScopeSequenzKnoten {
-	NextScope SequenzKnoten();
+interface A {
+	B nodeEdge();
 }
