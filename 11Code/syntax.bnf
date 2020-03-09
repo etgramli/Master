@@ -1,0 +1,5 @@
+<joi> ::= <component>                       # Zuweisung
+<component> ::= 'component' <componentName> # Seqzenz
+<interfaces> ::= {<componentInterface>}     # Optionale Wiederholung
+<type> ::= ('component' | 'interface')      # Alternative
+<componentName> ::= String                  # Terminale

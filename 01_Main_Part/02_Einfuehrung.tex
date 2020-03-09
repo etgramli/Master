@@ -119,6 +119,15 @@ Die erweiterte Backus-Naur-Form ist eine Erweiterung der Backus-Naur-Form, um di
 
 Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen, wodurch keine zusätzlichen Regeln benötigt werden.
 
+\subsubsection{Beispiel}
+
+\subsubsection{Festgelegte Syntax}
+Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verwendet, die sich an der ISO-Norm orientiert aber sich leicht davon unterscheidet. Zum Beispiel werden keine Kommentare unterstützt und die Zuweisung erfolgt durch \verb|::=| statt durch ein \verb|=|. Listing~\ref{LST:EBNFSyntaxExample} zeigt die Syntax der wichtigsten EBNF-Konstrukte.
+\begin{figure}[ht]
+\lstinputlisting[caption={Grammatik-Beispiel},label={LST:EBNFSyntaxExample}]{syntax.bnf}
+\end{figure}
+
+
 \subsection{Grafisch}
 Es gibt auch grafische Notationen für DSLs, etwas das Eclipse Modeling Framework\footnote{\url{http://www.eclipse.org/emf/}}, das sich an der Notation für Klassen von UML anlehnt.
 
