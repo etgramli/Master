@@ -1,5 +1,5 @@
-<joi> ::= <component>                       # Zuweisung
-<component> ::= 'component' <componentName> # Seqzenz
-<interfaces> ::= {<componentInterface>}     # Optionale Wiederholung
-<type> ::= ('component' | 'interface')      # Alternative
-<componentName> ::= String                  # Terminale
+<joi> = <component>;
+<component> = 'component' <componentName>;
+<interfaces> = {<componentInterface>};
+<type> = ('component' | 'interface');
+<componentName> = String;

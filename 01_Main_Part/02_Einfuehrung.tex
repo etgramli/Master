@@ -122,10 +122,26 @@ Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen
 \subsubsection{Beispiel}
 
 \subsubsection{Festgelegte Syntax}
-Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verwendet, die sich an der ISO-Norm orientiert aber sich leicht davon unterscheidet. Zum Beispiel werden keine Kommentare unterstützt und die Zuweisung erfolgt durch \verb|::=| statt durch ein \verb|=|. Listing~\ref{LST:EBNFSyntaxExample} zeigt die Syntax der wichtigsten EBNF-Konstrukte.
+Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verwendet, die sich an der ISO-Norm orientiert aber sich leicht davon unterscheidet. Zum Beispiel werden keine Kommentare und keine Ausnahme unterstützt. Listing~\ref{LST:EBNFSyntaxExample} zeigt die Syntax der wichtigsten EBNF-Konstrukte.
 \begin{figure}[ht]
 \lstinputlisting[caption={Grammatik-Beispiel},label={LST:EBNFSyntaxExample}]{syntax.bnf}
 \end{figure}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|c}
+\textbf{Konstrukt}     & \textbf{Syntax}\\\hline
+Zuweisung              & \verb|=|\\
+Alternative            & |\\
+Regel-Endzeichen       & \verb|;|\\
+Gliederung             & \verb|( ... )|\\
+Optionales Element     & \verb|[ ... ]|\\
+Optionale Wiederholung & \verb|{ ... }|\\
+Nicht-Terminal         & \verb|<NonTerminal>|\\
+\end{tabular}
+\caption{EBNF-Syntax-Elemente}
+\label{TAB:EBNFSyntax}
+\end{table}
 
 
 \subsection{Grafisch}

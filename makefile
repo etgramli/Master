@@ -2,6 +2,7 @@ LATEXMK      :=latexmk
 LATEXMKARGS  :=-pdf
 
 SOURCES      :=InterneDSLs.tex $(foreach dir,./, $(wildcard $(dir)/*/*.tex)) literature.bib
+CODEFILES    := $(wildcard 11Code/*)
 
 IMG_DIR      :=10_Pictures
 INKSCAPE_SVGS:=$(wildcard $(IMG_DIR)/*.svg)
@@ -9,7 +10,7 @@ INKSCAPE_IMGS:=$(INKSCAPE_SVGS:.svg=.pdf)
 UMLET_XMLS   :=$(wildcard $(IMG_DIR)/*.uxf)
 UMLET_IMGS   :=$(UMLET_XMLS:.uxf=.pdf)
 
-InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS)
+InterneDSLs.pdf: InterneDSLs.tex $(SOURCES) $(INKSCAPE_IMGS) $(UMLET_IMGS) $(CODEFILES)
 	$(LATEXMK) $(LATEXMKARGS) InterneDSLs
 
 $(IMG_DIR)/%.pdf: $(IMG_DIR)/%.svg
