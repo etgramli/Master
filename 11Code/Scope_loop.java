@@ -1,5 +1,5 @@
-interface A implements B{
-	B nodeEdge();
+interface A implements B {
+	A nodeEdge();
 }
 
 interface B {

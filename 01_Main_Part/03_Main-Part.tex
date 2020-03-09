@@ -112,12 +112,9 @@ Zusätzlich gibt es eine dritte Kante, die ebenfalls parallel ist aber in die en
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (c) at  (3,-2) {C};
 		\node[vertex] (b) at  (6,0) {B};
-		\path[->,draw,thick, bend right] (a) edge node[below] {NodeEdge} (c);
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
-		\path[->,draw,thick, bend right] (c) edge node[below] {OptionalEdge} (b);
-		\path[->,draw,thick, loop above] (c) edge node[above] {NodeEdge} (c);
+		\path[->,draw,thick, loop right] (a) edge node[right] {NodeEdge} (a);
 	\end{tikzpicture}
     \caption{Diagramm eines Schleifen-Knotens}
     \label{FIG:DiagramLoopNode}
