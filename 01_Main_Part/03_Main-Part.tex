@@ -35,12 +35,8 @@ Für diesen Anwendungsfall wird ein gerichteter Pseudo-Graph, der mehrere Kanten
 \label{FIG:TypesBNF}
 \end{figure}
 
-\begin{figure}[ht]
-\lstinputlisting[linerange={3-28,38-45},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
-\end{figure}
-
 \subsection{Kante mit einem Knoten}
-Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, kann man den ein Interface mit dem Namen des Knotens und dem nächsten Scope als Rückgabewert erstellen. Grafik~\ref{FIG:OneElementNode} zeigt, wie eine Abbildung aussehen kann.
+Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. Hier kann das Element auf eine Kante zwischen zwei Knoten abgebildet werden. Die Namen der Scopes werden zu den Interfaces, bzw. zum Rückgabewert der Methode, deren Namen dem der der Kante entspricht. Grafik~\ref{FIG:OneElementNode} zeigt, wie eine Abbildung aussehen kann.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -61,7 +57,7 @@ Im einfachsten Fall von einer Kante, die nur einen Sequenz-Knoten beinhaltet, ka
   \label{FIG:OneElementNode}
 \end{figure}
 
-Falls man einen Knoten überspringen kann (bzw. optional ist), muss man vom folgenden Scope (Listing~\ref{LST:JInterfaceOptionalNode}) erben, um dessen Methoden aufrufen zu können und damit die eigene(n) auslassen zu können.
+Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein und auch der nächstfolgende Methodenaufruf verfügbar sein. Das wird dadurch erreicht, indem das erste Interface vom folgenden erbt. Im Graphen wird das durch eine parallele Kante eines anderen Typen (OptionalEdge in Abbildung~\ref{FIG:DiagramOptionalNode}) repräsentiert. Listing~\ref{LST:JInterfaceOptionalNode}) ist, bis auf die Vererbung, gleich zu Listing~\ref{LST:JInterfaceOneElementNode}.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -84,7 +80,7 @@ Falls man einen Knoten überspringen kann (bzw. optional ist), muss man vom folg
 \end{figure}
 
 \subsection{Kante mit Alternativen}
-Falls eine Kante mehrere Alternativen enthält, können die alternativen je als eine Methode in einem Interface implementiert werden, die jeweils den folgenden Scope zurück geben (siehe Abbildung~\ref{FIG:AlternativeNode}).
+Alternativen in der EBNF können auf parallele Kanten vom selben Typ zwischen zwei Knoten abgebildet werden (siehe Abbildung~\ref{FIG:DiagramAlternativeNode}). Dadurch können beide Kanten analog wie bei einer Sequenz abgebildet werden, nur dass es einem Interface mehrere Methoden auftreten können (Listing~\ref{LST:JInterfaceAlternativeNode}). Die Interface-Typen und Rückgabewerte sind analog wie bei der Sequenz.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -106,10 +102,9 @@ Falls eine Kante mehrere Alternativen enthält, können die alternativen je als 
   \label{FIG:AlternativeNode}
 \end{figure}
 
-\subsection{Kante mit Schleife}
-Eine Wiederholung wird mit einem Schleifen-Knoten modelliert, der einen Sequenz-Knoten beinhaltet. Für eine Wiederholung, die kein Vorkommen erlaubt, reicht ein Scope, der vom Folge-Scope erbt; damit kann der Methodenaufruf vom Schleifen-Scope übersprungen werden.
-
-Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlichen Interface eingeführt werden, das dieselbe Methode deklariert und nicht vom Folge-Interface erbt, um einen Methodenaufruf zu erzwingen (Listing~\ref{LST:JInterfaceLoopNode}).
+\subsection{Kante mit optionaler Schleife}
+Da die Wiederholung bei EBNF optional ist (beliebig oft oder keinmal auftreten darf), gibt es hier, wie beim optionalen Element eine parallele Kante vom Typ OptionalEdge.
+Zusätzlich gibt es eine dritte Kante, die ebenfalls parallel ist aber in die entgegengesetzte Richtung zeigt. Diese Kante zeigt ebenfalls eine Vererbungsbeziehung an, um den Methodenaufruf von Interface A auch in Interface B verfügbar zu machen (Abbildung~\ref{FIG:DiagramLoopNode}).
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -117,10 +112,12 @@ Falls die Wiederholung mindestens ein Vorkommen voraussetzt muss ein zusätzlich
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (c) at  (3,-2) {C};
 		\node[vertex] (b) at  (6,0) {B};
-		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
+		\path[->,draw,thick, bend right] (a) edge node[below] {NodeEdge} (c);
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
-		\path[->,draw,thick, bend left] (b) edge node[above] {RepetitionEdge} (a);
+		\path[->,draw,thick, bend right] (c) edge node[below] {OptionalEdge} (b);
+		\path[->,draw,thick, loop above] (c) edge node[above] {NodeEdge} (c);
 	\end{tikzpicture}
     \caption{Diagramm eines Schleifen-Knotens}
     \label{FIG:DiagramLoopNode}
