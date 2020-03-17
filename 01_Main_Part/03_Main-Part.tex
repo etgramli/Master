@@ -44,7 +44,7 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (6,0) {B};
+		\node[vertex] (b) at  (5,0) {B};
 		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
 	\end{tikzpicture}
     \caption{Diagramm eines Sequenz-Knotens}
@@ -66,10 +66,10 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (3,0) {B};
-		\node[vertex] (c) at  (6,0) {C};
-		\path[->,draw,thick] (a) edge node[above] {NodeEdgeA} (b);
-		\path[->,draw,thick] (b) edge node[above] {NodeEdgeB} (c);
+		\node[vertex] (b) at  (2.5,0) {B};
+		\node[vertex] (c) at  (5,0) {C};
+		\path[->,draw,thick, bend left] (a) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {NodeEdgeB} (c);
 	\end{tikzpicture}
     \caption{Diagramm einer Sequenz von Knoten}
     \label{FIG:DiagramSequenceNode}
@@ -90,7 +90,7 @@ Alternativen in der EBNF können auf parallele Kanten vom selben Typ zwischen zw
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (6,0) {B};
+		\node[vertex] (b) at  (5,0) {B};
 		\path[->,draw,thick] (a) edge node[above] {NodeEdgeA} (b);
 		\path[->,draw,thick, bend left] (a) edge node[above] {NodeEdgeB} (b);
 	\end{tikzpicture}
@@ -113,7 +113,7 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (6,0) {B};
+		\node[vertex] (b) at  (5,0) {B};
 		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 	\end{tikzpicture}
@@ -140,7 +140,7 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (6,0) {B};
+		\node[vertex] (b) at  (5,0) {B};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, loop right] (a) edge node[right] {NodeEdge} (a);
 	\end{tikzpicture}
@@ -162,7 +162,7 @@ Eine Alternative zur Schleifen-Kante am ersten Scope ist eine am zweiten Scope (
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (6,0) {B};
+		\node[vertex] (b) at  (5,0) {B};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, loop left] (b) edge node[left] {NodeEdge} (b);
 	\end{tikzpicture}
@@ -189,14 +189,14 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
   	\begin{tikzpicture}
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
-		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (0,-1) {B};
-		\node[vertex] (c) at  (3,0) {C};
-		\node[vertex] (d) at  (6,0) {D};
+		\node[vertex] (a) at  (0,1.5) {A};
+		\node[vertex] (b) at  (0,0) {B};
+		\node[vertex] (c) at  (2.5,0) {C};
+		\node[vertex] (d) at  (5,0) {D};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (d);
-		\path[->,draw,thick, bend left] (d) edge node[below] {NodeEdgeA} (b);
-		\path[->,draw,thick] (b) edge node[below] {NodeEdgeB} (c);
-		\path[->,draw,thick] (c) edge node[below] {NodeEdgeC} (d);
+		\path[->,draw,thick, bend right] (d) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick, bend right] (b) edge node[below] {NodeEdgeB} (c);
+		\path[->,draw,thick, bend right] (c) edge node[below] {NodeEdgeC} (d);
 	\end{tikzpicture}
     \caption{Diagramm einer Sequenz innerhalb eines Schleifen-Knotens}
     \label{FIG:DiagramSequenceInLoop}
@@ -219,8 +219,8 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (2,0) {B};
-		\node[vertex] (c) at  (6,0) {C};
+		\node[vertex] (b) at  (1,0) {B};
+		\node[vertex] (c) at  (5,0) {C};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
 		\path[->,draw,thick, bend left] (c) edge node[below] {AlternativeA} (b);
 		\path[->,draw,thick] (c) edge node[below] {AlternativeB} (b);
