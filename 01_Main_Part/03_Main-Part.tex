@@ -57,7 +57,8 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
   \label{FIG:OneElementNode}
 \end{figure}
 
-Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein und auch der nächstfolgende Methodenaufruf verfügbar sein. Das wird dadurch erreicht, indem das erste Interface vom folgenden erbt. Im Graphen wird das durch eine parallele Kante eines anderen Typen (OptionalEdge in Abbildung~\ref{FIG:DiagramOptionalNode}) repräsentiert. Listing~\ref{LST:JInterfaceOptionalNode}) ist, bis auf die Vererbung, gleich zu Listing~\ref{LST:JInterfaceOneElementNode}.
+\subsection{Sequenz von Knoten}
+Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit einer Methode generiert werden, um die Aufruf-Reihenfolge zu gewährleisten. Abbildung~\ref{FIG:SequenceNode} zeigt ein Beispiel mit zwei Knoten in einer Sequenz.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -65,18 +66,19 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (6,0) {B};
-		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
-		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\node[vertex] (b) at  (3,0) {B};
+		\node[vertex] (c) at  (6,0) {C};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick] (b) edge node[above] {NodeEdgeB} (c);
 	\end{tikzpicture}
-    \caption{Diagramm eines optionalen Sequenz-Knotens}
-    \label{FIG:DiagramOptionalNode}
+    \caption{Diagramm einer Sequenz von Knoten}
+    \label{FIG:DiagramSequenceNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einem optionalen Sequenz-Knoten},label={LST:JInterfaceOptionalNode}]{Scope_optional.java}
+    \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten},label={FIG:JInterfaceSequenceNode}]{Scope_sequence.java}
   \end{subfigure}
-  \caption{Diagramm und Interface eines optionalen Sequenz-Knotens}
-  \label{FIG:OptionalNode}
+  \caption{Diagramm und Interface einer Sequenz von Knotens}
+  \label{FIG:SequenceNode}
 \end{figure}
 
 \subsection{Kante mit Alternativen}
@@ -102,9 +104,35 @@ Alternativen in der EBNF können auf parallele Kanten vom selben Typ zwischen zw
   \label{FIG:AlternativeNode}
 \end{figure}
 
+\subsection{Optionales Element}
+Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein und auch der nächstfolgende Methodenaufruf verfügbar sein. Das wird dadurch erreicht, indem das erste Interface vom folgenden erbt. Im Graphen wird das durch eine parallele Kante eines anderen Typen (OptionalEdge in Abbildung~\ref{FIG:DiagramOptionalNode}) repräsentiert. Listing~\ref{LST:JInterfaceOptionalNode}) ist, bis auf die Vererbung, gleich zu Listing~\ref{LST:JInterfaceOneElementNode}.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (6,0) {B};
+		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+	\end{tikzpicture}
+    \caption{Diagramm eines optionalen Sequenz-Knotens}
+    \label{FIG:DiagramOptionalNode}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einem optionalen Sequenz-Knoten},label={LST:JInterfaceOptionalNode}]{Scope_optional.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface eines optionalen Sequenz-Knotens}
+  \label{FIG:OptionalNode}
+\end{figure}
+
 \subsection{Kante mit optionaler Schleife}
-Da die Wiederholung bei EBNF optional ist (beliebig oft oder keinmal auftreten darf), gibt es hier, wie beim optionalen Element eine parallele Kante vom Typ OptionalEdge.
-Zusätzlich gibt es eine dritte Kante, die ebenfalls parallel ist aber in die entgegengesetzte Richtung zeigt. Diese Kante zeigt ebenfalls eine Vererbungsbeziehung an, um den Methodenaufruf von Interface A auch in Interface B verfügbar zu machen (Abbildung~\ref{FIG:DiagramLoopNode}).
+Da die Wiederholung bei EBNF optional ist (beliebig oft oder keinmal auftreten darf), gibt es hier, wie beim optionalen Element eine Kante vom Typ OptionalEdge. Dadurch kann der Methodenaufruf übersprungen werden.
+
+Um den Methodenaufruf wiederholbar zu machen kann man nicht einfach eine parallele, optionale Kante in die entgegengesetzte Richtung einfügen, weil diese ebenfalls in eine Vererbung umgesetzt würde; dadurch würde zwischen beiden Interfaces eine zirkuläre Abhängigkeit entstehen, die in Java verboten ist.
+
+Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufruf repräsentiert, eine Schleife zum Knoten selbst. Somit kann die Methode beliebig oft aufgerufen werden, bevor die in B deklarierte Methode aufgerufen wird (Abbildung~\ref{FIG:DiagramLoopNode}).
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -126,29 +154,7 @@ Zusätzlich gibt es eine dritte Kante, die ebenfalls parallel ist aber in die en
   \label{FIG:LoopNode}
 \end{figure}
 
-\subsection{Sequenz von Knoten}
-Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit einer Methode generiert werden, um die Aufruf-Reihenfolge zu gewährleisten. Abbildung~\ref{FIG:SequenceNode} zeigt ein Beispiel mit zwei Knoten in einer Sequenz.
-\begin{figure}[ht]
-\centering
-  \begin{subfigure}[c]{0.49\textwidth}
-  	\begin{tikzpicture}
-		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
-		\tikzset{edge/.style = {->,> = latex'}}
-		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (3,0) {B};
-		\node[vertex] (c) at  (6,0) {C};
-		\path[->,draw,thick] (a) edge node[above] {NodeEdgeA} (b);
-		\path[->,draw,thick] (b) edge node[above] {NodeEdgeB} (c);
-	\end{tikzpicture}
-    \caption{Diagramm einer Sequenz von Knoten}
-    \label{FIG:DiagramSequenceNode}
-  \end{subfigure}
-  \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten},label={FIG:JInterfaceSequenceNode}]{Scope_sequence.java}
-  \end{subfigure}
-  \caption{Diagramm und Interface einer Sequenz von Knotens}
-  \label{FIG:SequenceNode}
-\end{figure}
+\subsubsection{Schachtelung der Konstrukte}
 
 
 \section{Schwierigkeiten beim Bau}
