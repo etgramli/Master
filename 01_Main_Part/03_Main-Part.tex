@@ -144,15 +144,40 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, loop right] (a) edge node[right] {NodeEdge} (a);
 	\end{tikzpicture}
-    \caption{Diagramm eines Schleifen-Knotens}
+    \caption{Diagramm eines Schleifen-Knotens (Variante 1)}
     \label{FIG:DiagramLoopNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten},label={LST:JInterfaceLoopNode}]{Scope_loop.java}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten (Variante 1)},label={LST:JInterfaceLoopNode}]{Scope_loop.java}
   \end{subfigure}
-  \caption{Diagramm und Interface eines Schleifen-Knotens}
+  \caption{Diagramm und Interface eines Schleifen-Knotens (Variante 1)}
   \label{FIG:LoopNode}
 \end{figure}
+
+Eine Alternative zur Schleifen-Kante am ersten Scope ist eine am zweiten Scope (Abbildung~\ref{FIG:DiagramLoopNodeAlternative}); hier kann der Methodenaufruf ebenfalls übersprungen werden, indem die Methoden der anderen ausgehenden Kanten aufgerufen werden oder beliebig oft, da der selbe Scope zurückgegeben wird.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (6,0) {B};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, loop left] (b) edge node[left] {NodeEdge} (b);
+	\end{tikzpicture}
+    \caption{Diagramm eines Schleifen-Knotens (Variante 2)}
+    \label{FIG:DiagramLoopNodeAlternative}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten (Variante 2)},label={LST:JInterfaceLoopNodeAlternative}]{Scope_loop_alt.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface eines Schleifen-Knotens (Variante 2)}
+  \label{FIG:LoopNodeAlternative}
+\end{figure}
+
+Eine dritte Möglichkeit besteht darin, die beiden Knoten zusammenzuführen, die optionale Kante zu verwerfen und die Kante mit der Knoten-Information zu behalten.
+
 
 \subsubsection{Schachtelung der Konstrukte}
 
