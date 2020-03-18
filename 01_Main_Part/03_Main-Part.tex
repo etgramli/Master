@@ -179,7 +179,7 @@ Eine Alternative zur Schleifen-Kante am ersten Scope ist eine am zweiten Scope (
 Eine dritte Möglichkeit besteht darin, die beiden Knoten zusammenzuführen, die optionale Kante zu verwerfen und die Kante mit der Knoten-Information zu behalten.
 
 \subsection{Schachtelung der Konstrukte}
-In diesem Abschnitt wird darauf eingegangen, wie die Rekursion der ENBF-Konstrukte behandelt werden können. Die Fälle von Alternative und Schleifen in einer Sequenz werden aus Trivialität übersprungen.
+In diesem Abschnitt wird darauf eingegangen, wie die Rekursion der ENBF-Konstrukte behandelt werden können. Die Fälle von Alternative und Schleifen in einer Sequenz werden aus Trivialität übersprungen. Hier soll nur auf Fälle eingegangen werden, die nicht aus den vorherigen Beispielen ersichtlich sind.
 
 \subsubsection{Sequenz in einer Schleife}
 Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine Schleife zum Ziel-Knoten (Abbildung~\ref{FIG:DiagramSequenceInLoop}) der Schleife analog zur zweiten Variante der Schleife (siehe Abbildung~\ref{FIG:DiagramLoopNodeAlternative}).
@@ -237,6 +237,31 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
 \end{figure}
 
 \subsubsection{Schleife in Alternative}
+Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfsknoten eingeführt werden, auch wenn die Schleife nur eine Kante beinhaltet (Knoten C in Abbildung~\ref{FIG:DiagramLoopInAlternative}). Würde man die optionalen Kante direkt von A nach B aufnehmen, wären NodeEdgeB und NodeEdgeC ebenfalls optional und würde nicht dem EBNF-Konstrukt entsprechen.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (5,0) {B};
+		\node[vertex] (c) at  (2.5,1) {C};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
+		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, loop above] (c) edge node[above] {NodeEdgeA} (c);
+		\path[->,draw,thick] (a) edge node[above] {NodeEdgeB} (b);
+		\path[->,draw,thick, bend right] (a) edge node[above] {NodeEdgeC} (b);
+	\end{tikzpicture}
+    \caption{Diagramm einer Schleife innerhalb einer Alternative}
+    \label{FIG:DiagramLoopInAlternative}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleife innerhalb einer Alternative},label={LST:JInterfaceLoopInAlternative}]{Loop_with_inner_alternative_and_sequence.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative}
+  \label{FIG:LoopInAlternative}
+\end{figure}
 
 
 \section{Schwierigkeiten beim Bau}
