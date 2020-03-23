@@ -1,6 +1,9 @@
 interface A implements C {
 }
 
+interface C implements D
+}
+
 interface B {
 	C nodeEdge();
 }

@@ -215,10 +215,12 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,1.5) {A};
 		\node[vertex] (b) at  (0,0) {B};
-		\node[vertex] (c) at  (2.5,0) {C};
-		\node[vertex] (d) at  (5,0) {D};
+		\node[vertex] (c) at  (5,0) {C};
+		\node[vertex] (d) at  (2.5,1.5) {D};
+		\node[vertex] (e) at  (5,1.5) {E};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (d);
-		\path[->,draw,thick, bend right] (d) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick, bend left] (d) edge node[above] {OptionalEdge} (e);
+		\path[->,draw,thick, bend right] (d) edge node[below] {NodeEdgeA} (b);
 		\path[->,draw,thick, bend right] (b) edge node[below] {NodeEdgeB} (c);
 		\path[->,draw,thick, bend right] (c) edge node[below] {NodeEdgeC} (d);
 	\end{tikzpicture}
@@ -245,7 +247,9 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (1,0) {B};
 		\node[vertex] (c) at  (5,0) {C};
+		\node[vertex] (d) at  (2.5,-2) {D};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
+		\path[->,draw,thick, bend left] (c) edge node[below] {OptionalEdge} (d);
 		\path[->,draw,thick, bend left] (c) edge node[below] {AlternativeA} (b);
 		\path[->,draw,thick] (c) edge node[below] {AlternativeB} (b);
 		\path[->,draw,thick, bend left] (b) edge node[below] {NodeEdge} (c);

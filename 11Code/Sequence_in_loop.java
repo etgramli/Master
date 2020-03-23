@@ -1,4 +1,7 @@
-interface A implements C {
+interface A implements D {
+}
+
+interface D implements E {
 }
 
 interface B {
