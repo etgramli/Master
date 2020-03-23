@@ -176,7 +176,31 @@ Eine Alternative zur Schleifen-Kante am ersten Scope ist eine am zweiten Scope (
   \label{FIG:LoopNodeAlternative}
 \end{figure}
 
-Eine dritte Möglichkeit besteht darin, die beiden Knoten zusammenzuführen, die optionale Kante zu verwerfen und die Kante mit der Knoten-Information zu behalten.
+Eine dritte Möglichkeit besteht darin, die bei dem Verschachteln der Konstrukte wieder aufgegriffen wird, ist ein zusätzlicher Knoten, der zum nächsten und vorherigen Knoten mit je einer optionalen Kante verbunden ist (siehe Abblindung~\ref{FIG:DiagramLoopNodeAlternativeTwo}). Die Methoden aud C werden in A und B aufrufbar gemacht, wodurch der Aufruf an NodeEdge optional und mehrfach aufrufbar gemacht wird.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (2.5,0) {B};
+		\node[vertex] (c) at  (5,0) {C};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, loop below] (b) edge node[below] {NodeEdge} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (c);
+	\end{tikzpicture}
+    \caption{Diagramm einer Schleifen-Kante (Variante 3)}
+    \label{FIG:DiagramLoopNodeAlternativeTwo}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 3)},label={LST:JInterfaceLoopNodeAlternativeTwo}]{Scope_loop_alt_two.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 3)}
+  \label{FIG:LoopNodeAlternativeTwo}
+\end{figure}
+
+Eine vierte Möglichkeit besteht darin, die drei Knoten aus Variante 3 (Abbildung~\ref{FIG:DiagramLoopNodeAlternativeTwo}) zusammenzuführen.
 
 \subsection{Schachtelung der Konstrukte}
 In diesem Abschnitt wird darauf eingegangen, wie die Rekursion der ENBF-Konstrukte behandelt werden können. Die Fälle von Alternative und Schleifen in einer Sequenz werden aus Trivialität übersprungen. Hier soll nur auf Fälle eingegangen werden, die nicht aus den vorherigen Beispielen ersichtlich sind.
