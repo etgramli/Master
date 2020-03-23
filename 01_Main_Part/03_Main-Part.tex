@@ -53,7 +53,7 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einem Sequenz-Knoten},label={LST:JInterfaceOneElementNode}]{Scope_one-element.java}
   \end{subfigure}
-  \caption{Diagramm und Interface eines Sequenz-Knotens}
+  \caption{Diagramm und Interface eines Sequenz-Knotens (\texttt{<rule> = NodeEdge;})}
   \label{FIG:OneElementNode}
 \end{figure}
 
@@ -77,7 +77,7 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten},label={FIG:JInterfaceSequenceNode}]{Scope_sequence.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Sequenz von Knoten}
+  \caption{Diagramm und Interface einer Sequenz von Knoten (\texttt{<rule> = NodeEdgeA NodeEdgeB;})}
   \label{FIG:SequenceNode}
 \end{figure}
 
@@ -100,7 +100,7 @@ Alternativen in der EBNF können auf parallele Kanten vom selben Typ zwischen zw
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Kanten},label={LST:JInterfaceAlternativeNode}]{Scope_alternative.java}
   \end{subfigure}
-  \caption{Diagramm und Interface alternativer Kanten}
+  \caption{Diagramm und Interface alternativer Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;})}
   \label{FIG:AlternativeNode}
 \end{figure}
 
@@ -123,7 +123,7 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer optionalen Kante},label={LST:JInterfaceOptionalNode}]{Scope_optional.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer optionalen Kante}
+  \caption{Diagramm und Interface einer optionalen Kante (\texttt{<rule> = [NodeEdgeA];})}
   \label{FIG:OptionalNode}
 \end{figure}
 
@@ -144,7 +144,7 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, loop right] (a) edge node[right] {NodeEdge} (a);
 	\end{tikzpicture}
-    \caption{Diagramm einer Schleifen-Kante (Variante 1)}
+    \caption{Diagramm einer Schleifen-Kante (Variante 1) (\texttt{<rule> = \{NodeEdge\};})}
     \label{FIG:DiagramLoopNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
@@ -172,7 +172,7 @@ Eine Alternative zur Schleifen-Kante am ersten Scope ist eine am zweiten Scope (
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlternative}]{Scope_loop_alt.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2)}
+  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
   \label{FIG:LoopNodeAlternative}
 \end{figure}
 
@@ -196,7 +196,7 @@ Eine dritte Möglichkeit besteht darin, die bei dem Verschachteln der Konstrukte
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 3)},label={LST:JInterfaceLoopNodeAlternativeTwo}]{Scope_loop_alt_two.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 3)}
+  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 3) (\texttt{<rule> = \{NodeEdge\};})}
   \label{FIG:LoopNodeAlternativeTwo}
 \end{figure}
 
@@ -230,7 +230,7 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Sequenz in einem Schleifen-Knoten},label={LST:JInterfaceSequenceInLoop}]{Sequence_in_loop.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Sequenz innerhalb eines Schleifen-Knotens (nach Variante 2)}
+  \caption{Diagramm und Interface einer Sequenz innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{NodeEdgeA NodeEdgeB NodeEdgeC\};})}
   \label{FIG:SequenceInLoop}
 \end{figure}
 
@@ -260,7 +260,7 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten},label={LST:JInterfaceAlternativeInLoop}]{Loop_with_inner_alternative_and_sequence.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Alternative und Sequenz innerhalb eines Schleifen-Knotens (nach Variante 2)}
+  \caption{Diagramm und Interface einer Alternative und Sequenz innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{(AlternativeA | AlternativeB) NodeEdge\};})}
   \label{FIG:AlternativeInLoop}
 \end{figure}
 
@@ -287,7 +287,7 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleife innerhalb einer Alternative},label={LST:JInterfaceLoopInAlternative}]{Loop_with_inner_alternative_and_sequence.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative}
+  \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | NodeEdgeC;})}
   \label{FIG:LoopInAlternative}
 \end{figure}
 
