@@ -239,6 +239,29 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
   \label{FIG:LoopInAlternative}
 \end{figure}
 
+\subsection{Eigenschaften des Graphen}
+Der Graph ist
+\begin{itemize}
+	\item gerichtet,
+	\item zyklisch,
+	\item ungewichtet und
+	\item kann parallele Kanten enthalten.
+\end{itemize}
+Diese Eigenschaften bezeichnen einen gerichteter, zyklischen Multi-/Pseudograph. Die parallelen Kanten haben eine eigene Identität (Name und Typ), mit der man sie von anderen Kanten mit dem selben Quell- und Zielknoten unterscheiden kann.
+
+Es gibt einen Knoten ohne ausgehende Kanten, da bei allen Konstrukten (auch bei der Schleife) ein Folge-Knoten erstellt wird. Dadurch ist immer ein End-Knoten, den man als Ausstiegspunkt (etwa für eine Build-Methode) verwenden kann.
+
+Der Start-Knoten muss (im GraphBuilder) manuell gesetzt werden, da er in der Schleife auch eingehende Kanten besitzt.
+
+\subsubsection{Typen}
+Abbildung~\ref{FIG:GraphTypes} zeigt die Typen des Graphen.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.85\textwidth]{Nodes}
+\caption{Typen des Graphen (Scope für die Vertizes; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
+\label{FIG:GraphTypes}
+\end{figure}
+
 
 \section{Schwierigkeiten beim Bau}
 Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten werden in diesem Abschnitt besprochen: die Behandlung der Rekursion der EBNF-Grammatik und die der Typen.
@@ -248,9 +271,10 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 \subsection{Typen}
 
 \subsubsection{Mapping auf Typen der Hostsprache}
-- NTs -> Methoden (Einschränungen)
-
-- Interfacenamen beliebig
+\begin{itemize}
+	\item NTs -> Methoden (Einschränungen)
+	\item Interfacenamen beliebig
+\end{itemize}
 
 \subsubsection{Generierung von Typen aus EBNF-Regeln}
 
