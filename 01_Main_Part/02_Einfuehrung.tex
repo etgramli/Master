@@ -122,7 +122,7 @@ Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen
 \subsubsection{Beispiel}
 
 \subsubsection{Festgelegte Syntax}
-Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verwendet, die sich an der ISO-Norm orientiert aber sich leicht davon unterscheidet. Zum Beispiel werden keine Kommentare und keine Ausnahme unterstützt. Listing~\ref{LST:EBNFGrammar} zeigt die Syntax der EBNF-Grammatik.
+Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verwendet, die sich an der ISO-Norm orientiert aber sich leicht davon unterscheidet. In der Sequenz gibt es keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Listing~\ref{LST:EBNFGrammar} zeigt die Syntax der EBNF-Grammatik.
 
 \begin{figure}[ht]
 \lstinputlisting[linerange={3-49},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
@@ -132,13 +132,13 @@ Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verw
 \centering
 \begin{tabular}{l|c}
 \textbf{Konstrukt}     & \textbf{Syntax}\\\hline
-Zuweisung              & \verb|=|\\
+Definition             & \verb|=|\\
 Alternative            & |\\
 Regel-Endzeichen       & \verb|;|\\
-Gliederung             & \verb|( ... )|\\
+Gruppierung            & \verb|( ... )|\\
 Optionales Element     & \verb|[ ... ]|\\
 Optionale Wiederholung & \verb|{ ... }|\\
-Nicht-Terminal         & \verb|<NonTerminal>|\\
+Nicht-Terminal         & \verb|< ... >|\\
 \end{tabular}
 \caption{EBNF-Syntax-Elemente}
 \label{TAB:EBNFSyntax}
