@@ -45,7 +45,7 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (5,0) {B};
-		\path[->,draw,thick] (a) edge node[above] {NodeEdge} (b);
+		\path[->,draw,thick,bend left] (a) edge node[above] {NodeEdge} (b);
 	\end{tikzpicture}
     \caption{Diagramm eines Sequenz-Knotens}
     \label{FIG:DiagramOneElementNode}
@@ -68,8 +68,8 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (2.5,0) {B};
 		\node[vertex] (c) at  (5,0) {C};
-		\path[->,draw,thick, bend left] (a) edge node[above] {NodeEdgeA} (b);
-		\path[->,draw,thick, bend left] (b) edge node[above] {NodeEdgeB} (c);
+		\path[->,draw,thick,bend left] (a) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick,bend left] (b) edge node[above] {NodeEdgeB} (c);
 	\end{tikzpicture}
     \caption{Diagramm einer Sequenz von Knoten}
     \label{FIG:DiagramSequenceNode}
@@ -144,85 +144,35 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, loop right] (a) edge node[right] {NodeEdge} (a);
 	\end{tikzpicture}
-    \caption{Diagramm einer Schleifen-Kante (Variante 1) (\texttt{<rule> = \{NodeEdge\};})}
+    \caption{Diagramm einer Schleifen-Kante (Variante 1)}
     \label{FIG:DiagramLoopNode}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 1)},label={LST:JInterfaceLoopNode}]{Scope_loop.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 1)}
+  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 1) (\texttt{<rule> = \{NodeEdge\};})}
   \label{FIG:LoopNode}
 \end{figure}
-
-Eine Alternative zur Schleifen-Kante am ersten Scope ist eine am zweiten Scope (Abbildung~\ref{FIG:DiagramLoopNodeAlternative}); hier kann der Methodenaufruf ebenfalls übersprungen werden, indem die Methoden der anderen ausgehenden Kanten aufgerufen werden oder beliebig oft, da der selbe Scope zurückgegeben wird.
-\begin{figure}[ht]
-\centering
-  \begin{subfigure}[c]{0.49\textwidth}
-  	\begin{tikzpicture}
-		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
-		\tikzset{edge/.style = {->,> = latex'}}
-		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (5,0) {B};
-		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
-		\path[->,draw,thick, loop left] (b) edge node[left] {NodeEdge} (b);
-	\end{tikzpicture}
-    \caption{Diagramm einer Schleifen-Kante (Variante 2)}
-    \label{FIG:DiagramLoopNodeAlternative}
-  \end{subfigure}
-  \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlternative}]{Scope_loop_alt.java}
-  \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
-  \label{FIG:LoopNodeAlternative}
-\end{figure}
-
-Eine dritte Möglichkeit besteht darin, die bei dem Verschachteln der Konstrukte wieder aufgegriffen wird, ist ein zusätzlicher Knoten, der zum nächsten und vorherigen Knoten mit je einer optionalen Kante verbunden ist (siehe Abblindung~\ref{FIG:DiagramLoopNodeAlternativeTwo}). Die Methoden aud C werden in A und B aufrufbar gemacht, wodurch der Aufruf an NodeEdge optional und mehrfach aufrufbar gemacht wird.
-\begin{figure}[ht]
-\centering
-  \begin{subfigure}[c]{0.49\textwidth}
-  	\begin{tikzpicture}
-		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
-		\tikzset{edge/.style = {->,> = latex'}}
-		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (2.5,0) {B};
-		\node[vertex] (c) at  (5,0) {C};
-		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
-		\path[->,draw,thick, loop below] (b) edge node[below] {NodeEdge} (b);
-		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (c);
-	\end{tikzpicture}
-    \caption{Diagramm einer Schleifen-Kante (Variante 3)}
-    \label{FIG:DiagramLoopNodeAlternativeTwo}
-  \end{subfigure}
-  \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 3)},label={LST:JInterfaceLoopNodeAlternativeTwo}]{Scope_loop_alt_two.java}
-  \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 3) (\texttt{<rule> = \{NodeEdge\};})}
-  \label{FIG:LoopNodeAlternativeTwo}
-\end{figure}
-
-Eine vierte Möglichkeit besteht darin, die drei Knoten aus Variante 3 (Abbildung~\ref{FIG:DiagramLoopNodeAlternativeTwo}) zusammenzuführen.
 
 \subsection{Schachtelung der Konstrukte}
 In diesem Abschnitt wird darauf eingegangen, wie die Rekursion der ENBF-Konstrukte behandelt werden können. Die Fälle von Alternative und Schleifen in einer Sequenz werden aus Trivialität übersprungen. Hier soll nur auf Fälle eingegangen werden, die nicht aus den vorherigen Beispielen ersichtlich sind.
 
 \subsubsection{Sequenz in einer Schleife}
-Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine Schleife zum Ziel-Knoten (Abbildung~\ref{FIG:DiagramSequenceInLoop}) der Schleife analog zur zweiten Variante der Schleife (siehe Abbildung~\ref{FIG:DiagramLoopNodeAlternative}).
+Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine Schleife zum Ziel-Knoten (Abbildung~\ref{FIG:DiagramSequenceInLoop}) der Schleife analog zur trivialen Variante der Schleife (siehe Abbildung~\ref{FIG:DiagramLoopNode}).
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
   	\begin{tikzpicture}
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
-		\node[vertex] (a) at  (0,1.5) {A};
-		\node[vertex] (b) at  (0,0) {B};
-		\node[vertex] (c) at  (5,0) {C};
-		\node[vertex] (d) at  (2.5,1.5) {D};
-		\node[vertex] (e) at  (5,1.5) {E};
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (4,0) {B};
+		\node[vertex] (c) at  (4,-1.5) {C};
+		\node[vertex] (d) at  (5,0) {D};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (d);
-		\path[->,draw,thick, bend left] (d) edge node[above] {OptionalEdge} (e);
-		\path[->,draw,thick, bend right] (d) edge node[below] {NodeEdgeA} (b);
-		\path[->,draw,thick, bend right] (b) edge node[below] {NodeEdgeB} (c);
-		\path[->,draw,thick, bend right] (c) edge node[below] {NodeEdgeC} (d);
+		\path[->,draw,thick, bend left] (a) edge node[below] {NodeEdgeA} (b);
+		\path[->,draw,thick, bend left] (b) edge node[left] {NodeEdgeB} (c);
+		\path[->,draw,thick, bend left] (c) edge node[below] {NodeEdgeC} (a);
 	\end{tikzpicture}
     \caption{Diagramm einer Sequenz innerhalb eines Schleifen-Knotens}
     \label{FIG:DiagramSequenceInLoop}
@@ -245,14 +195,12 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (1,0) {B};
+		\node[vertex] (b) at  (4,0) {B};
 		\node[vertex] (c) at  (5,0) {C};
-		\node[vertex] (d) at  (2.5,-2) {D};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
-		\path[->,draw,thick, bend left] (c) edge node[below] {OptionalEdge} (d);
-		\path[->,draw,thick, bend left] (c) edge node[below] {AlternativeA} (b);
-		\path[->,draw,thick] (c) edge node[below] {AlternativeB} (b);
-		\path[->,draw,thick, bend left] (b) edge node[below] {NodeEdge} (c);
+		\path[->,draw,thick, bend left] (a) edge node[below] {AlternativeA} (b);
+		\path[->,draw,thick] (a) edge node[below] {AlternativeB} (b);
+		\path[->,draw,thick, bend left] (b) edge node[below] {NodeEdge} (a);
 	\end{tikzpicture}
     \caption{Diagramm einer Alternative und Sequenz innerhalb eines Schleifen-Knotens}
     \label{FIG:DiagramAlternativeInLoop}
@@ -274,10 +222,10 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (5,0) {B};
-		\node[vertex] (c) at  (2.5,1) {C};
+		\node[vertex] (c) at  (2.5,1.5) {C};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
-		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, loop above] (c) edge node[above] {NodeEdgeA} (c);
+		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick] (a) edge node[above] {NodeEdgeB} (b);
 		\path[->,draw,thick, bend right] (a) edge node[above] {NodeEdgeC} (b);
 	\end{tikzpicture}

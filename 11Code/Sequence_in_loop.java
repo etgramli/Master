@@ -1,17 +1,11 @@
 interface A implements D {
-}
-
-interface D implements E {
+	B nodeEdgeA();
 }
 
 interface B {
-	C nodeEdge();
+	C nodeEdgeB();
 }
 
 interface C {
-	D alternativeC();
-}
-
-interface D {
-	B nodeEdgeA();
+	A alternativeC();
 }
