@@ -27,7 +27,6 @@ Zum Erstellen des Graphen wird die Bibliothek JGraphT\cite{JGraphT} verwendet. S
 
 Für diesen Anwendungsfall wird ein gerichteter Pseudo-Graph, der mehrere Kanten zwischen zwei Knoten erlaubt; mehrere Kanten werden bei optionalen Elementen und Schleifen benötigt.
 
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{\main/10_Pictures/BNF-Types}
@@ -154,6 +153,31 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
   \label{FIG:LoopNode}
 \end{figure}
 
+Eine zweite Variante benötigt einen Hilfsknoten (Knoten B in Abbildung~\ref{FIG:DiagramLoopNodeAlt}). Im trivialen Fall ist dieser Hilfskonten unnötig, befindet sich die Schleife innerhalb einer Alternative sichert er aber die Wiederholung der richtigen Kante(n) (siehe Abbildung~\ref{FIG:LoopInAlternative}).
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (2.5,0) {B};
+		\node[vertex] (c) at  (5,0) {C};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, loop below] (b) edge node[below] {NodeEdge} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (c);
+	\end{tikzpicture}
+    \caption{Diagramm einer Schleifen-Kante (Variante 2)}
+    \label{FIG:DiagramLoopNodeAlt}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlt}]{Scope_loop_alt.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
+  \label{FIG:LoopNodeAlt}
+\end{figure}
+
+
 \subsection{Schachtelung der Konstrukte}
 In diesem Abschnitt wird darauf eingegangen, wie die Rekursion der ENBF-Konstrukte behandelt werden können. Die Fälle von Alternative und Schleifen in einer Sequenz werden aus Trivialität übersprungen. Hier soll nur auf Fälle eingegangen werden, die nicht aus den vorherigen Beispielen ersichtlich sind.
 
@@ -247,7 +271,7 @@ Der Graph ist
 	\item ungewichtet und
 	\item kann parallele Kanten enthalten.
 \end{itemize}
-Diese Eigenschaften bezeichnen einen gerichteter, zyklischen Multi-/Pseudograph. Die parallelen Kanten haben eine eigene Identität (Name und Typ), mit der man sie von anderen Kanten mit dem selben Quell- und Zielknoten unterscheiden kann.
+Diese Eigenschaften bezeichnen einen gerichteter, zyklischen Multi- bzw. Pseudograph. Die parallelen Kanten haben eine eigene Identität (Name und Typ), mit der man sie von anderen Kanten mit dem selben Quell- und Zielknoten unterscheiden kann.
 
 Es gibt einen Knoten ohne ausgehende Kanten, da bei allen Konstrukten (auch bei der Schleife) ein Folge-Knoten erstellt wird. Dadurch ist immer ein End-Knoten, den man als Ausstiegspunkt (etwa für eine Build-Methode) verwenden kann.
 
