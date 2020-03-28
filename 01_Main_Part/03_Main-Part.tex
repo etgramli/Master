@@ -277,6 +277,24 @@ Es gibt einen Knoten ohne ausgehende Kanten, da bei allen Konstrukten (auch bei 
 
 Der Start-Knoten muss (im GraphBuilder) manuell gesetzt werden, da er in der Schleife auch eingehende Kanten besitzt.
 
+\subsubsection{Graphbibliotheken}
+\begin{itemize}
+	\item JGraphT\footnote{\url{https://jgrapht.org/}}
+	\item Google Guava\footnote{\url{https://github.com/google/guava}}
+	\item Apache Commons\footnote{\url{https://commons.apache.org/sandbox/commons-graph/}}
+\end{itemize}
+
+\paragraph{JGraphT}
+JGraphT wird aktiv weiterentwickelt und bietet Typen für verschiedene Arten von Graphen (u.a. gerichtete/ungerichtete, gewichtet/ungewichtet). Außerdem bietet die diese Bibliothek die Möglichkeit eigene Typen für Knoten und Kanten anzugeben, womit man für beide jeweils Identitäten vergeben kann (z.B. spezielle Namen für den Start- und End-Knoten). Darüber hinaus implementiert JGraphT für Graphen typische Algorithmen (u.a. Shortest Path, Coloring, Tiefensuche, Breitensuche, Zyklenerkennung) und Exportfunktionen (z.B. DOT).
+
+Es gibt auch Adapter, um die Algorithmen von JGraphT auf die Typen von Google Guava anzuwenden.
+
+\paragraph{Google Guava}
+Google Guava beinhaltet unter anderem auch Typen für Graphen, mit benutzerdefinierten Typen für Knoten oder Knoten und Kanten. Auch gerichtete/ungerichtete und gewichtete/ungewichtete Graphen sind möglich. Aber es gibt kaum Algorithmen, die auf den Typen arbeiten.
+
+\paragraph{Apache Commons}
+Apache Commons bietet auch eine Graph-Bibliothek, die (un)gerichtete und (un)gewichtete Graphen erlaubt, wenige Algorithmen bietet aber nicht mehr weiterentwickelt wird und nur als Version 0.1 vorliegt.
+
 \subsubsection{Typen}
 Abbildung~\ref{FIG:GraphTypes} zeigt die Typen des Graphen.
 \begin{figure}[ht]
@@ -317,6 +335,16 @@ Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer
 
 \chapter{Testlauf mit anschaulichem Beispiel}
 
+\section{Joi}
+\begin{figure}[ht]
+    \lstinputlisting[language=Java,caption={Joi-EBNF},label={LST:JOIBNF}]{joi.bnf}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\resizebox{0.5\linewidth}{!}{\input{\main/10_Pictures/joi.tex}}
+\caption{Graph generiert aus der Joi-EBNF}
+\label{FIG:JoiGraph}
+\end{figure}
 
 \section{Optimierungspotenzial}
 

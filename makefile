@@ -25,7 +25,7 @@ $(IMG_DIR)/%.pdf: $(IMG_DIR)/%.uxf
 	mv $<.pdf $@
 
 $(IMG_DIR)/%.tex: $(IMG_DIR)/%.gv
-	dot2tex --figonly -o $@ $<
+	dot2tex --figonly -e utf8 --preproc --autosize -o $@ $<
 
 .PHONY: clean cleanup
 

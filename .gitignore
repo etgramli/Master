@@ -37,6 +37,8 @@ Recherche/
 *.PNG
 *.eps
 
+10_Pictures/*.tex
+
 # Office files
 *.ods
 

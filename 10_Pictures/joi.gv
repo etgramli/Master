@@ -1,0 +1,38 @@
+digraph G {
+  Scope_0;
+  Scope_1;
+  Scope_3;
+  Scope_4;
+  Scope_5;
+  Scope_6;
+  Scope_7;
+  Scope_8;
+  Scope_9;
+  Scope_10;
+  Scope_12;
+  Scope_14;
+  Scope_19;
+  Scope_22;
+  Scope_25;
+  Scope_28;
+  Scope_5 -> Scope_7 [ label="OptionalEdge" ];
+  Scope_7 -> Scope_6 [ label="OptionalEdge" ];
+  Scope_8 -> Scope_10 [ label="OptionalEdge" ];
+  Scope_10 -> Scope_9 [ label="OptionalEdge" ];
+  Scope_9 -> Scope_12 [ label="OptionalEdge" ];
+  Scope_0 -> Scope_3 [ label="component [KEYWORD]" ];
+  Scope_0 -> Scope_3 [ label="singleton [KEYWORD]" ];
+  Scope_12 -> Scope_1 [ label="OptionalEdge" ];
+  Scope_7 -> Scope_14 [ label="impl [KEYWORD]" ];
+  Scope_14 -> Scope_7 [ label="String [TYPE]" ];
+  Scope_3 -> Scope_4 [ label="String [TYPE]" ];
+  Scope_6 -> Scope_19 [ label="method [KEYWORD]" ];
+  Scope_19 -> Scope_8 [ label="String [TYPE]" ];
+  Scope_10 -> Scope_22 [ label="method [KEYWORD]" ];
+  Scope_22 -> Scope_10 [ label="String [TYPE]" ];
+  Scope_12 -> Scope_25 [ label="field [KEYWORD]" ];
+  Scope_25 -> Scope_12 [ label="String [TYPE]" ];
+  Scope_4 -> Scope_28 [ label="impl [KEYWORD]" ];
+  Scope_28 -> Scope_5 [ label="String [TYPE]" ];
+}
+
