@@ -3,7 +3,7 @@ LATEXMKARGS   :=-pdf
 
 SOURCES       :=InterneDSLs.tex $(foreach dir,./, $(wildcard $(dir)/*/*.tex)) literature.bib
 CODEFILES     := $(wildcard 11Code/*)
-TMPFILEENDINGS:=*.aux *.bbl *.bcf *.blg *.fdb_latexmk *.fls *.glg *.glo *.gls *.idx *.ilg *.ind *.ist *.lof *.log *.lol *.lot *.out *.synctex.gz *.toc *.xdy
+TMPFILEENDINGS:=*.aux *.bbl *.bcf *.blg *.fdb_latexmk *.fls *.glg *.glo *.gls *.idx *.ilg *.ind *.ist *.lof *.log *.lol *.lot *.out *.run.xml *.synctex.gz *.toc *.xdy
 SUBDIRTMPFILES:=$(foreach dir,$(wildcard ./*/),$(addprefix $(dir),$(TMPFILEENDINGS)))
 
 IMG_DIR       :=10_Pictures
