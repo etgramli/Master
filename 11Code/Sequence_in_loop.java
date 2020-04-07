@@ -1,4 +1,4 @@
-interface A implements D {
+interface A extends D {
 	B nodeEdgeA();
 }
 

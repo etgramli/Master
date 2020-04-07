@@ -1,3 +1,3 @@
-interface A implements B {
+interface A extends B {
 	B nodeEdge();
 }
