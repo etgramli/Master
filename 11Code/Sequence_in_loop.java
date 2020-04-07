@@ -1,11 +1,14 @@
-interface A extends D {
-	B nodeEdgeA();
+interface A extends B {
 }
 
-interface B {
-	C nodeEdgeB();
+interface B extends E {
+	C nodeEdgeA();
 }
 
 interface C {
-	A alternativeC();
+	D nodeEdgeB();
+}
+
+interface D {
+	B alternativeC();
 }

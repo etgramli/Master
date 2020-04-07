@@ -190,13 +190,15 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (4,0) {B};
-		\node[vertex] (c) at  (4,-1.5) {C};
-		\node[vertex] (d) at  (5,0) {D};
-		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (d);
-		\path[->,draw,thick, bend left] (a) edge node[below] {NodeEdgeA} (b);
-		\path[->,draw,thick, bend left] (b) edge node[left] {NodeEdgeB} (c);
-		\path[->,draw,thick, bend left] (c) edge node[below] {NodeEdgeC} (a);
+		\node[vertex] (b) at  (2.5,0) {B};
+		\node[vertex] (c) at  (3.75,-2) {C};
+		\node[vertex] (d) at  (1.25,-2) {D};
+		\node[vertex] (e) at  (5,0) {E};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (e);
+		\path[->,draw,thick, bend left] (b) edge node[right] {NodeEdgeA} (c);
+		\path[->,draw,thick, bend left] (c) edge node[below] {NodeEdgeB} (d);
+		\path[->,draw,thick, bend left] (d) edge node[left] {NodeEdgeC} (b);
 	\end{tikzpicture}
     \caption{Diagramm einer Sequenz innerhalb eines Schleifen-Knotens}
     \label{FIG:DiagramSequenceInLoop}
