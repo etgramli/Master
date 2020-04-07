@@ -211,9 +211,9 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
 \end{figure}
 
 \subsubsection{Alternative in einer Schleife}
-Befindet sich eine Alternative in einer Schleife, werden alle Alternativen, die nur aus einer Kante bestehen, in eine Schleifen-Kante am Ziel-Knoten der Schleife transformiert. Besteht eine Alternative aus einer Sequenz, wird aus dieser Sequenz eine weitere Schleife aus mehreren Kanten und Knoten.
+Befindet sich eine Alternative in einer Schleife, werden alle Alternativen, die nur aus einer Kante bestehen, in eine Schleifen-Kante am Ziel-Knoten der Schleife transformiert. Besteht eine Alternative aus einer Sequenz, wird aus dieser Sequenz eine weitere Schleife aus mehreren Kanten und Knoten (siehe Abbildung~\ref{FIG:DiagramAlternativeInLoop}).
 
-Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt es in der Schleife mehrere ausgehende Kanten vom Ziel-Knoten der Schleife (siehe Abbildung~\ref{FIG:DiagramAlternativeInLoop}).
+Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt es in der Schleife mehrere ausgehende Kanten vom Ziel-Knoten der Schleife.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -221,20 +221,20 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
 		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
-		\node[vertex] (b) at  (4,0) {B};
+		\node[vertex] (b) at  (2.5,0) {B};
 		\node[vertex] (c) at  (5,0) {C};
-		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
-		\path[->,draw,thick, bend left] (a) edge node[below] {AlternativeA} (b);
-		\path[->,draw,thick] (a) edge node[below] {AlternativeB} (b);
-		\path[->,draw,thick, bend left] (b) edge node[below] {NodeEdge} (a);
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (c);
+		\path[->,draw,thick, loop left] (b) edge node[below] {AltA} (b);
+		\path[->,draw,thick, loop right] (b) edge node[below] {AltB} (b);
 	\end{tikzpicture}
-    \caption{Diagramm einer Alternative und Sequenz innerhalb eines Schleifen-Knotens}
+    \caption{Diagramm einer Alternative innerhalb eines Schleifen-Knotens}
     \label{FIG:DiagramAlternativeInLoop}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einem Schleifen-Knoten},label={LST:JInterfaceAlternativeInLoop}]{Loop_with_inner_alternative_and_sequence.java}
+    \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Alternative in einer Schleife},label={LST:JInterfaceAlternativeInLoop}]{Loop_with_inner_alternative.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Alternative und Sequenz innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{(AlternativeA | AlternativeB) NodeEdge\};})}
+  \caption{Diagramm und Interface einer Alternative innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{(AlternativeA | AlternativeB)\};})}
   \label{FIG:AlternativeInLoop}
 \end{figure}
 
@@ -250,16 +250,16 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
 		\node[vertex] (b) at  (5,0) {B};
 		\node[vertex] (c) at  (2.5,1.5) {C};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
-		\path[->,draw,thick, loop above] (c) edge node[above] {NodeEdgeA} (c);
+		\path[->,draw,thick, loop above] (c) edge node[above] {AlternativeA} (c);
 		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
-		\path[->,draw,thick] (a) edge node[above] {NodeEdgeB} (b);
-		\path[->,draw,thick, bend right] (a) edge node[above] {NodeEdgeC} (b);
+		\path[->,draw,thick] (a) edge node[above] {AlternativeB} (b);
+		\path[->,draw,thick, bend right] (a) edge node[above] {AlternativeC} (b);
 	\end{tikzpicture}
     \caption{Diagramm einer Schleife innerhalb einer Alternative}
     \label{FIG:DiagramLoopInAlternative}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleife innerhalb einer Alternative},label={LST:JInterfaceLoopInAlternative}]{Loop_with_inner_alternative_and_sequence.java}
+    \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleife innerhalb einer Alternative},label={LST:JInterfaceLoopInAlternative}]{Alternative_with_inner_loop.java}
   \end{subfigure}
   \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | NodeEdgeC;})}
   \label{FIG:LoopInAlternative}

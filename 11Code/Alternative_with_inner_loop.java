@@ -4,5 +4,5 @@ interface A extends C {
 }
 
 interface C extends B {
-	C nodeEdgeA();
+	C alternativeA();
 }
