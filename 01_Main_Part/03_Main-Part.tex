@@ -263,6 +263,36 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
   \label{FIG:LoopInAlternative}
 \end{figure}
 
+\subsection{Scala}
+Da es in Scala keine Interfaces gibt, kommen entweder abstrakte Klassen oder Traits infrage. Da Schleifen in einer Alternative Mehrfachvererbung voraussetzen, scheiden die abstrakten Klassen aus.
+
+Es werden also Traits generiert, die die selben Methoden wie die Interface-Pendants haben und (bis auf void, das auf Unit abgebildet wird) die gleichen Parameter- und Rückgabetypen haben, da die Java-Typen verwendet werden können.
+
+Beispielhaft wird hier noch einmal die optionale Schleife aufgeführt (Abbildung~\ref{FIG:ScalaLoopNodeAlt}), um den generierten Scala-Code zu zeigen, weil bei der Schleife Methoden und Vererbung vorkommen.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (2.5,0) {B};
+		\node[vertex] (c) at  (5,0) {C};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick, loop below] (b) edge node[below] {NodeEdge} (b);
+		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (c);
+	\end{tikzpicture}
+    \caption{Diagramm einer Schleifen-Kante (Variante 2)}
+    \label{FIG:ScalaDiagramLoopNodeAlt}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Scala,caption={Scala-Trait aus einer Schleifen-Kante (Variante 2)},label={LST:ScalaTraitLoopNodeAlt}]{Scope_loop_alt.scala}
+  \end{subfigure}
+  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
+  \label{FIG:ScalaLoopNodeAlt}
+\end{figure}
+
+
 \subsection{Eigenschaften des Graphen}
 Der Graph ist
 \begin{itemize}
@@ -300,7 +330,7 @@ Abbildung~\ref{FIG:GraphTypes} zeigt die Typen des Graphen.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=.85\textwidth]{Nodes}
-\caption{Typen des Graphen (Scope für die Vertizes; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
+\caption{Typen des Graphen (Scope für die Vertices; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
 \label{FIG:GraphTypes}
 \end{figure}
 
@@ -317,6 +347,14 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 	\item NTs -> Methoden (Einschränungen)
 	\item Interfacenamen beliebig
 \end{itemize}
+
+\subsection{Nicht-Terminale}
+Nicht-Terminale werden durch ihre Entsprechung aus Terminalen ersetzt, danach werden die Terminale durch die folgenden Regeln abgebildet.
+
+\subsection{Scope-Namen}
+Die Sopes werden zunächst durch den Graphen selbst erstellt und nummeriert. Diese Namen könnte man beibehalten, da die Bezeichner der Interfaces nicht direkt benutzt werden (bis auf das Start- und End-Interface).
+
+Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Interfaces bestimmt und diese aneinander gehängt werden. Da das zu Kollisionen führen kann, wird in dem Fall der (eindeutige) Name des Scopes aus dem Graphen am Schluss angehängt.
 
 \subsubsection{Generierung von Typen aus EBNF-Regeln}
 
