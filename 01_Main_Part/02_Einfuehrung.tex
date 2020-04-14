@@ -2,7 +2,7 @@
 \documentclass[../InterneDSLs.tex]{subfiles}
 \begin{document}
 
-\chapter{Domänenspezifische Sprachen}
+\chapter{Domänenspezifische Sprachen}\label{SEC:DomainSpecificLanguages}
 Domänenspezifische Sprachen sind formale Sprachen, die für eine bestimmte Domäne (Fachbereich) entworfen wurden. Durch diese Modellierung soll eine hohe Spezifität im Bezug auf die Probleme der Domäne gewährleistet werden; und daneben soll nichts anderes ausgedrückt werden können.
 
 Dadurch soll die Sprache für Domänenexperten leicht zu verwenden sein, im Gegensatz zu einer General Purpose Language (siehe~\ref{FIG:DslAdvantages}). Daraus ergibt sich auch, dass der Code besser lesbar ist und weniger Redundanz enthält.
@@ -13,7 +13,7 @@ Bei der Entwicklung einer eigenen DSL läuft man aber auch Gefahr, dass diese nu
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
     \begin{itemize}
-	  \item Domänenexperten entwickeln mit
+	  \item Domänenexperten entwickeln
 	  \item Lesbarkeit, weniger Redundanz
 	  \item Änderung des Ausführungskontextes
     \end{itemize}
@@ -88,7 +88,7 @@ Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte einge
 \subsection{Method Sequence}
 
 
-\chapter{Grammatiken}
+\chapter{Grammatiken}\label{SEC:Grammars}
 Programmiersprachen liegen formale Sprachen zugrunde, die sich in der Chomsky-Hie"-rar"-chie (Abbildung~\ref{fig:chomkskyhierarchie}) wiederfinden. Diese formalen Sprachen legen durch Regeln fest, welche Zeichenketten gültig sind und damit zur Sprache gehören. Jede Klasse von Grammatiken beinhaltet auch die Grammatiken tiefer in der Chomsky-Hierarchie. (Überführung ineinander?)
 
 \begin{figure}

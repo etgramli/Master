@@ -4,9 +4,11 @@
 \begin{document}
 
 \chapter{Einleitung}
-Domänenspezifische Sprachen sind ein zunehmend wichtiger werdender Trend in der Softwareentwicklung. Durch domänenspezifische Sprachen können Sachverhalte einer Domäne einfach ausgedrückt und daraus Programme erstellt werden. 
+Domänenspezifische Sprachen sind ein wichtiger Bestandteil in der Softwareentwicklung und sind an einigen Stellen anzutreffen (z.B. als SQL, mafkefile, shell scipt). Durch domänenspezifische Sprachen können Sachverhalte einer Domäne einfach ausgedrückt und daraus Programme erstellt werden. 
 
-Da im agilen Umfeld ein schneller Einstieg in die Entwicklung wichtig ist, bieten sich hier interne \acsp{DSL} an, weil es für die Hostsprache bereits Tools (z.B. Compiler, Editor) gibt, die nicht neu erstellt werden müssen.
+In \gqq{Deriving Fluent Internal Domain-Specific Languages from Grammars}~\cite{butting2018deriving} wird dem Wechsel zwischen internen und externen DSLs in der agilen Softwareentwicklung ein Nutzen zugeschrieben.
+
+Da im agilen Umfeld jedoch ein schneller Einstieg in die Entwicklung wichtig ist, bieten sich hier insbesondere interne \acsp{DSL} an, weil es für die Hostsprache bereits Tools (z.B. Compiler, Editor) gibt, die nicht neu erstellt werden müssen. Auch die Entwickler müssen keine neu Sprache bzw. DSL erlernen. Deswegen konzentriert sich diese Arbeit auf interne DSLs und beleuchtet, ob und wie sich aus einer Grammatik DSLs für verschiedene Hostsprachen generieren lassen.
 
 
 \section{Zielsetzung}
@@ -14,7 +16,9 @@ Das Ziel der Arbeit ist es zu untersuchen, welche Arten von Grammatiken (regulä
 
 
 \section{Aufbau der Arbeit}
+Zuerst wird in Kapitel~\ref{SEC:DomainSpecificLanguages} eine Einführung in domänenspezifische Sprachen und ihre Anwendungsfälle gegeben. In Kapitel~\ref{SEC:Grammars} werden Grammatiken und ihre Notation erläutert.
 
+Kapitel~\ref{SEC:Prototype} beschreibt den Aufbau des Prototypen und die Transformationen, die er auf die Grammatik anwendet. Das folgende Kapitel~\ref{SEC:Example} zeigt ein Beispiel, das die Eingabe und Ausgabe des des Prototypen dokumentiert.
 
 
 \end{document}
