@@ -1,49 +1,35 @@
 grammar Bnf;
 
 bnf
-    : bnfrule* EOF
-    ;
+    : bnfrule* EOF ;
 bnfrule
-    : nt '=' alternatives ';'
-    ;
+    : nt '=' alternatives ';' ;
 alternatives
-    : sequence ('|' sequence)*
-    ;
+    : sequence ('|' sequence)* ;
 sequence
-    : element+
-    ;
+    : element+ ;
 element
     : nt
     | keyword
     | type
     | optional
     | zeroormore
-    | precedence
-    ;
+    | precedence ;
 optional
-    : '[' alternatives ']'
-    ;
+    : '[' alternatives ']' ;
 zeroormore
-    : '{' alternatives '}'
-    ;
+    : '{' alternatives '}' ;
 precedence
-    : '(' alternatives ')'
-    ;
+    : '(' alternatives ')' ;
 nt
-    : NT
-    ;
+    : NT ;
 keyword
-    : KEYWORD
-    ;
+    : KEYWORD ;
 type
-    : TYPE
-    ;
+    : TYPE ;
 NT
-    : '<'('a'..'z')('a'..'z'|'A'..'Z')+'>'
-    ;
+    : '<'('a'..'z')('a'..'z'|'A'..'Z')+'>' ;
 KEYWORD
-    : '\''('a'..'z'|'A'..'Z')+'\''
-    ;
+    : '\''('a'..'z'|'A'..'Z')+'\'' ;
 TYPE
-    : ('a'..'z'|'A'..'Z')+
-    ;
+    : ('a'..'z'|'A'..'Z')+ ;

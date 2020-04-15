@@ -14,7 +14,11 @@ Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
 \end{itemize}
 
 \section{Parser}
-Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert.
+Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}).
+
+\begin{figure}[ht]
+\lstinputlisting[linerange={3-35},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
+\end{figure}
 
 Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
 

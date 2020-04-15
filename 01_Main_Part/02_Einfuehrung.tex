@@ -125,18 +125,12 @@ Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner
 DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\cite[S. 22ff]{Fowler.2010}
 
 \subsection{EBNF}
-Die erweiterte Backus-Naur-Form ist eine Erweiterung der Backus-Naur-Form, um die Syntax von kontextfreien Grammatiken zu notieren. Sie wurde ursprünglich für die Syntax von Pascal eingeführt und ist inzwischen ein ISO-Standard\cite{scowen1996international}.
+Die erweiterte Backus-Naur-Form ist eine Erweiterung der Backus-Naur-Form, um die Syntax von kontextfreien Grammatiken zu notieren. Sie wurde ursprünglich für die Syntax von Pascal eingeführt. Es gibt verschiedene Varianten der Notation (z.B.~\cite{wirthsyntaxnotation.wikipedia} und \cite{ebnfnotations.jinks}) und ist inzwischen ein ISO-Standard\\cite{scowen1996international}, der ebenfalls einen neuen Dialekt einführt.
 
 Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen, wodurch keine zusätzlichen Regeln benötigt werden.
 
-\subsubsection{Beispiel}
-
-\subsubsection{Festgelegte Syntax}
-Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax verwendet, die sich an der ISO-Norm orientiert aber sich leicht davon unterscheidet. In der Sequenz gibt es keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Listing~\ref{LST:EBNFGrammar} zeigt die Syntax der EBNF-Grammatik.
-
-\begin{figure}[ht]
-\lstinputlisting[linerange={3-49},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
-\end{figure}
+\subsubsection{Festgelegte Syntax}\label{SEC:SetSyntax}
+Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax (Tabelle~\ref{TAB:EBNFSyntax}) verwendet, die sich an der ISO-Norm orientiert (\cite[S. 7]{scowen1996international}) aber sich leicht davon unterscheidet. So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Listing~\ref{LST:EbnfNumbers} zeigt die Syntax an dem Beispiel für ganze Zahlen.
 
 \begin{table}[ht]
 \centering
@@ -154,6 +148,12 @@ Nicht-Terminal         & \verb|< ... >|\\
 \label{TAB:EBNFSyntax}
 \end{table}
 
+\begin{lstlisting}[caption={Zahlen in der festgelegten Notation},label={LST:EbnfNumbers}]
+<digitNotZero>    = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
+<digit>           = '0' | <digitNotZero> ;
+<naturalNumber> = <digitNotZero> { <digit> } ;
+<integer>         = '0' | [ '-' ] naturalNumber ;
+\end{lstlisting}
 
 \subsection{Grafisch}
 Es gibt auch grafische Notationen für DSLs, etwas das Eclipse Modeling Framework\footnote{\url{http://www.eclipse.org/emf/}}, das sich an der Notation für Klassen von UML anlehnt.
