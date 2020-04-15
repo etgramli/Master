@@ -85,7 +85,30 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
 \end{figure}
 
 \subsection{Kante mit Alternativen}
-Alternativen in der EBNF können auf parallele Kanten vom selben Typ zwischen zwei Knoten abgebildet werden (siehe Abbildung~\ref{FIG:DiagramAlternativeNode}). Dadurch können beide Kanten analog wie bei einer Sequenz abgebildet werden, nur dass es einem Interface mehrere Methoden auftreten können (Listing~\ref{LST:JInterfaceAlternativeNode}). Die Interface-Typen und Rückgabewerte sind analog wie bei der Sequenz.
+Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen Knoten abgebildet werden (siehe Abbildung~\ref{FIG:DiagramAlternativeNodeVariant}). Bei dieser Variante erhält jede Alternative einen eigenen End-Knoten. Das hat jedoch den Nachteil, dass wenn der Alternative in einer Sequenz weiter Elemente folgen, diese auf allen Pfaden der jeweiligen Alternativen dupliziert werden müssen.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (5,1) {B};
+		\node[vertex] (c) at  (5,0) {C};
+		\path[->,draw,thick, bend left] (a) edge node[above] {NodeEdgeA} (b);
+		\path[->,draw,thick] (a) edge node[above] {NodeEdgeB} (c);
+	\end{tikzpicture}
+    \caption{Diagramm alternativer Kanten}
+    \label{FIG:DiagramAlternativeNodeVariant}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Kanten},label={LST:JInterfaceAlternativeNodeVariant}]{Scope_alternative_variant.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface alternativer Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;})}
+  \label{FIG:AlternativeNodeVariant}
+\end{figure}
+
+Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei Knoten abgebildet (siehe Abbildung~ref{FIG:DiagramAlternativeNode}). Dadurch können die Alternativen jeweils wie Sequenzen zwischen dem selben Start- und End-Knoten abgebildet werden.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
