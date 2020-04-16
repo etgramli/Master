@@ -8,12 +8,12 @@
 Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
 \begin{itemize}
 	\item Parsen der Grammatik
-	\item Aufbau des Syntax-Baumes (aus Java-Typen)
+	\item Aufbau des Syntax-Baumes
 	\item Abbildung in einen Graphen, der die Aufrufreihenfolge abbildet
-	\item Generierung der Interfaces
+	\item Generierung der Interfaces mit StringTemplates
 \end{itemize}
 
-\section{Parser}
+\section{Parsen der Grammatik}
 Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}).
 
 \begin{figure}[ht]
@@ -363,6 +363,39 @@ Abbildung~\ref{FIG:GraphTypes} zeigt die Typen des Graphen.
 \label{FIG:GraphTypes}
 \end{figure}
 
+
+\section{Generierung der Interfaces}
+Die Java-Interfaces und Scala-Traits werden mit StringTemplate generiert, die aus dem ANTLR-Projekt hervorging~\cite{stringtemplate.github} und die von Parr auch vorgeschlagen werden~\cite[S. 313 ff]{Parr.2010}. Zwar gibt es auch andere Template-Engines (z.B. Apache Velocity\footnote{\url{http://velocity.apache.org/}}), aber StringTemplate biete eine bessere Trennung von Daten und Template~\cite{parr2004enforcing}.
+
+Listing~\ref{LST:STJavaInterface} zeigt das Template für Java-Interfaces das ein Interface mit beliebig vielen Super-Interfaces und Methoden erzeugen kann. Das Template für Scala-Traits ist analog aufgebaut, mit dem Unterschied, dass die Reihenfolge der Argumentnamen und -typen unterschiedlich ist und das Interface durch Trait ersetzt wurde.
+
+Um das Template zu instantiieren muss die Template-Datei geladen und eine Instanz eines Templates (per Namen) erstellt werden (Listing~\ref{LST:STInstantiation}, Zeilen 2 und 3); danach können die Argumente des Templates gesetzt werden (Listing~\ref{LST:STJavaInterface} Zeile 1, Listing~\ref{LST:STInstantiation} Zeilen 4-7). Da StringTemplate die Argument per Lazy Evaluation anwendet wird der Text erst beim Aufruf der Render-Methode ersetzt (Listing~\ref{LST:STInstantiation} Zeile 8) und somit Kollisionen mit dem Inhalt der Argumente vermieden.
+\begin{lstlisting}[language=,caption={String-Template für ein Java-Interface mit Methoden},label=LST:STJavaInterface]
+javaInterface(package,interfaceName,parents,methods) ::= <<
+package <package>;
+
+public interface <interfaceName> <if(parents)>extends <parents;separator=", "> <endif> {<methods:{method|<javaMethod(method.returnType,method.name,method.arguments)>}>
+}
+
+>>
+
+javaMethod(returnType,name,arguments) ::= <<
+
+    <returnType> <name>(<arguments:{argument|<argument.type> <argument.name>};separator=", ">);
+>>
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Instantiierung eines String-Templates},label=LST:STInstantiation]
+String renderInterface(final Interface anInterface) {
+    final STGroup stGroup = new STGroupFile("java_interface.stg");
+    return stGroup.getInstanceOf(javaInterface)
+        .add("package", getTargetPackage())
+        .add("interfaceName", anInterface.getName())
+        .add("methods", anInterface.getMethods())
+        .add("parents", anInterface.getParents())
+        .render();
+}
+\end{lstlisting}
 
 \section{Schwierigkeiten beim Bau}
 Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten werden in diesem Abschnitt besprochen: die Behandlung der Rekursion der EBNF-Grammatik und die der Typen.
