@@ -14,13 +14,15 @@ Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
 \end{itemize}
 
 \section{Parsen der Grammatik}
-Als Parser-Generator wurde ANTLR4 verwendet, der Parser zu einer EBNF-Grammatik in Java generieren kann. Dafür verwendet ANTLR aber eine unübliche Syntax, die sich an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}).
+Für das Parsen der Grammatik wurde ANTLR4 verwendet, der adaptive LL(*)-Parser generieren kann, die Grammatiken zur Laufzeit analysieren können, statt zur Compilezeit (siehe~\cite[S. xiii ff]{Parr.2012}). ANTLR selbst ist in Java geschrieben und kann Parser für verschiedene Zielsprachen generieren (u.a. Java, C++, C\#, Python, vgl.~\ref{antlrcodegeneration.github}). Da neue Features vorrangig für den Parser in Java entwickelt werden, und da als Zielsprachen JVM-Sprachen ins Auge gefasst wurden, wird auf dem Parser in Java aufgebaut werden.
+
+Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmierspraceh) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
 
 \begin{figure}[ht]
 \lstinputlisting[linerange={3-35},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
 \end{figure}
 
-Der von ANTLR generierte Parser wird von einem Listener erweitert, der aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
+Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten, bietet ANTLR4 zwei Möglichkeiten: generierte Listener oder Visitor zu überschreiben (vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
 
 \section{Abbildung von EBNF auf Interfaces}
 Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten transformiert. Dadurch wird eine Typ-Sicherheit hergestellt und Methoden implementiert werden, die das Traversieren des Baumes vereinfachen. Abbildung~\ref{FIG:TypesBNF} zeigt die Typen und ihre Beziehungen untereinander. Diese Typen finden sich auch in den Regeln der EBNF-Grammatik (Abbildung~\ref{LST:EBNFGrammar}) wieder.
