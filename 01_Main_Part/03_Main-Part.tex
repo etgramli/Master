@@ -14,7 +14,7 @@ Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
 \end{itemize}
 
 \section{Parsen der Grammatik}
-Für das Parsen der Grammatik wurde ANTLR4 verwendet, der adaptive LL(*)-Parser generieren kann, die Grammatiken zur Laufzeit analysieren können, statt zur Compilezeit (siehe~\cite[S. xiii ff]{Parr.2012}). ANTLR selbst ist in Java geschrieben und kann Parser für verschiedene Zielsprachen generieren (u.a. Java, C++, C\#, Python, vgl.~\ref{antlrcodegeneration.github}). Da neue Features vorrangig für den Parser in Java entwickelt werden, und da als Zielsprachen JVM-Sprachen ins Auge gefasst wurden, wird auf dem Parser in Java aufgebaut werden.
+Für das Parsen der Grammatik wurde ANTLR4 verwendet, der adaptive LL(*)-Parser generieren kann, die Grammatiken zur Laufzeit analysieren können, statt zur Compilezeit (siehe~\cite[S. xiii ff]{Parr.2012}). ANTLR selbst ist in Java geschrieben und kann Parser für verschiedene Zielsprachen generieren (u.a. Java, C++, C\#, Python, vgl.~\cite{antlrcodegeneration.github}). Da neue Features vorrangig für den Parser in Java entwickelt werden, und da als Zielsprachen JVM-Sprachen ins Auge gefasst wurden, wird auf dem Parser in Java aufgebaut werden.
 
 Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmierspraceh) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
 
@@ -403,17 +403,25 @@ String renderInterface(final Interface anInterface) {
 }
 \end{lstlisting}
 
+\subsection{Kollisionen mit Elementen der Hostsprache}
+Durch die in der EBNF gewählten Bezeichner können Kollisionen mit den Schlüsselworten und Typen auftreten. Darauf sollte schon beim Schreiben der EBNF geachtet werden, falls die Zielsprache bekannt ist. Trotzdem werden schon beim Erstellen der Interfaces Kollisionen vermieden, indem die Bezeichner und generierten Interfacenamen überprüft werden.
+
+Vor dem Speichern der Interfaces wird geprüft, ob die Interface-, Methoden- und Argumentnamen Schlüsselworte oder Typen von Java und Scala sind. Bei Kollisionen von Interfacenamen wird der interne Bezeichner angehängt, bei Methodennamen kann \gqq{Method} angehängt werden, und bei Argumentnamen wird ein \gqq{an} vorangestellt und der eigentliche Name im Camelcase angehängt. Die Argument-Typen dürfen auch Typen der Hostsprache sein, aber kein Schlüsselwort.
+
 \subsection{Benennung der Interfaces}
 Die Scopes erhalten im Graphen interne, eindeutige Bezeichner; diese könnten als Namen für die Interfaces verwendet werden, da bis auf das Start-Interfaces alle nicht instantiiert werden, sondern nur deren Methoden aufgerufen oder implementiert werden. Da der Start- und End-Scope des Graphen eindeutig bestimmbar sind, werden diese mit BeginScope respekive EndScope benannt.
 
-Um die restlichen Interfaces trotzdem mit sprechenden Namen zu versehen, werden die Namen der Methoden und \gqq{Scope} aneinander gehängt, wobei die Namenskonvention von Java (Camelcase) eingehalten wird. Dabei muss keine Rücksicht darauf genommen werden, dass ein Interface keine Methoden hat, denn jeder Knoten hat mindestens eine Kante vom Typ NodeEdge zu einem Folge-Knoten (siehe Abschnitte~\ref{SEC:OneNode}~bis~\ref{SEC:OptionalLoop}).
+Um die restlichen Interfaces trotzdem mit sprechenden Namen zu versehen, werden die Namen der Methoden und \gqq{Scope} aneinander gehängt, wobei die Namenskonvention von Java (Camelcase) eingehalten wird. Dabei gibt es, bis auf eine Ausnahme, für jedes Interface mindestens eine Methode, die zur Namensgenerierung verwendet werden kann (siehe Abschnitte~\ref{SEC:OneNode}~bis~\ref{SEC:OptionalLoop}). Nur die Scopes, die direkt vor einer optionalen Wiederholung auftreten, haben keine ausgehende Kante vom Typ NodeEdge (seihe Abschnitt~\ref{SEC:OptionalLoop}); für diese Interfaces muss der interne Bezeichner aus dem Graphen als Interfacename gewählt werden.
+
+Auch können Kollisionen vorkommen, etwa wenn ein Nicht-Terminal oder ein Keyword mehrfach vorkommt. Dann wäre der Name für das Interface nicht mehr eindeutig und es wird der interne Bezeichner des Scopes aus dem Graphen an das beschriebene Schema angehängt. Somit bleibt der Name des Interfaces eindeutig, da die Bezeichner innerhalb des Graphen eindeutig gewählt wurden.
 
 Da die Methodennamen aneinander gehängt werden, können für die Interfaces Namen vorkommen, die länger als üblich sind. Für Java selbst stellt das kein Problem dar (siehe~\cite[S. 24]{javalanguagespecification.oracle}), für den Benutzer der DSL könnte das aber suboptimal sein; jedoch ist ein lesbarer Name besser als ein interner Bezeichner des Graphen.
 
 \subsection{Benennung der Methoden}
+Die Namen der Methoden werden direkt aus der Kante vom Typ \gqq{Keyword} generiert. Es wird überprüft, ob der Name ein Schlüsselwort oder Typ der Hostsprache ist, und in dem Fall eine Suffix angehängt.
 
 \subsection{Benennung der Argumente}
-
+Die Argumente werden aus der Kante vom Typ \gqq{Type} generiert, die der Kante einer Methode folgt. Der Typ des Arguments entspricht dem Bezeichner aus der EBNF, der Name wird aus dem Typ abgeleitet: der erste Buchstabe wird zum Kleinbuchstaben, und falls dieser Name ebenfalls ein Typ oder Schlüsselwort ist, wird ein \gqq{an} vorangestellt.
 
 \section{Schwierigkeiten beim Bau}
 Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten werden in diesem Abschnitt besprochen: die Behandlung der Rekursion der EBNF-Grammatik und die der Typen.
