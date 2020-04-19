@@ -22,22 +22,68 @@ Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der
 \lstinputlisting[linerange={3-35},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
 \end{figure}
 
-Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten, bietet ANTLR4 zwei Möglichkeiten: generierte Listener oder Visitor zu überschreiben (vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die EBNF selbst nicht gegeben ist.
+Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten, bietet ANTLR4 zwei Möglichkeiten: generierte Listener oder Visitor zu überschreiben (vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die Strings im EBNF-Parser selbst nicht gegeben ist.
 
-\section{Abbildung von EBNF auf Interfaces}
-Zuerst wird die in EBNF geschriebene Grammatik in einen Baum aus Java-Objekten transformiert. Dadurch wird eine Typ-Sicherheit hergestellt und Methoden implementiert werden, die das Traversieren des Baumes vereinfachen. Abbildung~\ref{FIG:TypesBNF} zeigt die Typen und ihre Beziehungen untereinander. Diese Typen finden sich auch in den Regeln der EBNF-Grammatik (Abbildung~\ref{LST:EBNFGrammar}) wieder.
-
-Danach wird aus dem Baum ein Graph generiert, der eine Abfolge aus Knoten und Kanten darstellt. Die Knoten repräsentieren die Scopes (die durchnummerierte Namen erhalten), die Kanten repräsentierten die Methoden. In den folgenden Abschnitten wird die Abbildung der EBNF-Konstrukte auf die des Graphen und Interfaces erklärt.
-
-Zum Erstellen des Graphen wird die Bibliothek JGraphT\cite{JGraphT} verwendet. Sie bietet verschiedene Arten von Graphen aus der Graphentheorie mit dazugehörigen Algorithmen und Konsistenzregeln an. Die Bibliothek wird aktiv weiterentwickelt und benötigt Java ab Version 1.8.
-
-Für diesen Anwendungsfall wird ein gerichteter Pseudo-Graph, der mehrere Kanten zwischen zwei Knoten erlaubt; mehrere Kanten werden bei optionalen Elementen und Schleifen benötigt.
+Abbildung~\ref{FIG:TypesBNF} zeigt die eigenen Typen des Baumes, der dem Parse-Tree entspricht; in ihm finden sich die Konstrukte der EBNF wieder (z.B. Regeln, Sequenzen, Alternativen, vgl. Abbildung~\ref{LST:EBNFGrammar}). Aus dem Baum dieser Typen werden die Interfaces generiert, wie im folgenden Abschnitt~\ref{SEC:EBNFtoInterface} erklärt wird.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{\main/10_Pictures/BNF-Types}
 \caption{Typen des BNF-Baumes}
 \label{FIG:TypesBNF}
+\end{figure}
+
+\section{Abbildung von EBNF auf Interfaces}\label{SEC:EBNFtoInterface}
+Aus dem Baum ein Graph generiert, dessen Abfolge von Knoten und Kanten die Konstrukte der EBNF darstellt. Die Knoten werden dabei dazu verwendet, die Scopes für das Object Scoping zu repräsentieren, der Typ und die Anzahl der Kanten repräsentierten die Konstrukte der EBNF selbt. Wie die Konstrukte genau abgebildet werden, wird in den folgenden Abschnitten erklärt. Neben den trivialen Fällen wird auf einige verschachtelte Konstrukte eingegangen um zu zeigen, dass einige Konstrukte im Graph verwendet werden, die aus den trivialen Fällen nicht ersichtlich sind.
+
+Zuerst werden jedoch die Eigenschaften des Graphen erläutert und dazu eine entsprechende Bibliothek ausgewählt.
+
+\subsection{Eigenschaften des Graphen}
+Aus der Struktur der EBNF gehen verschiedene Eigenschaften des Graphen heraus; er Graph ist
+\begin{itemize}
+	\item gerichtet (wegen der Sequenz),
+	\item zyklisch (Wiederholung),
+	\item ungewichtet (keine Alternative wird bevorzugt) und
+	\item kann parallele Kanten enthalten (Alternative).
+\end{itemize}
+Diese Eigenschaften bezeichnen einen gerichteten, zyklischen Multi- bzw. Pseudograph. Die parallelen Kanten haben eine eigene Identität (Name und Typ), mit der man sie von anderen Kanten mit dem selben Quell- und Zielknoten unterscheiden kann.
+
+Da es bei allen im folgenden vorgestellten Abbildungen jeweils einen Knoten ohne eingehende Kanten und einen Knoten ohne ausgehende Kanten gibt, hat der gesamte Graph ebenfalls einen Start- und End-Knoten. Dadurch sind der Start und das Ende des Graphen gegeben, was das Traversieren vereinfacht, der Endknoten kann ebenfalls einfach für eine Build-Methode identifiziert werden.
+
+Beide Start- und End-Knoten müssen im Graph-Builder jedoch manuell verfolgt werden, da während dem Aufbau des Graphen (etwa bei der Alternative) mehrere Knoten mit den Eigenschaften des Endknoten auftreten können.
+
+\subsubsection{Graphbibliotheken}
+Es gibt mehrere bekannte Bibliotheken für Graphen in Java, die sich im Umfang und Status der Weiterentwicklung unterscheiden. Auf eine Eigenentwicklung wird verzichtet, da die Graphen und zugehörigen Algorithmen in den Bibliotheken schon getestet sind. Hier werden drei Bibliotheken vorgestellt, von denen JGraphT ausgewählt wurde, da hier der Fokus auf die Graphen und Algorithmen gelegt wurde.
+\begin{itemize}
+	\item JGraphT\footnote{\url{https://jgrapht.org/}}
+	\item Google Guava\footnote{\url{https://github.com/google/guava}}
+	\item Apache Commons\footnote{\url{https://commons.apache.org/sandbox/commons-graph/}}
+\end{itemize}
+
+\paragraph{JGraphT}
+JGraphT wird aktiv weiterentwickelt und bietet Typen für verschiedene Arten von Graphen (u.a. gerichtete/ungerichtete, gewichtet/ungewichtet)~\cite{JGraphT}. Außerdem bietet die diese Bibliothek die Möglichkeit eigene Typen für Knoten und Kanten anzugeben, womit man für beide jeweils Identitäten vergeben kann (z.B. spezielle Namen für den Start- und End-Knoten). Darüber hinaus implementiert JGraphT für Graphen typische Algorithmen (u.a. Shortest Path, Coloring, Tiefensuche, Breitensuche, Zyklenerkennung) und Exportfunktionen (z.B. DOT).
+
+Es gibt auch Adapter, um die Algorithmen von JGraphT auf die Typen von Google Guava anzuwenden.
+
+\paragraph{Google Guava}
+Google Guava beinhaltet unter anderem auch Typen für Graphen, mit benutzerdefinierten Typen für Knoten oder Knoten und Kanten. Auch gerichtete/ungerichtete und gewichtete/ungewichtete Graphen sind möglich. Aber es gibt kaum Algorithmen, die auf den Typen arbeiten.
+
+\paragraph{Apache Commons}
+Apache Commons bietet auch eine Graph-Bibliothek, die (un)gerichtete und (un)gewichtete Graphen erlaubt, wenige Algorithmen bietet aber nicht mehr weiterentwickelt wird und nur als Version 0.1 vorliegt.
+
+\subsubsection{Typen}
+Abbildung~\ref{FIG:GraphTypes} zeigt die eigenen Typen des Graphen: die Scopes werden als Knoten verwendet und die ScopeEdges als Kanten. Erstere repräsentieren die Interfaces, die letzteren, je nach Klasse und Typ eine Vererbungsbeziehung oder Methode inklusive Argumente.
+
+OptionalEdges repräsentieren eine Vererbungsbeziehung, deswegen darf es zwischen zwei Knoten nur eine OptionalEdge geben; eine OptionalEdge mit demselben Quell- und Zielknoten ist ebenfalls nicht erlaubt, da diese Kante überflüssig ist.
+
+NodeEdges mit dem Typ \gqq{KEYWORD} werden zum Schlüsselwort der generierten Sprache, indem für sie eine Methode generiert werden, die den Bezeichner aus der EBNF als Methodennamen verwendet (weitergereicht als String im Node in Abbildung~\ref{FIG:GraphTypes}). Folgt solch einer NodeEdge eine vom Typ \gqq{Type}, wird diese zu einem Argument vom in der EBNF angegebenen Typen; der Name des Typs wird automatisch generiert.
+
+NodeEdges vom Typ \gqq{NON\_TERMINAL} entsprechen Nicht-Terminalen in der EBNF und werden benötigt, um die Nicht-Terminalen durch die entsprechenden Regeln zu ersetzen. Dazu wird für jede Regel der EBNF ein eigener Graph aufgebaut und anschließend die Nicht-Terminalen Kanten durch deren entsprechenden Graphen ersetzt.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.85\textwidth]{Nodes}
+\caption{Typen des Graphen (Scope für die Vertices; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
+\label{FIG:GraphTypes}
 \end{figure}
 
 \subsection{Kante mit einem Knoten}
@@ -321,48 +367,6 @@ Beispielhaft wird hier noch einmal die optionale Schleife aufgeführt (Abbildung
   \end{subfigure}
   \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
   \label{FIG:ScalaLoopNodeAlt}
-\end{figure}
-
-
-\subsection{Eigenschaften des Graphen}
-Der Graph ist
-\begin{itemize}
-	\item gerichtet,
-	\item zyklisch,
-	\item ungewichtet und
-	\item kann parallele Kanten enthalten.
-\end{itemize}
-Diese Eigenschaften bezeichnen einen gerichteter, zyklischen Multi- bzw. Pseudograph. Die parallelen Kanten haben eine eigene Identität (Name und Typ), mit der man sie von anderen Kanten mit dem selben Quell- und Zielknoten unterscheiden kann.
-
-Es gibt einen Knoten ohne ausgehende Kanten, da bei allen Konstrukten (auch bei der Schleife) ein Folge-Knoten erstellt wird. Dadurch ist immer ein End-Knoten, den man als Ausstiegspunkt (etwa für eine Build-Methode) verwenden kann.
-
-Der Start-Knoten muss (im GraphBuilder) manuell gesetzt werden, da er in der Schleife auch eingehende Kanten besitzt.
-
-\subsubsection{Graphbibliotheken}
-\begin{itemize}
-	\item JGraphT\footnote{\url{https://jgrapht.org/}}
-	\item Google Guava\footnote{\url{https://github.com/google/guava}}
-	\item Apache Commons\footnote{\url{https://commons.apache.org/sandbox/commons-graph/}}
-\end{itemize}
-
-\paragraph{JGraphT}
-JGraphT wird aktiv weiterentwickelt und bietet Typen für verschiedene Arten von Graphen (u.a. gerichtete/ungerichtete, gewichtet/ungewichtet). Außerdem bietet die diese Bibliothek die Möglichkeit eigene Typen für Knoten und Kanten anzugeben, womit man für beide jeweils Identitäten vergeben kann (z.B. spezielle Namen für den Start- und End-Knoten). Darüber hinaus implementiert JGraphT für Graphen typische Algorithmen (u.a. Shortest Path, Coloring, Tiefensuche, Breitensuche, Zyklenerkennung) und Exportfunktionen (z.B. DOT).
-
-Es gibt auch Adapter, um die Algorithmen von JGraphT auf die Typen von Google Guava anzuwenden.
-
-\paragraph{Google Guava}
-Google Guava beinhaltet unter anderem auch Typen für Graphen, mit benutzerdefinierten Typen für Knoten oder Knoten und Kanten. Auch gerichtete/ungerichtete und gewichtete/ungewichtete Graphen sind möglich. Aber es gibt kaum Algorithmen, die auf den Typen arbeiten.
-
-\paragraph{Apache Commons}
-Apache Commons bietet auch eine Graph-Bibliothek, die (un)gerichtete und (un)gewichtete Graphen erlaubt, wenige Algorithmen bietet aber nicht mehr weiterentwickelt wird und nur als Version 0.1 vorliegt.
-
-\subsubsection{Typen}
-Abbildung~\ref{FIG:GraphTypes} zeigt die Typen des Graphen.
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.85\textwidth]{Nodes}
-\caption{Typen des Graphen (Scope für die Vertices; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
-\label{FIG:GraphTypes}
 \end{figure}
 
 
