@@ -86,7 +86,7 @@ NodeEdges vom Typ \gqq{NON\_TERMINAL} entsprechen Nicht-Terminalen in der EBNF u
 \label{FIG:GraphTypes}
 \end{figure}
 
-\subsection{Kante mit einem Knoten}
+\subsection{Kante mit einem Knoten}\label{SEC:OneNode}
 Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. Hier kann das Element auf eine Kante zwischen zwei Knoten abgebildet werden. Die Namen der Scopes werden zu den Interfaces, bzw. zum Rückgabewert der Methode, deren Namen dem der der Kante entspricht. Grafik~\ref{FIG:OneElementNode} zeigt, wie eine Abbildung aussehen kann.
 \begin{figure}[ht]
 \centering
@@ -108,7 +108,7 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
   \label{FIG:OneElementNode}
 \end{figure}
 
-\subsection{Sequenz von Knoten}
+\subsection{Sequenz von Knoten}\label{SEC:Sequence}
 Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit einer Methode generiert werden, um die Aufruf-Reihenfolge zu gewährleisten. Abbildung~\ref{FIG:SequenceNode} zeigt ein Beispiel mit zwei Knoten in einer Sequenz.
 \begin{figure}[ht]
 \centering
@@ -132,7 +132,7 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
   \label{FIG:SequenceNode}
 \end{figure}
 
-\subsection{Kante mit Alternativen}
+\subsection{Kante mit Alternativen}\label{SEC:Alternative}
 Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen Knoten abgebildet werden (siehe Abbildung~\ref{FIG:DiagramAlternativeNodeVariant}). Bei dieser Variante erhält jede Alternative einen eigenen End-Knoten. Das hat jedoch den Nachteil, dass wenn der Alternative in einer Sequenz weiter Elemente folgen, diese auf allen Pfaden der jeweiligen Alternativen dupliziert werden müssen.
 \begin{figure}[ht]
 \centering
@@ -178,7 +178,7 @@ Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei K
   \label{FIG:AlternativeNode}
 \end{figure}
 
-\subsection{Optionales Element}
+\subsection{Optionales Element}\label{SEC:Optional}
 Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein und auch der nächstfolgende Methodenaufruf verfügbar sein. Das wird dadurch erreicht, indem das erste Interface vom folgenden erbt. Im Graphen wird das durch eine parallele Kante eines anderen Typen (OptionalEdge in Abbildung~\ref{FIG:DiagramOptionalNode}) repräsentiert. Listing~\ref{LST:JInterfaceOptionalNode}) ist, bis auf die Vererbung, gleich zu Listing~\ref{LST:JInterfaceOneElementNode}.
 \begin{figure}[ht]
 \centering
@@ -201,7 +201,7 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
   \label{FIG:OptionalNode}
 \end{figure}
 
-\subsection{Kante mit optionaler Schleife}
+\subsection{Kante mit optionaler Schleife}\label{SEC:OptionalLoop}
 Da die Wiederholung bei EBNF optional ist (beliebig oft oder keinmal auftreten darf), gibt es hier, wie beim optionalen Element eine Kante vom Typ OptionalEdge. Dadurch kann der Methodenaufruf übersprungen werden.
 
 Um den Methodenaufruf wiederholbar zu machen kann man nicht einfach eine parallele, optionale Kante in die entgegengesetzte Richtung einfügen, weil diese ebenfalls in eine Vererbung umgesetzt würde; dadurch würde zwischen beiden Interfaces eine zirkuläre Abhängigkeit entstehen, die in Java verboten ist.
@@ -402,6 +402,18 @@ String renderInterface(final Interface anInterface) {
         .render();
 }
 \end{lstlisting}
+
+\subsection{Benennung der Interfaces}
+Die Scopes erhalten im Graphen interne, eindeutige Bezeichner; diese könnten als Namen für die Interfaces verwendet werden, da bis auf das Start-Interfaces alle nicht instantiiert werden, sondern nur deren Methoden aufgerufen oder implementiert werden. Da der Start- und End-Scope des Graphen eindeutig bestimmbar sind, werden diese mit BeginScope respekive EndScope benannt.
+
+Um die restlichen Interfaces trotzdem mit sprechenden Namen zu versehen, werden die Namen der Methoden und \gqq{Scope} aneinander gehängt, wobei die Namenskonvention von Java (Camelcase) eingehalten wird. Dabei muss keine Rücksicht darauf genommen werden, dass ein Interface keine Methoden hat, denn jeder Knoten hat mindestens eine Kante vom Typ NodeEdge zu einem Folge-Knoten (siehe Abschnitte~\ref{SEC:OneNode}~bis~\ref{SEC:OptionalLoop}).
+
+Da die Methodennamen aneinander gehängt werden, können für die Interfaces Namen vorkommen, die länger als üblich sind. Für Java selbst stellt das kein Problem dar (siehe~\cite[S. 24]{javalanguagespecification.oracle}), für den Benutzer der DSL könnte das aber suboptimal sein; jedoch ist ein lesbarer Name besser als ein interner Bezeichner des Graphen.
+
+\subsection{Benennung der Methoden}
+
+\subsection{Benennung der Argumente}
+
 
 \section{Schwierigkeiten beim Bau}
 Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten werden in diesem Abschnitt besprochen: die Behandlung der Rekursion der EBNF-Grammatik und die der Typen.
