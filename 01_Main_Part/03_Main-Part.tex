@@ -36,6 +36,8 @@ Abbildung~\ref{FIG:TypesBNF} zeigt die eigenen Typen des Baumes, der dem Parse-T
 \section{Abbildung von EBNF auf Interfaces}\label{SEC:EBNFtoInterface}
 Aus dem Baum ein Graph generiert, dessen Abfolge von Knoten und Kanten die Konstrukte der EBNF darstellt. Die Knoten werden dabei dazu verwendet, die Scopes für das Object Scoping zu repräsentieren, der Typ und die Anzahl der Kanten repräsentierten die Konstrukte der EBNF selbt. Wie die Konstrukte genau abgebildet werden, wird in den folgenden Abschnitten erklärt. Neben den trivialen Fällen wird auf einige verschachtelte Konstrukte eingegangen um zu zeigen, dass einige Konstrukte im Graph verwendet werden, die aus den trivialen Fällen nicht ersichtlich sind.
 
+Da bei mehreren Schleifen in einer Alternative von mehreren Interfaces geerbt werden muss, kommen abstrakte Klassen nicht infrage, da diese nur von einer anderen Klasse erben können. Interfaces können stattdessen mehrere andere erweitern.
+
 Zuerst werden jedoch die Eigenschaften des Graphen erläutert und dazu eine entsprechende Bibliothek ausgewählt.
 
 \subsection{Eigenschaften des Graphen}
@@ -81,7 +83,7 @@ NodeEdges mit dem Typ \gqq{KEYWORD} werden zum Schlüsselwort der generierten Sp
 NodeEdges vom Typ \gqq{NON\_TERMINAL} entsprechen Nicht-Terminalen in der EBNF und werden benötigt, um die Nicht-Terminalen durch die entsprechenden Regeln zu ersetzen. Dazu wird für jede Regel der EBNF ein eigener Graph aufgebaut und anschließend die Nicht-Terminalen Kanten durch deren entsprechenden Graphen ersetzt.
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.85\textwidth]{Nodes}
+\includegraphics[width=\linewidth]{Nodes}
 \caption{Typen des Graphen (Scope für die Vertices; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
 \label{FIG:GraphTypes}
 \end{figure}
@@ -426,6 +428,30 @@ Die Argumente werden aus der Kante vom Typ \gqq{Type} generiert, die der Kante e
 \section{Schwierigkeiten beim Bau}
 Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten werden in diesem Abschnitt besprochen: die Behandlung der Rekursion der EBNF-Grammatik und die der Typen.
 
+\subsection{Einschränkungen der Grammatik}
+Die EBNF-Grammatik kann nicht beliebig formuliert sein, es gibt folgende Einschränkungen:
+\begin{itemize}
+	\item Eine Kante vom Typ \gqq{Type} muss einer vom Typ \gqq{Keyword} vorangehen,
+	\item Eine Methoden kann höchstens ein Argument haben
+	\item Eine Start-Regel muss definiert werden
+	\item Lexer-Regeln für die Umsetzung der Tokens
+\end{itemize}
+
+\subsubsection{Folge von Type auf Keyword}\label{SEC:TypeFollowsKeyword}
+Um die Schlüsselworte der Sprache umzusetzen, werden die Keywords aus der EBNF auf Methoden abgebildet, und die Typen aus der EBNF auf Typen der Hostsprache (oder eigens definierte Typen). Deshalb ergibt es innerhalb der in diesem Kontext geschriebener EBNF keinen Sinn, wenn ein Keyword nicht einem Typ vorangeht.
+
+\subsubsection{Methode mit einem Argument}
+Mit Abschnitt~\ref{SEC:TypeFollowsKeyword} hängt das Auftreten und die Anzahl der Argumente zusammen. Die einfachste Möglichkeit ist es nur ein Argument zuzulassen, indem einem Keyword nur ein Typ folgen darf, der das Argument darstellt. Es ist auch möglich eine Folge von Typen an ein Keyword anzuhängen, das wird vom Prototypen aber noch nicht unterstützt.
+
+\subsubsection{Startregel}
+In der Grammatik muss eine Startregel definiert sein, die auf der rechten Seite nur ein Nicht-Terminal beinhaltet. Diese Regel wird als Einstiegspunkt für das Ersetzen der Graphen der Nicht-Terminalen verwendet.
+
+\subsubsection{Lexer-Regeln}
+Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur die jeweilige Lexer-Regel beinhaltet. Dadurch kann der Listener des Parsers die Typen auch verarbeiten.
+
+Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer anderen, darf es ebenfalls keine Lexer-Regel sein, um vom Listener erkannt zu werden.
+
+
 \subsection{Behandlung der Rekursion}
 
 \subsection{Typen}
@@ -445,18 +471,6 @@ Die Sopes werden zunächst durch den Graphen selbst erstellt und nummeriert. Die
 Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Interfaces bestimmt und diese aneinander gehängt werden. Da das zu Kollisionen führen kann, wird in dem Fall der (eindeutige) Name des Scopes aus dem Graphen am Schluss angehängt.
 
 \subsubsection{Generierung von Typen aus EBNF-Regeln}
-
-
-\section{Einschränkungen bei der Grammatik}
-Die EBNF-Grammatik kann nicht beliebig formuliert sein.
-
-\subsection{Startregel}
-In der Grammatik muss eine Startregel definiert sein, die nur ein Nicht-Terminal beinhaltet. Daraus wird das erste Interface als Einstiegspunkt generiert.
-
-\subsection{Lexer-Regeln}
-Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur die jeweilige Lexer-Regel beinhaltet. Dadurch kann der Listener des Parsers die Typen auch verarbeiten.
-
-Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer anderen, darf es ebenfalls keine Lexer-Regel sein, um vom Listener erkannt zu werden.
 
 
 \chapter{Testlauf mit anschaulichem Beispiel}\label{SEC:Example}
