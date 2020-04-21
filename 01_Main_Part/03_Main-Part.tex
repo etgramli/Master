@@ -325,7 +325,7 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (5,0) {B};
-		\node[vertex] (c) at  (2.5,1.5) {C};
+		\node[vertex] (c) at  (2.5,1.25) {C};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
 		\path[->,draw,thick, loop above] (c) edge node[above] {AlternativeA} (c);
 		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
@@ -342,8 +342,38 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
   \label{FIG:LoopInAlternative}
 \end{figure}
 
+\subsubsection{Schleifen in Alternative}
+Befinden sich mehrere Schleifen innerhalb einer Alternative, werden mehrere ausgehende optionale Kanten zu einem Knoten angelegt (siehe Abbildung~\ref{FIG:DiagramLoopsInAlternative}). Daher kann statt Interfaces keine abstrakten Klassen verwendet werden; in Scala, das keine Interfaces kennt, müssen daher Traits statt abstrakten Klassen verwendet werden.
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[c]{0.49\textwidth}
+  	\begin{tikzpicture}
+		\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+		\tikzset{edge/.style = {->,> = latex'}}
+		\node[vertex] (a) at  (0,0) {A};
+		\node[vertex] (b) at  (5,0) {B};
+		\node[vertex] (c) at  (2.5,1.25) {C};
+		\node[vertex] (d) at  (2.5,-1.25) {D};
+		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
+		\path[->,draw,thick, loop above] (c) edge node[above] {AlternativeA} (c);
+		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
+		\path[->,draw,thick] (a) edge node[above] {AlternativeB} (b);
+		\path[->,draw,thick, bend right] (a) edge node[below] {OptionalEdge} (d);
+		\path[->,draw,thick, loop above] (d) edge node[above] {AlternativeC} (d);
+		\path[->,draw,thick, bend right] (d) edge node[below] {OptionalEdge} (b);
+	\end{tikzpicture}
+    \caption{Diagramm einer Schleife innerhalb einer Alternative}
+    \label{FIG:DiagramLoopsInAlternative}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.49\textwidth}
+    \lstinputlisting[language=Java,caption={Java-Interface aus zwei Schleifen innerhalb einer Alternative. Da hier mehrere ausgehende optionale Kanten bei einem Knoten auftreten wird von mehreren Interfaces geerbt.},label={LST:JInterfaceLoopsInAlternative}]{Alternative_with_inner_loops.java}
+  \end{subfigure}
+  \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | \{NodeEdgeC\};})}
+  \label{FIG:LoopsInAlternative}
+\end{figure}
+
 \subsection{Scala}
-Da es in Scala keine Interfaces gibt, kommen entweder abstrakte Klassen oder Traits infrage. Da Schleifen in einer Alternative Mehrfachvererbung voraussetzen, scheiden die abstrakten Klassen aus.
+Da es in Scala keine Interfaces gibt, kommen entweder abstrakte Klassen oder Traits infrage. Da mehrere Schleifen in einer Alternative Mehrfachvererbung voraussetzen (siehe Abbildung~\ref{FIG:LoopsInAlternative}), scheiden die abstrakten Klassen aus.
 
 Es werden also Traits generiert, die die selben Methoden wie die Interface-Pendants haben und (bis auf void, das auf Unit abgebildet wird) die gleichen Parameter- und Rückgabetypen haben, da die Java-Typen verwendet werden können.
 
