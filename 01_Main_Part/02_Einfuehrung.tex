@@ -129,32 +129,6 @@ Die erweiterte Backus-Naur-Form ist eine Erweiterung der Backus-Naur-Form, um di
 
 Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen, wodurch keine zusätzlichen Regeln benötigt werden.
 
-\subsubsection{Festgelegte Syntax}\label{SEC:SetSyntax}
-Um die konkrete Syntax einer neuen DSL zu definieren, wird eine EBNF-Syntax (Tabelle~\ref{TAB:EBNFSyntax}) verwendet, die sich an der ISO-Norm orientiert (\cite[S. 7]{scowen1996international}) aber sich leicht davon unterscheidet. So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Listing~\ref{LST:EbnfNumbers} zeigt die Syntax an dem Beispiel für ganze Zahlen.
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{l|c}
-\textbf{Konstrukt}     & \textbf{Syntax}\\\hline
-Definition             & \verb|=|\\
-Alternative            & |\\
-Regel-Endzeichen       & \verb|;|\\
-Gruppierung            & \verb|( ... )|\\
-Optionales Element     & \verb|[ ... ]|\\
-Optionale Wiederholung & \verb|{ ... }|\\
-Nicht-Terminal         & \verb|< ... >|\\
-\end{tabular}
-\caption{EBNF-Syntax-Elemente}
-\label{TAB:EBNFSyntax}
-\end{table}
-
-\begin{lstlisting}[caption={Zahlen in der festgelegten Notation},label={LST:EbnfNumbers}]
-<digitNotZero>    = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
-<digit>           = '0' | <digitNotZero> ;
-<naturalNumber> = <digitNotZero> { <digit> } ;
-<integer>         = '0' | [ '-' ] naturalNumber ;
-\end{lstlisting}
-
 \subsection{Grafisch}
 Es gibt auch grafische Notationen für DSLs, etwas das Eclipse Modeling Framework\footnote{\url{http://www.eclipse.org/emf/}}, das sich an der Notation für Klassen von UML anlehnt.
 

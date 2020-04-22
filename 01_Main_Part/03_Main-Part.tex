@@ -16,12 +16,39 @@ Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
 \section{Parsen der Grammatik}
 Für das Parsen der Grammatik wurde ANTLR4 verwendet, der adaptive LL(*)-Parser generieren kann, die Grammatiken zur Laufzeit analysieren können, statt zur Compilezeit (siehe~\cite[S. xiii ff]{Parr.2012}). ANTLR selbst ist in Java geschrieben und kann Parser für verschiedene Zielsprachen generieren (u.a. Java, C++, C\#, Python, vgl.~\cite{antlrcodegeneration.github}). Da neue Features vorrangig für den Parser in Java entwickelt werden, und da als Zielsprachen JVM-Sprachen ins Auge gefasst wurden, wird auf dem Parser in Java aufgebaut werden.
 
-Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmierspraceh) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
+Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmiersprache) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
+
+\subsection{Festgelegte Syntax}\label{SEC:SetSyntax}
+Die abstrakte Syntax entspricht der der EBNF mit Sequenzen, Gruppierungen, optionalen Elementen und Wiederholungen. Die konkrete Syntax bzw. Notation der EBNF richtet sich an der ISO-Norm orientiert (\cite[S. 7]{scowen1996international}),sich aber leicht davon (Tabelle~\ref{TAB:EBNFSyntax}). So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Die Nicht-Terminal werden, wie in der BNF~\cite[S. 3]{crocker1997augmented}, in spitzen Klammern notiert um sie von Schlüsselworten und Typen zu unterscheiden (siehe Listing~\ref{LST:EBNFGrammar}, Zeilen 28-33). In Listing~\ref{LST:EbnfNumbers} wurde eine Grammatik für ganze Zahlen definiert, um die Notation an einem gängigen Beispiel zu zeigen.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|c}
+\textbf{Konstrukt}     & \textbf{Syntax}\\\hline
+Definition             & \verb|=|\\
+Alternative            & |\\
+Regel-Endzeichen       & \verb|;|\\
+Gruppierung            & \verb|( ... )|\\
+Optionales Element     & \verb|[ ... ]|\\
+Optionale Wiederholung & \verb|{ ... }|\\
+Nicht-Terminal         & \verb|< ... >|\\
+\end{tabular}
+\caption{EBNF-Syntax-Elemente}
+\label{TAB:EBNFSyntax}
+\end{table}
+
+\begin{lstlisting}[caption={Zahlen in der festgelegten Notation},label={LST:EbnfNumbers}]
+<digitNotZero>    = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
+<digit>           = '0' | <digitNotZero> ;
+<naturalNumber> = <digitNotZero> { <digit> } ;
+<integer>         = '0' | [ '-' ] naturalNumber ;
+\end{lstlisting}
 
 \begin{figure}[ht]
 \lstinputlisting[linerange={3-35},caption={EBNF-Grammatik (Auszug)},label={LST:EBNFGrammar}]{Bnf.g4}
 \end{figure}
 
+\subsection{Traversieren des Parse-Trees}
 Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten, bietet ANTLR4 zwei Möglichkeiten: generierte Listener oder Visitor zu überschreiben (vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die Strings im EBNF-Parser selbst nicht gegeben ist.
 
 Abbildung~\ref{FIG:TypesBNF} zeigt die eigenen Typen des Baumes, der dem Parse-Tree entspricht; in ihm finden sich die Konstrukte der EBNF wieder (z.B. Regeln, Sequenzen, Alternativen, vgl. Abbildung~\ref{LST:EBNFGrammar}). Aus dem Baum dieser Typen werden die Interfaces generiert, wie im folgenden Abschnitt~\ref{SEC:EBNFtoInterface} erklärt wird.
@@ -106,7 +133,7 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einem Sequenz-Knoten},label={LST:JInterfaceOneElementNode}]{Scope_one-element.java}
   \end{subfigure}
-  \caption{Diagramm und Interface eines Sequenz-Knotens (\texttt{<rule> = NodeEdge;})}
+  \caption{Ein einzelner Sequenz-Knoten (\texttt{<rule> = NodeEdge;}) wird auf eine Methode in einem Interface abgebildet. Das Interface entspricht dem Scope am Anfang der gerichteten Kante.}
   \label{FIG:OneElementNode}
 \end{figure}
 
@@ -130,7 +157,7 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten},label={FIG:JInterfaceSequenceNode}]{Scope_sequence.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Sequenz von Knoten (\texttt{<rule> = NodeEdgeA NodeEdgeB;})}
+  \caption{Eine Sequenz von Knoten (\texttt{<rule> = NodeEdgeA NodeEdgeB;}) wird auf eine Abfolge von Interfaces abgebildet, die jeweils eine Methode beinhalten, die das Folge-Interface als Rückgabewert haben.}
   \label{FIG:SequenceNode}
 \end{figure}
 
@@ -154,7 +181,7 @@ Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Kanten},label={LST:JInterfaceAlternativeNodeVariant}]{Scope_alternative_variant.java}
   \end{subfigure}
-  \caption{Diagramm und Interface alternativer Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;})}
+  \caption{Alternative Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;}) werden auf mehrere Methoden in einem Interface abgebildet, die verschiedene Rückgabetypen haben.}
   \label{FIG:AlternativeNodeVariant}
 \end{figure}
 
@@ -176,7 +203,7 @@ Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei K
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Kanten},label={LST:JInterfaceAlternativeNode}]{Scope_alternative.java}
   \end{subfigure}
-  \caption{Diagramm und Interface alternativer Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;})}
+  \caption{Alternative Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;}) werden auf mehrere Methoden in einem Interface abgebildet, die denselben Rückgabewert haben.}
   \label{FIG:AlternativeNode}
 \end{figure}
 
@@ -199,7 +226,7 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer optionalen Kante},label={LST:JInterfaceOptionalNode}]{Scope_optional.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer optionalen Kante (\texttt{<rule> = [NodeEdgeA];})}
+  \caption{Ein optionales Element (\texttt{<rule> = [NodeEdgeA];}) wird auf ein Interface mit einer Methode, die das Folge-Interface zurück gibt, abgebildet. Das Interface erbt auch vom Folge-Interface um den Methodenaufruf zu überspringen.}
   \label{FIG:OptionalNode}
 \end{figure}
 
@@ -226,7 +253,7 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 1)},label={LST:JInterfaceLoopNode}]{Scope_loop.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 1) (\texttt{<rule> = \{NodeEdge\};})}
+  \caption{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf ein Interface mit einer Methode mit dem Interface selbst als Rückgabewert und vom Folge-Interface erbend abgebildet werden. (Variante 1)}
   \label{FIG:LoopNode}
 \end{figure}
 
@@ -250,7 +277,7 @@ Eine zweite Variante benötigt einen Hilfsknoten (Knoten B in Abbildung~\ref{FIG
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlt}]{Scope_loop_alt.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
+  \caption{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilf-Interface, das vom eigentlichen erbt, das zweite enthält die Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
   \label{FIG:LoopNodeAlt}
 \end{figure}
 
@@ -283,7 +310,7 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Sequenz in einem Schleifen-Knoten},label={LST:JInterfaceSequenceInLoop}]{Sequence_in_loop.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Sequenz innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{NodeEdgeA NodeEdgeB NodeEdgeC\};})}
+  \caption{Eine Sequenz innerhalb einer Schleife (\texttt{<rule> = \{NodeEdgeA NodeEdgeB NodeEdgeC\};}) ersetzt dessen einfache Kante zum Knoten selbst. Für jeden Scope in der Sequenz muss ein eigenes Interface erstellt werden. (nach Variante 2)}
   \label{FIG:SequenceInLoop}
 \end{figure}
 
@@ -325,7 +352,7 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (5,0) {B};
-		\node[vertex] (c) at  (2.5,1.25) {C};
+		\node[vertex] (c) at  (2.5,1.5) {C};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
 		\path[->,draw,thick, loop above] (c) edge node[above] {AlternativeA} (c);
 		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
@@ -352,8 +379,8 @@ Befinden sich mehrere Schleifen innerhalb einer Alternative, werden mehrere ausg
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (5,0) {B};
-		\node[vertex] (c) at  (2.5,1.25) {C};
-		\node[vertex] (d) at  (2.5,-1.25) {D};
+		\node[vertex] (c) at  (2.5,1.5) {C};
+		\node[vertex] (d) at  (2.5,-1.5) {D};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (c);
 		\path[->,draw,thick, loop above] (c) edge node[above] {AlternativeA} (c);
 		\path[->,draw,thick, bend left] (c) edge node[above] {OptionalEdge} (b);
@@ -485,6 +512,7 @@ Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer
 \subsection{Behandlung der Rekursion}
 
 \subsection{Typen}
+Mit der bisherigen EBNF kann man nur eingeschränkt eigene Typen definieren.
 
 \subsubsection{Mapping auf Typen der Hostsprache}
 \begin{itemize}
