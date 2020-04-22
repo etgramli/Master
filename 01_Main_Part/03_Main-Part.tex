@@ -492,6 +492,7 @@ Die EBNF-Grammatik kann nicht beliebig formuliert sein, es gibt folgende Einschr
 	\item Eine Methoden kann höchstens ein Argument haben
 	\item Eine Start-Regel muss definiert werden
 	\item Lexer-Regeln für die Umsetzung der Tokens
+	\item Methodennamen können nicht beliebig gewählt werden
 \end{itemize}
 
 \subsubsection{Folge von Type auf Keyword}\label{SEC:TypeFollowsKeyword}
@@ -508,17 +509,16 @@ Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur d
 
 Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer anderen, darf es ebenfalls keine Lexer-Regel sein, um vom Listener erkannt zu werden.
 
+\subsubsection{Methodennamen}
+Die Schlüsselwörter in der EBNF, die auf Methodennamen abgebildet werden, können nicht beliebig gewählt werden, da Kollisionen mit der Hostsprache auftreten dürfen. Schlüsselworte und (benutzerdefinierte) Typen dürfen nicht verwendet werden. Schlüsselworte von Java uns Scala und die primitiven Datentypen werden erkannt und erzeugen eine Fehlermeldung. Benutzerdefinierte Typen müssen schon beim Schreiben der Grammatik selbst vermieden werden.
+
 
 \subsection{Behandlung der Rekursion}
+Die in der EBNF-Grammatik vorkommende Rekursion (Alternative in Wiederholung in Sequenz in Alternative) wird korrekt behandelt, um den korrekten Parse-Tree zu erstellen. Auch können die Nicht-Terminale durch ihre Repräsentation aus derselben Grammatik richtig ersetzt werden.
 
-\subsection{Typen}
-Mit der bisherigen EBNF kann man nur eingeschränkt eigene Typen definieren.
+Jedoch können Grammatiken nicht ineinander geschachtelt werden; das könnte dazu verwendet werden um durch eine Grammatik einen Typen zu generieren, der in einer anderen als Typ eines Arguments vorkommt.
 
-\subsubsection{Mapping auf Typen der Hostsprache}
-\begin{itemize}
-	\item NTs -> Methoden (Einschränungen)
-	\item Interfacenamen beliebig
-\end{itemize}
+Stattdessen kann man mit dem Prototypen eine Grammatik verarbeiten, dessen letztes Interface mit der End-Methode ein Objekt vom einem spezifiziertem Typ zurück liefert (siehe Parameter~\gqq{-r}\footnote{\url{https://github.com/etgramli/AntlrTest}}). Diesen Rückgabetyp kann man als Typ für ein Argument in einer anderen Grammatik verwenden.
 
 \subsection{Nicht-Terminale}
 Nicht-Terminale werden durch ihre Entsprechung aus Terminalen ersetzt, danach werden die Terminale durch die folgenden Regeln abgebildet.
@@ -527,8 +527,6 @@ Nicht-Terminale werden durch ihre Entsprechung aus Terminalen ersetzt, danach we
 Die Sopes werden zunächst durch den Graphen selbst erstellt und nummeriert. Diese Namen könnte man beibehalten, da die Bezeichner der Interfaces nicht direkt benutzt werden (bis auf das Start- und End-Interface).
 
 Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Interfaces bestimmt und diese aneinander gehängt werden. Da das zu Kollisionen führen kann, wird in dem Fall der (eindeutige) Name des Scopes aus dem Graphen am Schluss angehängt.
-
-\subsubsection{Generierung von Typen aus EBNF-Regeln}
 
 
 \chapter{Testlauf mit anschaulichem Beispiel}\label{SEC:Example}
