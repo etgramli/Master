@@ -1,0 +1,32 @@
+<expr>
+    = <startExpr>
+    ;
+
+<startExpr>
+    = <lhs> {<operatorRhs>}
+    ;
+
+<lhs>
+    = ('expr' Double | 'expr' Expr)
+    ;
+
+<operatorRhs>
+    = <plusRhs> | <minusRhs> | <timesRhs> | <dividedRhs>
+    ;
+
+<plusRhs>
+    = ('plus' Double | 'plus' Expr)
+    ;
+
+<minusRhs>
+    = ('minus' Double | 'minus' Expr)
+    ;
+
+<timesRhs>
+    = ('times' Double | 'times' Expr)
+    ;
+
+<dividedRhs>
+    = ('divided' Double | 'divided' Expr)
+    ;
+

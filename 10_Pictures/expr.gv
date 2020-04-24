@@ -1,0 +1,39 @@
+digraph G {
+  Scope0;
+  Scope1;
+  Scope3;
+  Scope5;
+  Scope9;
+  Scope10;
+  Scope13;
+  Scope14;
+  Scope17;
+  Scope18;
+  Scope21;
+  Scope22;
+  Scope25;
+  Scope26;
+  Scope3 -> Scope5 [ label="OptionalEdge" ];
+  Scope5 -> Scope1 [ label="OptionalEdge" ];
+  Scope5 -> Scope9 [ label="divided [KEYWORD]" ];
+  Scope5 -> Scope10 [ label="divided [KEYWORD]" ];
+  Scope9 -> Scope5 [ label="Double [TYPE]" ];
+  Scope10 -> Scope5 [ label="Expr [TYPE]" ];
+  Scope5 -> Scope14 [ label="times [KEYWORD]" ];
+  Scope5 -> Scope13 [ label="times [KEYWORD]" ];
+  Scope14 -> Scope5 [ label="Expr [TYPE]" ];
+  Scope13 -> Scope5 [ label="Double [TYPE]" ];
+  Scope5 -> Scope18 [ label="minus [KEYWORD]" ];
+  Scope5 -> Scope17 [ label="minus [KEYWORD]" ];
+  Scope18 -> Scope5 [ label="Expr [TYPE]" ];
+  Scope17 -> Scope5 [ label="Double [TYPE]" ];
+  Scope5 -> Scope21 [ label="plus [KEYWORD]" ];
+  Scope5 -> Scope22 [ label="plus [KEYWORD]" ];
+  Scope22 -> Scope5 [ label="Expr [TYPE]" ];
+  Scope21 -> Scope5 [ label="Double [TYPE]" ];
+  Scope0 -> Scope26 [ label="expr [KEYWORD]" ];
+  Scope0 -> Scope25 [ label="expr [KEYWORD]" ];
+  Scope26 -> Scope3 [ label="Expr [TYPE]" ];
+  Scope25 -> Scope3 [ label="Double [TYPE]" ];
+}
+

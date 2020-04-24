@@ -530,6 +530,18 @@ Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Int
 
 
 \chapter{Testlauf mit anschaulichem Beispiel}\label{SEC:Example}
+In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} anhand von zwei Beispielen dokumentiert. Zuerst werden Interfaces für mathematische Ausdrücke generiert, und dann ein Beispiel eines Typsystems vorgestellt.
+
+\section{Mathematische Ausdrücke}
+\begin{figure}
+	\lstinputlisting[language=Java,caption={Expression-EBNF},label={LST:EXPRBNF}]{expr.bnf}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\resizebox{\linewidth}{!}{\input{\main/10_Pictures/expr.tex}}
+\caption{Graph generiert aus der Expression-EBNF}
+\label{FIG:ExprGraph}
+\end{figure}
 
 \section{Joi}
 \begin{figure}[ht]
