@@ -111,7 +111,7 @@ NodeEdges vom Typ \gqq{NON\_TERMINAL} entsprechen Nicht-Terminalen in der EBNF u
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{Nodes}
-\caption{Typen des Graphen (Scope für die Vertices; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
+\caption[Typen des Graphen]{Typen des Graphen (Scope für die Vertices; ScopeEdge, OptionalEdge und NodeEdge für die Kanten)}
 \label{FIG:GraphTypes}
 \end{figure}
 
@@ -133,7 +133,7 @@ Der einfachste Fall ist der von einer Sequenz, die nur ein Element beinhaltet. H
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einem Sequenz-Knoten},label={LST:JInterfaceOneElementNode}]{Scope_one-element.java}
   \end{subfigure}
-  \caption{Ein einzelner Sequenz-Knoten (\texttt{<rule> = NodeEdge;}) wird auf eine Methode in einem Interface abgebildet. Das Interface entspricht dem Scope am Anfang der gerichteten Kante.}
+  \caption[Abbildung eines Sequenz-Knotens (\texttt{<rule> = NodeEdge;})]{Ein einzelner Sequenz-Knoten (\texttt{<rule> = NodeEdge;}) wird auf eine Methode in einem Interface abgebildet. Das Interface entspricht dem Scope am Anfang der gerichteten Kante.}
   \label{FIG:OneElementNode}
 \end{figure}
 
@@ -157,7 +157,7 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Sequenz von Knoten},label={FIG:JInterfaceSequenceNode}]{Scope_sequence.java}
   \end{subfigure}
-  \caption{Eine Sequenz von Knoten (\texttt{<rule> = NodeEdgeA NodeEdgeB;}) wird auf eine Abfolge von Interfaces abgebildet, die jeweils eine Methode beinhalten, die das Folge-Interface als Rückgabewert haben.}
+  \caption[Abbildung einer Sequenz (\texttt{<rule> = NodeEdgeA NodeEdgeB;})]{Eine Sequenz von Knoten (\texttt{<rule> = NodeEdgeA NodeEdgeB;}) wird auf eine Abfolge von Interfaces abgebildet, die jeweils eine Methode beinhalten, die das Folge-Interface als Rückgabewert haben.}
   \label{FIG:SequenceNode}
 \end{figure}
 
@@ -181,7 +181,7 @@ Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Kanten},label={LST:JInterfaceAlternativeNodeVariant}]{Scope_alternative_variant.java}
   \end{subfigure}
-  \caption{Alternative Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;}) werden auf mehrere Methoden in einem Interface abgebildet, die verschiedene Rückgabetypen haben.}
+  \caption[Abbildung alternativer Kanten Variante 1]{Alternative Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;}) werden auf mehrere Methoden in einem Interface abgebildet, die verschiedene Rückgabetypen haben.}
   \label{FIG:AlternativeNodeVariant}
 \end{figure}
 
@@ -203,7 +203,7 @@ Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei K
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus alternativen Kanten},label={LST:JInterfaceAlternativeNode}]{Scope_alternative.java}
   \end{subfigure}
-  \caption{Alternative Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;}) werden auf mehrere Methoden in einem Interface abgebildet, die denselben Rückgabewert haben.}
+  \caption[Abbildung alternativer Kanten Variante 2]{Alternative Kanten (\texttt{<rule> = NodeEdgeA | NodeEdgeB;}) werden auf mehrere Methoden in einem Interface abgebildet, die denselben Rückgabewert haben.}
   \label{FIG:AlternativeNode}
 \end{figure}
 
@@ -226,7 +226,7 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer optionalen Kante},label={LST:JInterfaceOptionalNode}]{Scope_optional.java}
   \end{subfigure}
-  \caption{Ein optionales Element (\texttt{<rule> = [NodeEdgeA];}) wird auf ein Interface mit einer Methode, die das Folge-Interface zurück gibt, abgebildet. Das Interface erbt auch vom Folge-Interface um den Methodenaufruf zu überspringen.}
+  \caption[Abbildung eines optionalen Elements (\texttt{<rule> = [NodeEdgeA];})]{Ein optionales Element (\texttt{<rule> = [NodeEdgeA];}) wird auf ein Interface mit einer Methode, die das Folge-Interface zurück gibt, abgebildet. Das Interface erbt auch vom Folge-Interface um den Methodenaufruf zu überspringen.}
   \label{FIG:OptionalNode}
 \end{figure}
 
@@ -253,7 +253,7 @@ Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufr
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 1)},label={LST:JInterfaceLoopNode}]{Scope_loop.java}
   \end{subfigure}
-  \caption{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf ein Interface mit einer Methode mit dem Interface selbst als Rückgabewert und vom Folge-Interface erbend abgebildet werden. (Variante 1)}
+  \caption[Abbildung einer optionalen Schleife (Variante 1)]{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf ein Interface mit einer Methode mit dem Interface selbst als Rückgabewert und vom Folge-Interface erbend abgebildet werden. (Variante 1)}
   \label{FIG:LoopNode}
 \end{figure}
 
@@ -277,7 +277,7 @@ Eine zweite Variante benötigt einen Hilfsknoten (Knoten B in Abbildung~\ref{FIG
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlt}]{Scope_loop_alt.java}
   \end{subfigure}
-  \caption{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilf-Interface, das vom eigentlichen erbt, das zweite enthält die Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
+  \caption[Abbildung einer optionalen Schleife (Variante 2)]{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilf-Interface, das vom eigentlichen erbt, das zweite enthält die Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
   \label{FIG:LoopNodeAlt}
 \end{figure}
 
@@ -310,7 +310,7 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Sequenz in einem Schleifen-Knoten},label={LST:JInterfaceSequenceInLoop}]{Sequence_in_loop.java}
   \end{subfigure}
-  \caption{Eine Sequenz innerhalb einer Schleife (\texttt{<rule> = \{NodeEdgeA NodeEdgeB NodeEdgeC\};}) ersetzt dessen einfache Kante zum Knoten selbst. Für jeden Scope in der Sequenz muss ein eigenes Interface erstellt werden. (nach Variante 2)}
+  \caption[Abbildung einer Sequenz innerhalb einer Schleife]{Eine Sequenz innerhalb einer Schleife (\texttt{<rule> = \{NodeEdgeA NodeEdgeB NodeEdgeC\};}) ersetzt dessen einfache Kante zum Knoten selbst. Für jeden Scope in der Sequenz muss ein eigenes Interface erstellt werden. (nach Variante 2)}
   \label{FIG:SequenceInLoop}
 \end{figure}
 
@@ -338,7 +338,7 @@ Falls die Alternative sich in einer Sequenz in einer Alternative befindet, gibt 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interfaces aus einer Alternative in einer Schleife},label={LST:JInterfaceAlternativeInLoop}]{Loop_with_inner_alternative.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Alternative innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{(AlternativeA | AlternativeB)\};})}
+  \caption[Abbildung einer Alternative innerhalb einer Schleife]{Diagramm und Interface einer Alternative innerhalb eines Schleifen-Knotens (nach Variante 2) (\texttt{<rule> = \{(AlternativeA | AlternativeB)\};})}
   \label{FIG:AlternativeInLoop}
 \end{figure}
 
@@ -365,7 +365,7 @@ Befindet sich eine Schleife in einer Alternative, muss für ihre Kante ein Hilfs
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleife innerhalb einer Alternative},label={LST:JInterfaceLoopInAlternative}]{Alternative_with_inner_loop.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | NodeEdgeC;})}
+  \caption[Abbildung einer Schleife innerhalb einer Alternative]{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | NodeEdgeC;})}
   \label{FIG:LoopInAlternative}
 \end{figure}
 
@@ -393,9 +393,9 @@ Befinden sich mehrere Schleifen innerhalb einer Alternative, werden mehrere ausg
     \label{FIG:DiagramLoopsInAlternative}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={Java-Interface aus zwei Schleifen innerhalb einer Alternative. Da hier mehrere ausgehende optionale Kanten bei einem Knoten auftreten wird von mehreren Interfaces geerbt.},label={LST:JInterfaceLoopsInAlternative}]{Alternative_with_inner_loops.java}
+    \lstinputlisting[language=Java,caption={[Java-Interface aus zwei Schleifen innerhalb einer Alternative]Java-Interface aus zwei Schleifen innerhalb einer Alternative. Da hier mehrere ausgehende optionale Kanten bei einem Knoten auftreten wird von mehreren Interfaces geerbt.},label={LST:JInterfaceLoopsInAlternative}]{Alternative_with_inner_loops.java}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | \{NodeEdgeC\};})}
+  \caption[Abbildung mehrere Schleifen innerhalb einer Alternative]{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | \{NodeEdgeC\};})}
   \label{FIG:LoopsInAlternative}
 \end{figure}
 
@@ -424,7 +424,7 @@ Beispielhaft wird hier noch einmal die optionale Schleife aufgeführt (Abbildung
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Scala,caption={Scala-Trait aus einer Schleifen-Kante (Variante 2)},label={LST:ScalaTraitLoopNodeAlt}]{Scope_loop_alt.scala}
   \end{subfigure}
-  \caption{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
+  \caption[Abbildung einer Sequenz auf einen Sala-Trait]{Diagramm und Interface einer Schleifen-Kante (Variante 2) (\texttt{<rule> = \{NodeEdge\};})}
   \label{FIG:ScalaLoopNodeAlt}
 \end{figure}
 
@@ -543,16 +543,48 @@ In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github
 \label{FIG:ExprGraph}
 \end{figure}
 
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}
+\textbf{Scope} & \textbf{Interface}\\\hline
+Scope1 & EndScope\\
+Scope0 & BeginScope\\
+Scope3 & Scope3\\
+Scope5 & DividedMinusPlusTimesScope\\
+\end{tabular}
+\caption[Abbildung von Scope- auf Interfacenamen (Expression-Beispiel)]{Abbildung von Scope-Namen auf Interface-Namen (Expression-Beispiel)}
+\label{TAB:MappingExpressionScopeToInterface}
+\end{table}
+
 \section{Joi}
 \begin{figure}[ht]
     \lstinputlisting[language=Java,caption={Joi-EBNF},label={LST:JOIBNF}]{joi.bnf}
 \end{figure}
+
 \begin{figure}[ht]
 \centering
 \resizebox{0.5\linewidth}{!}{\input{\main/10_Pictures/joi.tex}}
 \caption{Graph generiert aus der Joi-EBNF}
 \label{FIG:JoiGraph}
 \end{figure}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}
+Scope   & \textbf{Interface}\\\hline
+Scope12 & FieldScope\\
+Scope1  & EndScope\\
+Scope0  & BeginScope\\
+Scope10 & MethodScope\\
+Scope5  & Scope5\\
+Scope4  & ImplScopeScope4\\
+Scope7  & ImplScope\\
+Scope6  & MethodScopeScope6\\
+Scope8  & Scope8\\
+\end{tabular}
+\caption[Abbildung von Scope- auf Interfacenamen (Joi-Beispiel)]{Abbildung von Scope-Namen auf lesbare Interface-Namen (Joi-Beispiel)}
+\label{TAB:MappingJoiScopeToInterface}
+\end{table}
 
 \section{Optimierungspotenzial}
 
