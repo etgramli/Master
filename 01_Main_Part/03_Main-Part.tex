@@ -572,7 +572,7 @@ Scope3 & Scope3\\
 Scope5 & DividedMinusPlusTimesScope\\
 Scope1 & EndScope\\
 \end{tabular}
-\caption[Abbildung von Scope- auf Interfacenamen (Expression-Beispiel)]{Abbildung von Scope-Namen auf Interface-Namen (Expression-Beispiel)}
+\caption[Abbildung von Scope- auf Interfacenamen (Expression-Beispiel)]{Abbildung von Scope- auf Interface-Namen (Expression-Beispiel)}
 \label{TAB:MappingExpressionScopeToInterface}
 \end{table}
 
@@ -586,6 +586,7 @@ Die folgenden Interfaces werden für den in Abbildung~\ref{FIG:ExprGraph} gezeig
     \lstinputlisting[language=Java,caption={Expression: Scope3.java},label={LST:ExprScope3}]{expr/Scope3.java}
 \end{figure}
 
+Listing ~\ref{LST:ExprDivideMinusPlusTimesScope} zeigt das generierte Interface mit den Rechenoperationen mit je einer Variante für den Typ Double und Expr. Der Name des Interfaces leitet sich aus allen Methodennamen ab, die alphabetisch sortiert aneinander gehängt werden, der erste Buchstabe der jeweiligen Methode wird zum Großbuchstaben.
 \begin{figure}[ht]
     \lstinputlisting[language=Java,caption={Expression: DividedMinusPlusTimesScope.java},label={LST:ExprDivideMinusPlusTimesScope}]{expr/DividedMinusPlusTimesScope.java}
 \end{figure}
@@ -597,10 +598,12 @@ Die End-Methode im EndScope (Zeile 4 in Listing~\ref{LST:ExprEndScope}) hat kein
 
 
 \section{Joi}
+Dieses Beispiel zeigt eine Grammatik, mit der man Objekte modellieren kann, denen Methoden und Feldern zugeordnet werden (Listing~\ref{LST:JOIBNF}).
 \begin{figure}[ht]
     \lstinputlisting[language=Java,caption={Joi-EBNF},label={LST:JOIBNF}]{joi.bnf}
 \end{figure}
 
+Abbildung~\ref{FIG:JoiGraph} zeigt den vom Prototypen generierte Graph; hier fällt auf, dass sich zwischen den beiden optionalen Schleifen (Scope 10 und 12) nur eine optionale Kante befindet und nicht zwei, wie man aus dem Beispiel aus Abschnitt~\ref{SEC:OptionalLoop} erwarten könnte. Dieser Scope würde ein leeres Interface generieren, das ein anderes erweitert, und das von nur einem anderen erweitert wird. Da dieses Interface überflüssig wäre und auch schon der Scope keine Informationen trägt, wird er schon beim Aufbau des Graphen verworfen.
 \begin{figure}[ht]
 \centering
 \resizebox{0.5\linewidth}{!}{\input{\main/10_Pictures/joi.tex}}
@@ -608,31 +611,34 @@ Die End-Methode im EndScope (Zeile 4 in Listing~\ref{LST:ExprEndScope}) hat kein
 \label{FIG:JoiGraph}
 \end{figure}
 
+An diesem Beispiel sieht man auch das Verhalten bei Kollisionen von Interface-Namen, da mehrere Nicht-Termiale mehrfach vorkommen. Dadurch treten mehrere Scopes auf, die Interfaces mit gleichen Methoden erzeugen und somit die gleichen Interface-Namen generierten. Um bei diesen Kollisionen immer noch eindeutige Namen für die Interfaces zu erhalten, werden die Namen der Scoes aus dem Graphen angehängt (Tabelle~\ref{TAB:MappingJoiScopeToInterface}: Scope4, -7, -6, -10).
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
 \textbf{Name des Scopes} & \textbf{Name des Interfaces}\\\hline
-Scope12 & FieldScope\\
-Scope1  & EndScope\\
 Scope0  & BeginScope\\
-Scope10 & MethodScope\\
-Scope5  & Scope5\\
 Scope4  & ImplScopeScope4\\
+Scope5  & Scope5\\
 Scope7  & ImplScope\\
 Scope6  & MethodScopeScope6\\
 Scope8  & Scope8\\
+Scope10 & MethodScope\\
+Scope12 & FieldScope\\
+Scope1  & EndScope\\
 \end{tabular}
-\caption[Abbildung von Scope- auf Interfacenamen (Joi-Beispiel)]{Abbildung von Scope-Namen auf lesbare Interface-Namen (Joi-Beispiel)}
+\caption[Abbildung von Scope- auf Interfacenamen (Joi-Beispiel)]{Abbildung von Scope- auf lesbare Interface-Namen (Joi-Beispiel)}
 \label{TAB:MappingJoiScopeToInterface}
 \end{table}
 
 \section{Optimierungspotenzial}
+Am Prototypen gibt es noch diverse Möglichkeiten zur Optimierung. Einerseits könnten mehr Freiheiten beim Verwenden der Grammatiken eingeräumt werden. Und andererseits könnten mehr Konstrukte innerhalb der Hostsprache unterstützt werden.
+
 \subsection{Mehrere Grammatiken verwenden}
 \subsubsection{Regeln in verschiedene Grammatiken aufteilen}
 \subsubsection{Rekursion}
 \subsection{Mehrere Argumente zulassen}
-
-\section{Varianten}
+\subsection{Unterstützung für Scala-spezifische Konstrukte}
+Operator-Überladung
 
 
 \end{document}
