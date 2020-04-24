@@ -49,7 +49,7 @@ Nicht-Terminal         & \verb|< ... >|\\
 \end{figure}
 
 \subsection{Traversieren des Parse-Trees}
-Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten, bietet ANTLR4 zwei Möglichkeiten: generierte Listener oder Visitor zu überschreiben (vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die Strings im EBNF-Parser selbst nicht gegeben ist.
+Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten gibt es bei ANTLR4 zwei Möglichkeiten: entweder können die generierten Listener oder Visitor überschreiben werden(vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die Strings im EBNF-Parser selbst nicht gegeben ist.
 
 Abbildung~\ref{FIG:TypesBNF} zeigt die eigenen Typen des Baumes, der dem Parse-Tree entspricht; in ihm finden sich die Konstrukte der EBNF wieder (z.B. Regeln, Sequenzen, Alternativen, vgl. Abbildung~\ref{LST:EBNFGrammar}). Aus dem Baum dieser Typen werden die Interfaces generiert, wie im folgenden Abschnitt~\ref{SEC:EBNFtoInterface} erklärt wird.
 
@@ -185,7 +185,7 @@ Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen
   \label{FIG:AlternativeNodeVariant}
 \end{figure}
 
-Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei Knoten abgebildet (siehe Abbildung~ref{FIG:DiagramAlternativeNode}). Dadurch können die Alternativen jeweils wie Sequenzen zwischen dem selben Start- und End-Knoten abgebildet werden.
+Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei Knoten abgebildet (siehe Abbildung~\ref{FIG:DiagramAlternativeNode}). Dadurch können die Alternativen jeweils wie Sequenzen zwischen dem selben Start- und End-Knoten abgebildet werden.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -295,14 +295,14 @@ Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine 
 		\tikzset{edge/.style = {->,> = latex'}}
 		\node[vertex] (a) at  (0,0) {A};
 		\node[vertex] (b) at  (2.5,0) {B};
-		\node[vertex] (c) at  (3.75,-2) {C};
-		\node[vertex] (d) at  (1.25,-2) {D};
+		\node[vertex] (c) at  (5,-1.5) {C};
+		\node[vertex] (d) at  (0,-1.5) {D};
 		\node[vertex] (e) at  (5,0) {E};
 		\path[->,draw,thick, bend left] (a) edge node[above] {OptionalEdge} (b);
 		\path[->,draw,thick, bend left] (b) edge node[above] {OptionalEdge} (e);
-		\path[->,draw,thick, bend left] (b) edge node[right] {NodeEdgeA} (c);
+		\path[->,draw,thick, bend left] (b) edge node[below] {NodeEdgeA} (c);
 		\path[->,draw,thick, bend left] (c) edge node[below] {NodeEdgeB} (d);
-		\path[->,draw,thick, bend left] (d) edge node[left] {NodeEdgeC} (b);
+		\path[->,draw,thick, bend left] (d) edge node[below] {NodeEdgeC} (b);
 	\end{tikzpicture}
     \caption{Diagramm einer Sequenz innerhalb eines Schleifen-Knotens}
     \label{FIG:DiagramSequenceInLoop}
@@ -488,12 +488,18 @@ Beim Erstellen des Prototypen traten einige Schwierigkeiten auf. Die größten w
 \subsection{Einschränkungen der Grammatik}
 Die EBNF-Grammatik kann nicht beliebig formuliert sein, es gibt folgende Einschränkungen:
 \begin{itemize}
+	\item Für alle Nicht-Terminale muss es eine Regel mit demselben Namen geben
 	\item Eine Kante vom Typ \gqq{Type} muss einer vom Typ \gqq{Keyword} vorangehen,
 	\item Eine Methoden kann höchstens ein Argument haben
 	\item Eine Start-Regel muss definiert werden
 	\item Lexer-Regeln für die Umsetzung der Tokens
 	\item Methodennamen können nicht beliebig gewählt werden
 \end{itemize}
+
+\subsection{Nicht-Terminale}
+Alle Nicht-Terminale, die in der Grammatik vorkommen, müssen in derselben Grammatik eine entsprechende Regel haben. Diese Regel muss den gleichen Namen wie das zu ersetzende Nicht-Terminal haben, damit es durch die Regel ersetzt werden kann. Da in dem Prototypen nicht mehrere Grammatiken verarbeitet werden können, muss die Regel in der gleichen Grammatik stehen.
+
+Ansonsten muss sich die zu ersetzende Regel an die restlichen (folgenden) Einschränkungen halten. Auch muss beachtet werden, dass nach dem Ersetzen einer Regel nicht zwei Kanten vom Typ \gqq{TYPE} nicht aufeinander folgen.
 
 \subsubsection{Folge von Type auf Keyword}\label{SEC:TypeFollowsKeyword}
 Um die Schlüsselworte der Sprache umzusetzen, werden die Keywords aus der EBNF auf Methoden abgebildet, und die Typen aus der EBNF auf Typen der Hostsprache (oder eigens definierte Typen). Deshalb ergibt es innerhalb der in diesem Kontext geschriebener EBNF keinen Sinn, wenn ein Keyword nicht einem Typ vorangeht.
@@ -533,9 +539,19 @@ Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Int
 In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} anhand von zwei Beispielen dokumentiert. Zuerst werden Interfaces für mathematische Ausdrücke generiert, und dann ein Beispiel eines Typsystems vorgestellt.
 
 \section{Mathematische Ausdrücke}
+Das erste Beispiel, an dem der Prototyp demonstriert wird, soll ein gängiges sein. Deswegen wurde dafür mathematische Ausdrücke ausgewählt. Listing~\ref{LST:EXPRBNF} zeigt die Definition der Ausdrücke als EBNF. Hier wird für jede Grundrechenart eine Regel deklariert, die die je eine Alternative mit dem Typ Double und Expr enthält, der als Rückgabetyp des Programms angegeben werden kann.
+
+Mit dem Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} kann mit einem Aufruf auch ein Graphen wie in Abbildung~\ref{FIG:ExprGraph} generiert werden. Der Aufruf kann zum Beispiel so aussehen:
+\begin{lstlisting}
+java -jar antlr-test-1.6.1-jar-with-dependencies.jar -d targetDir -p com.package.expr -g expr.bnf -s exprGraph.dot -r Expr
+\end{lstlisting}
+
 \begin{figure}
-	\lstinputlisting[language=Java,caption={Expression-EBNF},label={LST:EXPRBNF}]{expr.bnf}
+	\lstinputlisting[language=Java,caption={Expression-EBNF (expr.bnf)},label={LST:EXPRBNF}]{expr.bnf}
 \end{figure}
+
+Der generierte DOT-Graph kann mit z.B. einem Online-Tool\footnote{\url{https://dreampuf.github.io/GraphvizOnline/}} visualisiert werden, um einen Überblick über die Aufruf-Reihenfolge zu erhalten. Der Graph in Abbildung~\ref{FIG:ExprGraph} zeigt den aus der EBNF-Grammatik generierten Graphen. Wie zuvor beschrieben wurden hierfür alle Nicht-Terminale durch ihre entsprechenden Regeln ersetzt wodurch nur ein zusammenhängender Graph entsteht; die Regel \verb|<expr>| diente hierbei als Einstiegs-Regel.
+
 \begin{figure}[ht]
 \centering
 \resizebox{\linewidth}{!}{\input{\main/10_Pictures/expr.tex}}
@@ -543,18 +559,42 @@ In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github
 \label{FIG:ExprGraph}
 \end{figure}
 
+In diesem Graphen werden noch keine sprechenden Namen verwendet, sondern es werden die graph-internen Bezeichnungen der Scopes verwendet. Die aussagekräftigen Namen werden erst beim Generieren der Interfaces generiert, da erst hier auf Kollisionen mit Typen und Schlüsselworten der Hostsprache überprüft wird. Tabelle~\ref{TAB:MappingExpressionScopeToInterface} zeigt welche Namen der Interfaces im Vergleich mit den Namen der zugehörigen Scopes.
+
+Man sieht hier auch, dass nicht zu jedem Knoten des Graphen ein eigenes Interfaces generiert wird. Da die Kanten vom Typ \gqq{KEYWORD} auf Methoden abgebildet werden, werden folgende TYP-Kanten auf Argumente abgebildet; der Knoten dazwischen repräsentiert also kein Interface und erhält auch keinen sprechenden Namen. Knoten, die nur ausgehende, optionale Kanten haben (z.B. Scope3 in Abbildung~\ref{FIG:ExprGraph}), erhalten ebenfalls keinen sprechenden Namen, da es für diese Knoten keine Methoden gibt, aus denen der Name generiert wird. Der End-Scope ohne ausgehende Kanten würde nach der Regel ebenfalls keinen Namen erhalten, wird aber stets \gqq{EndScope} genannt, da es nur einen solchen Scope gibt (siehe~\ref{SEC:Alternative}).
+
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
-\textbf{Scope} & \textbf{Interface}\\\hline
-Scope1 & EndScope\\
+\textbf{Name des Scopes} & \textbf{Name des Interfaces}\\\hline
 Scope0 & BeginScope\\
 Scope3 & Scope3\\
 Scope5 & DividedMinusPlusTimesScope\\
+Scope1 & EndScope\\
 \end{tabular}
 \caption[Abbildung von Scope- auf Interfacenamen (Expression-Beispiel)]{Abbildung von Scope-Namen auf Interface-Namen (Expression-Beispiel)}
 \label{TAB:MappingExpressionScopeToInterface}
 \end{table}
+
+\subsection{Generierte Interfaces}
+Die folgenden Interfaces werden für den in Abbildung~\ref{FIG:ExprGraph} gezeigten Graphen generiert. Die Namen der Interfaces entsprechen jetzt, bis auf Scope3, nicht mehr den Bezeichnern der Scopes im Graphen. Die Methodennamen wurden den Namen der Kanten vom Typ \gqq{KEYWORD} entnommen. Die Namen der Argumente wurden auch auf Kollisionen mit Schlüsselworten der Hostsprache überprüft und entsprechend umbenannt (siehe Zeile 4 in Listing~\ref{LST:ExprBeginScope}).
+\begin{figure}[ht]
+    \lstinputlisting[language=Java,caption={Expression: BeginScope.java},label={LST:ExprBeginScope}]{expr/BeginScope.java}
+\end{figure}
+
+\begin{figure}[ht]
+    \lstinputlisting[language=Java,caption={Expression: Scope3.java},label={LST:ExprScope3}]{expr/Scope3.java}
+\end{figure}
+
+\begin{figure}[ht]
+    \lstinputlisting[language=Java,caption={Expression: DividedMinusPlusTimesScope.java},label={LST:ExprDivideMinusPlusTimesScope}]{expr/DividedMinusPlusTimesScope.java}
+\end{figure}
+
+Die End-Methode im EndScope (Zeile 4 in Listing~\ref{LST:ExprEndScope}) hat keine Entsprechung im Graphen, wurde aber eingeführt um einen (hier eigenen) Typen zurückgeben zu können.
+\begin{figure}[ht]
+    \lstinputlisting[language=Java,caption={Expression: EndScope.java},label={LST:ExprEndScope}]{expr/EndScope.java}
+\end{figure}
+
 
 \section{Joi}
 \begin{figure}[ht]
@@ -571,7 +611,7 @@ Scope5 & DividedMinusPlusTimesScope\\
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
-Scope   & \textbf{Interface}\\\hline
+\textbf{Name des Scopes} & \textbf{Name des Interfaces}\\\hline
 Scope12 & FieldScope\\
 Scope1  & EndScope\\
 Scope0  & BeginScope\\
@@ -587,7 +627,10 @@ Scope8  & Scope8\\
 \end{table}
 
 \section{Optimierungspotenzial}
-
+\subsection{Mehrere Grammatiken verwenden}
+\subsubsection{Regeln in verschiedene Grammatiken aufteilen}
+\subsubsection{Rekursion}
+\subsection{Mehrere Argumente zulassen}
 
 \section{Varianten}
 
