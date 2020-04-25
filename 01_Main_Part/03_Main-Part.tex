@@ -547,7 +547,7 @@ java -jar antlr-test-1.6.1-jar-with-dependencies.jar -d targetDir -p com.package
 \end{lstlisting}
 
 \begin{figure}
-	\lstinputlisting[language=Java,caption={Expression-EBNF (expr.bnf)},label={LST:EXPRBNF}]{expr.bnf}
+\lstinputlisting[language=Java,caption={Expression-EBNF (expr.bnf)},label={LST:EXPRBNF}]{expr.bnf}
 \end{figure}
 
 Der generierte DOT-Graph kann mit z.B. einem Online-Tool\footnote{\url{https://dreampuf.github.io/GraphvizOnline/}} visualisiert werden, um einen Überblick über die Aufruf-Reihenfolge zu erhalten. Der Graph in Abbildung~\ref{FIG:ExprGraph} zeigt den aus der EBNF-Grammatik generierten Graphen. Wie zuvor beschrieben wurden hierfür alle Nicht-Terminale durch ihre entsprechenden Regeln ersetzt wodurch nur ein zusammenhängender Graph entsteht; die Regel \verb|<expr>| diente hierbei als Einstiegs-Regel.
@@ -583,7 +583,7 @@ Die folgenden Interfaces werden für den in Abbildung~\ref{FIG:ExprGraph} gezeig
 \end{figure}
 
 \begin{figure}[ht]
-    \lstinputlisting[language=Java,caption={Expression: Scope3.java},label={LST:ExprScope3}]{expr/Scope3.java}
+\lstinputlisting[language=Java,caption={Expression: Scope3.java},label={LST:ExprScope3}]{expr/Scope3.java}
 \end{figure}
 
 Listing ~\ref{LST:ExprDivideMinusPlusTimesScope} zeigt das generierte Interface mit den Rechenoperationen mit je einer Variante für den Typ Double und Expr. Der Name des Interfaces leitet sich aus allen Methodennamen ab, die alphabetisch sortiert aneinander gehängt werden, der erste Buchstabe der jeweiligen Methode wird zum Großbuchstaben.
@@ -637,6 +637,49 @@ Am Prototypen gibt es noch diverse Möglichkeiten zur Optimierung. Einerseits k�
 \subsubsection{Regeln in verschiedene Grammatiken aufteilen}
 \subsubsection{Rekursion}
 \subsection{Mehrere Argumente zulassen}
+Um in einer Methode mehrere Argumente zuzulassen, können mehrere Typ-Kanten auf eine Keyword-Kanten folgen. Mehrere Argumente könnten zwar durch aufeinander folgende Methodenaufrufe mit je einem Argument ersetzt werden, dennoch ist ein einzelner Methodenaufruf einfacher zu verstehen.
+
+Um mehrere Argumente in der EBNF zu notieren, müsste auf eine Keyword-Kante mehrere Type-Kanten folgen. Bei so einer Abfolge von Knoten erzeugt der Prototyp noch eine Fehlermeldung. Trotzdem wäre dieses Konstrukt relativ einfach umzusetzen, indem im Graphen von der Keyword-Kante aus alle Folge-Kanten vom Typ \gqq{TYPE]} erkannt werden, solange bis eine andere Kante auftritt (Abbildung~\ref{FIG:DiagramMethodTwoArguments}).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+	\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+	\tikzset{edge/.style = {->,> = latex'}}
+	\node[vertex] (a) at  (0,0) {A};
+	\node[vertex] (b) at  (3.33,0) {B};
+	\node[vertex] (c) at  (6.66,0) {C};
+	\node[vertex] (d) at  (10,0) {D};
+	\path[->,draw,thick] (a) edge node[above] {keyword} (b);
+	\path[->,draw,thick] (b) edge node[above] {type} (c);
+	\path[->,draw,thick] (c) edge node[above] {type} (d);
+\end{tikzpicture}
+\caption{Diagramm einer Methode mit zwei Argumenten}
+\label{FIG:DiagramMethodTwoArguments}
+\end{figure}
+
+Mehrere Kombinationen von Argumenten werden ebenfalls nicht unterstützt, wenn nur die Typen in der EBNF in einer Alternative vorkommen. Will man eine Methode mit verschiedenen Argumenten überladen, muss man bisher (wie in Listing~\ref{LST:EXPRBNF}) den Namen der Methode und Typ zusammen in alternativen zusammenfassen. Ein solches Konstrukt könnte auf einen Graphen wie in Abbildung~\ref{FIG:DiagramMethodTwoCombinationsArguments} abgebildet werden.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+	\tikzset{vertex/.style = {shape=circle,draw,minimum size=.2em}}
+	\tikzset{edge/.style = {->,> = latex'}}
+	\node[vertex] (a) at  (0,0) {A};
+	\node[vertex] (b) at  (3.33,0) {B};
+	\node[vertex] (c) at  (6.66,0) {C};
+	\node[vertex] (d) at  (10,0) {D};
+	\node[vertex] (e) at  (6.66,1.5) {E};
+	\path[->,draw,thick] (a) edge node[above] {keyword} (b);
+	\path[->,draw,thick] (b) edge node[above] {typeA} (c);
+	\path[->,draw,thick] (c) edge node[above] {typeB} (d);
+	\path[->,draw,thick, bend left] (b) edge node[above] {typeC} (e);
+	\path[->,draw,thick, bend left] (e) edge node[above] {typeD} (d);
+\end{tikzpicture}
+\caption{Diagramm einer Methode mit zwei verschiedenen Kombinationen von Argumenten}
+\label{FIG:DiagramMethodTwoCombinationsArguments}
+\end{figure}
+
+
 \subsection{Unterstützung für Scala-spezifische Konstrukte}
 Operator-Überladung
 
