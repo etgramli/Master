@@ -124,10 +124,13 @@ Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner
 \section{Notation}\label{SEC:Notation}
 DSLs können auch in der Art der Notation unterschieden werden, es gibt grafische und textuelle DSLs. Ein Beispiel für eine grafische DSL ist UML, textuelle DSLs sind zum Beispiel HTML oder LaTeX. Fowler stellt auch Workbenches vor.\cite[S. 22ff]{Fowler.2010}
 
-\subsection{EBNF}
-Die erweiterte Backus-Naur-Form ist eine Erweiterung der Backus-Naur-Form, um die Syntax von kontextfreien Grammatiken zu notieren. Sie wurde ursprünglich für die Syntax von Pascal eingeführt. Es gibt verschiedene Varianten der Notation (z.B.~\cite{wirthsyntaxnotation.wikipedia} und \cite{ebnfnotations.jinks}) und ist inzwischen ein ISO-Standard\\cite{scowen1996international}, der ebenfalls einen neuen Dialekt einführt.
+\subsection{BNF}
+Die Backus-Naur-Form~\cite{bnf.wikipedia} ist eine Metasprache für kontextfreie Grammatiken (z.B. Syntax von Programmiersprachen) und wurde zur Notation der Sprache Algol entwickelt. Sie wurde mehrfach erweitert (ABNF~\cite{crocker1997augmented}, EBNF~\cite{ebnf.wikipedia}, RBNF~\cite{farrel2009routing}) um Konstrukte (optionales Element und Wiederholung) und die Behandlung von Sonderzeichen zu vereinfachen.
 
-Die EBNF vereinfacht das Ausdrücken von optionalen Elementen und Wiederholungen, wodurch keine zusätzlichen Regeln benötigt werden.
+\subsection{EBNF}
+Die erweiterte Backus-Naur-Form ist eine Erweiterung der BNF, um die Syntax von kontextfreien Grammatiken zu notieren. Im Vergleich zur BNF, die auch für kontextfreie Grammatiken verwendet wird, wurde die EBNF um optionale Elemente und Wiederholungen erweitert. Das führt zu kürzerem und leichter verständlichen Grammatiken. Auch werden die Terminalen in Anführungszeichen geschrieben, wodurch die in der BNF selbst verwendeten Sonderzeichen (\verb|::=|, \verb|<|, \verb|>| und \verb|||) jetzt verwendet werden können.
+
+Die EBNF wurde ursprünglich für die Syntax von Pascal eingeführt. Es gibt verschiedene Varianten der Notation (z.B.~\cite{wirthsyntaxnotation.wikipedia} und \cite{ebnfnotations.jinks}) und ist inzwischen ein ISO-Standard\\cite{scowen1996international}, der ebenfalls einen neuen Dialekt einführt.
 
 \subsection{Grafisch}
 Es gibt auch grafische Notationen für DSLs, etwas das Eclipse Modeling Framework\footnote{\url{http://www.eclipse.org/emf/}}, das sich an der Notation für Klassen von UML anlehnt.
