@@ -634,8 +634,14 @@ Scope1  & EndScope\\
 Am Prototypen gibt es noch diverse Möglichkeiten zur Optimierung. Einerseits könnten mehr Freiheiten beim Verwenden der Grammatiken eingeräumt werden. Und andererseits könnten mehr Konstrukte innerhalb der Hostsprache unterstützt werden.
 
 \subsection{Mehrere Grammatiken verwenden}
+Der Prototyp kann aktuell nur eine Datei mit einer Grammatik verarbeiten. Dadurch ergeben sich die folgenden zwei Einschränkungen.
+
 \subsubsection{Regeln in verschiedene Grammatiken aufteilen}
+Alle Regeln für Nicht-Terminale müssen in der Grammatik-Datei stehen, die dem Prototypen als Argument übergeben wird. Es wäre einfach möglich, mehrere Dateien als Kommandozeilenargumente zuzulassen, wodurch man eine Grammatik in mehrere einzelne Dateien aufteile könnte um etwa alle Nicht-Terminale in eine eigene Datei zu schreiben oder die Regeln anderweitig zu gruppieren.
+
 \subsubsection{Rekursion}
+Um Rekursive Grammatiken zu verarbeiten, kann über den Parameter \verb|-r| ein Rückgabe-Typ der Grammatik angegeben werden, der in der Grammatik selbst verwendet wird. Sollen mehrere Grammatiken verwendet werden, deren Rückgabewert gegenseitig verwendet werden, müssen für sie jeweils in einem eigenen Durchlauf des Prototypen Interfaces generiert werden.
+
 \subsection{Mehrere Argumente zulassen}
 Um in einer Methode mehrere Argumente zuzulassen, können mehrere Typ-Kanten auf eine Keyword-Kanten folgen. Mehrere Argumente könnten zwar durch aufeinander folgende Methodenaufrufe mit je einem Argument ersetzt werden, dennoch ist ein einzelner Methodenaufruf einfacher zu verstehen.
 
