@@ -16,7 +16,9 @@ Die Verarbeitung der Grammatik erfolgt nach dem folgenden Schema:
 \section{Parsen der Grammatik}
 Für das Parsen der Grammatik wurde ANTLR4 verwendet, der adaptive LL(*)-Parser generieren kann, die Grammatiken zur Laufzeit analysieren können, statt zur Compilezeit (siehe~\cite[S. xiii ff]{Parr.2012}). ANTLR selbst ist in Java geschrieben und kann Parser für verschiedene Zielsprachen generieren (u.a. Java, C++, C\#, Python, vgl.~\cite{antlrcodegeneration.github}). Da neue Features vorrangig für den Parser in Java entwickelt werden, und da als Zielsprachen JVM-Sprachen ins Auge gefasst wurden, wird auf dem Parser in Java aufgebaut werden.
 
-Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmiersprache) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
+Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Der Hauptgrund zum Erstellen einer neuen Syntax für Grammatiken, statt die von ANTLR zu verwenden, ist der, dass die Mächtigkeit von ANTLR für den Anwendungsfall nicht benötigt wird; es werden verschiedene Optionen, Importe, Token und Aktionen bereitgestellt~\cite[S. 265ff]{Parr.2012}, mit denen man den von ANTLR generierten Code beeinflussen kann. Die notwendigen Optionen werden beim Aufruf vom Prototypen selbst angegeben.
+
+Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmiersprache) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
 
 \subsection{Festgelegte Syntax}\label{SEC:SetSyntax}
 Die abstrakte Syntax entspricht der der EBNF mit Sequenzen, Gruppierungen, optionalen Elementen und Wiederholungen. Die konkrete Syntax bzw. Notation der EBNF richtet sich an der ISO-Norm orientiert (\cite[S. 7]{scowen1996international}),sich aber leicht davon (Tabelle~\ref{TAB:EBNFSyntax}). So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Die Nicht-Terminal werden, wie in der BNF~\cite[S. 3]{crocker1997augmented}, in spitzen Klammern notiert um sie von Schlüsselworten und Typen zu unterscheiden (siehe Listing~\ref{LST:EBNFGrammar}, Zeilen 28-33). In Listing~\ref{LST:EbnfNumbers} wurde eine Grammatik für ganze Zahlen definiert, um die Notation an einem gängigen Beispiel zu zeigen.
@@ -687,7 +689,8 @@ Mehrere Kombinationen von Argumenten werden ebenfalls nicht unterstützt, wenn n
 
 
 \subsection{Unterstützung für Scala-spezifische Konstrukte}
-Operator-Überladung
+\subsubsection{Operator-Überladung}
+\subsubsection{Klammerung}
 
 
 \end{document}
