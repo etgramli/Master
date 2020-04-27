@@ -21,7 +21,7 @@ Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der
 Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmiersprache) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
 
 \subsection{Festgelegte Syntax}\label{SEC:SetSyntax}
-Die abstrakte Syntax entspricht der der EBNF mit Sequenzen, Gruppierungen, optionalen Elementen und Wiederholungen. Die konkrete Syntax bzw. Notation der EBNF richtet sich an der ISO-Norm orientiert (\cite[S. 7]{scowen1996international}),sich aber leicht davon (Tabelle~\ref{TAB:EBNFSyntax}). So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Die Nicht-Terminal werden, wie in der BNF~\cite[S. 3]{crocker1997augmented}, in spitzen Klammern notiert um sie von Schlüsselworten und Typen zu unterscheiden (siehe Listing~\ref{LST:EBNFGrammar}, Zeilen 28-33). In Listing~\ref{LST:EbnfNumbers} wurde eine Grammatik für ganze Zahlen definiert, um die Notation an einem gängigen Beispiel zu zeigen.
+Die abstrakte Syntax entspricht der EBNF mit Sequenzen, Gruppierungen, optionalen Elementen und Wiederholungen. Die konkrete Syntax bzw. Notation der EBNF orientiert sich an der ISO-Norm~\cite[S. 7]{scowen1996international}, unterscheidet sich aber leicht davon (Tabelle~\ref{TAB:EBNFSyntax}). So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Die Nicht-Terminale werden, wie in der BNF~\cite[S. 3]{crocker1997augmented}, in spitzen Klammern notiert, um sie von Schlüsselworten und Typen zu unterscheiden (siehe Listing~\ref{LST:EBNFGrammar}, Zeilen 28-33). In Listing~\ref{LST:EbnfNumbers} wurde eine Grammatik für ganze Zahlen definiert, um die Notation an einem gängigen Beispiel zu zeigen.
 
 \begin{table}[ht]
 \centering
@@ -51,7 +51,7 @@ Nicht-Terminal         & \verb|< ... >|\\
 \end{figure}
 
 \subsection{Traversieren des Parse-Trees}
-Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten gibt es bei ANTLR4 zwei Möglichkeiten: entweder können die generierten Listener oder Visitor überschreiben werden(vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen generiert. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die Strings im EBNF-Parser selbst nicht gegeben ist.
+Um den Parse-Tree der eingelesenen Grammatik zu verarbeiten, gibt es bei ANTLR4 zwei Möglichkeiten: entweder können die generierten Listener oder Visitor überschreiben werden(vgl.~\cite[S. 112 ff]{Parr.2012}). Die Visitors sollte man implementieren, falls man größtmögliche Kontrolle über das Traversieren des Baumes benötigt. Da das aber nicht nötig ist, werden hier nur die Listener erweitert, um aus den EBNF-Konstrukten (die praktisch Strings entprechen) einen Baum aus eigenen Klassen zu generieren. Dadurch wird eine Typ-Sicherheit hergestellt, die durch die Strings im EBNF-Parser selbst nicht gegeben ist.
 
 Abbildung~\ref{FIG:TypesBNF} zeigt die eigenen Typen des Baumes, der dem Parse-Tree entspricht; in ihm finden sich die Konstrukte der EBNF wieder (z.B. Regeln, Sequenzen, Alternativen, vgl. Abbildung~\ref{LST:EBNFGrammar}). Aus dem Baum dieser Typen werden die Interfaces generiert, wie im folgenden Abschnitt~\ref{SEC:EBNFtoInterface} erklärt wird.
 
@@ -63,14 +63,14 @@ Abbildung~\ref{FIG:TypesBNF} zeigt die eigenen Typen des Baumes, der dem Parse-T
 \end{figure}
 
 \section{Abbildung von EBNF auf Interfaces}\label{SEC:EBNFtoInterface}
-Aus dem Baum ein Graph generiert, dessen Abfolge von Knoten und Kanten die Konstrukte der EBNF darstellt. Die Knoten werden dabei dazu verwendet, die Scopes für das Object Scoping zu repräsentieren, der Typ und die Anzahl der Kanten repräsentierten die Konstrukte der EBNF selbt. Wie die Konstrukte genau abgebildet werden, wird in den folgenden Abschnitten erklärt. Neben den trivialen Fällen wird auf einige verschachtelte Konstrukte eingegangen um zu zeigen, dass einige Konstrukte im Graph verwendet werden, die aus den trivialen Fällen nicht ersichtlich sind.
+Aus dem Baum wird ein Graph generiert, dessen Abfolge von Knoten und Kanten die Konstrukte der EBNF darstellt. Die Knoten werden dabei dazu verwendet, die Scopes für das Object Scoping zu repräsentieren, der Typ und die Anzahl der Kanten repräsentieren die Konstrukte der EBNF selbt. Wie die Konstrukte genau abgebildet werden, wird in den folgenden Abschnitten erklärt. Neben den trivialen Fällen wird auf einige verschachtelte Konstrukte eingegangen, um zu zeigen, dass einige Konstrukte im Graph verwendet werden, die aus den trivialen Fällen nicht ersichtlich sind.
 
 Da bei mehreren Schleifen in einer Alternative von mehreren Interfaces geerbt werden muss, kommen abstrakte Klassen nicht infrage, da diese nur von einer anderen Klasse erben können. Interfaces können stattdessen mehrere andere erweitern.
 
 Zuerst werden jedoch die Eigenschaften des Graphen erläutert und dazu eine entsprechende Bibliothek ausgewählt.
 
 \subsection{Eigenschaften des Graphen}
-Aus der Struktur der EBNF gehen verschiedene Eigenschaften des Graphen heraus; er Graph ist
+Aus der Struktur der EBNF gehen verschiedene Eigenschaften des Graphen heraus; der Graph ist
 \begin{itemize}
 	\item gerichtet (wegen der Sequenz),
 	\item zyklisch (Wiederholung),
@@ -81,7 +81,7 @@ Diese Eigenschaften bezeichnen einen gerichteten, zyklischen Multi- bzw. Pseudog
 
 Da es bei allen im folgenden vorgestellten Abbildungen jeweils einen Knoten ohne eingehende Kanten und einen Knoten ohne ausgehende Kanten gibt, hat der gesamte Graph ebenfalls einen Start- und End-Knoten. Dadurch sind der Start und das Ende des Graphen gegeben, was das Traversieren vereinfacht, der Endknoten kann ebenfalls einfach für eine Build-Methode identifiziert werden.
 
-Beide Start- und End-Knoten müssen im Graph-Builder jedoch manuell verfolgt werden, da während dem Aufbau des Graphen (etwa bei der Alternative) mehrere Knoten mit den Eigenschaften des Endknoten auftreten können.
+Beide Start- und End-Knoten müssen im Graph-Builder jedoch manuell verfolgt werden, da während des Aufbaus des Graphen (etwa bei der Alternative) mehrere Knoten mit den Eigenschaften des Endknotens auftreten können.
 
 \subsubsection{Graphbibliotheken}
 Es gibt mehrere bekannte Bibliotheken für Graphen in Java, die sich im Umfang und Status der Weiterentwicklung unterscheiden. Auf eine Eigenentwicklung wird verzichtet, da die Graphen und zugehörigen Algorithmen in den Bibliotheken schon getestet sind. Hier werden drei Bibliotheken vorgestellt, von denen JGraphT ausgewählt wurde, da hier der Fokus auf die Graphen und Algorithmen gelegt wurde.
@@ -92,7 +92,7 @@ Es gibt mehrere bekannte Bibliotheken für Graphen in Java, die sich im Umfang u
 \end{itemize}
 
 \paragraph{JGraphT}
-JGraphT wird aktiv weiterentwickelt und bietet Typen für verschiedene Arten von Graphen (u.a. gerichtete/ungerichtete, gewichtet/ungewichtet)~\cite{JGraphT}. Außerdem bietet die diese Bibliothek die Möglichkeit eigene Typen für Knoten und Kanten anzugeben, womit man für beide jeweils Identitäten vergeben kann (z.B. spezielle Namen für den Start- und End-Knoten). Darüber hinaus implementiert JGraphT für Graphen typische Algorithmen (u.a. Shortest Path, Coloring, Tiefensuche, Breitensuche, Zyklenerkennung) und Exportfunktionen (z.B. DOT).
+JGraphT wird aktiv weiterentwickelt und bietet Typen für verschiedene Arten von Graphen (u.a. gerichtete/ungerichtete, gewichtet/ungewichtet)~\cite{JGraphT}. Außerdem bietet diese Bibliothek die Möglichkeit eigene Typen für Knoten und Kanten anzugeben, womit man für beide jeweils Identitäten vergeben kann (z.B. spezielle Namen für den Start- und End-Knoten). Darüber hinaus implementiert JGraphT für Graphen typische Algorithmen (u.a. Shortest Path, Coloring, Tiefensuche, Breitensuche, Zyklenerkennung) und Exportfunktionen (z.B. DOT).
 
 Es gibt auch Adapter, um die Algorithmen von JGraphT auf die Typen von Google Guava anzuwenden.
 
@@ -100,14 +100,14 @@ Es gibt auch Adapter, um die Algorithmen von JGraphT auf die Typen von Google Gu
 Google Guava beinhaltet unter anderem auch Typen für Graphen, mit benutzerdefinierten Typen für Knoten oder Knoten und Kanten. Auch gerichtete/ungerichtete und gewichtete/ungewichtete Graphen sind möglich. Aber es gibt kaum Algorithmen, die auf den Typen arbeiten.
 
 \paragraph{Apache Commons}
-Apache Commons bietet auch eine Graph-Bibliothek, die (un)gerichtete und (un)gewichtete Graphen erlaubt, wenige Algorithmen bietet aber nicht mehr weiterentwickelt wird und nur als Version 0.1 vorliegt.
+Apache Commons bietet auch eine Graph-Bibliothek an, die ebenfalls verschiedene Arten von Graphen (un-/gerichtet, un-/gewichtete) und nur wenige Algorithmen implementiert. Diese Bibliothek liegt als Version 0.1 vor und wird seit 2011 nicht mehr weiterentwickelt.
 
 \subsubsection{Typen}
-Abbildung~\ref{FIG:GraphTypes} zeigt die eigenen Typen des Graphen: die Scopes werden als Knoten verwendet und die ScopeEdges als Kanten. Erstere repräsentieren die Interfaces, die letzteren, je nach Klasse und Typ eine Vererbungsbeziehung oder Methode inklusive Argumente.
+Abbildung~\ref{FIG:GraphTypes} zeigt die eigenen Typen des Graphen: die Scopes werden als Knoten verwendet und die ScopeEdges als Kanten. Erstere repräsentieren die Interfaces, die letzteren, je nach Klasse und Typ, eine Vererbungsbeziehung oder Methode inklusive Argumente.
 
 OptionalEdges repräsentieren eine Vererbungsbeziehung, deswegen darf es zwischen zwei Knoten nur eine OptionalEdge geben; eine OptionalEdge mit demselben Quell- und Zielknoten ist ebenfalls nicht erlaubt, da diese Kante überflüssig ist.
 
-NodeEdges mit dem Typ \gqq{KEYWORD} werden zum Schlüsselwort der generierten Sprache, indem für sie eine Methode generiert werden, die den Bezeichner aus der EBNF als Methodennamen verwendet (weitergereicht als String im Node in Abbildung~\ref{FIG:GraphTypes}). Folgt solch einer NodeEdge eine vom Typ \gqq{Type}, wird diese zu einem Argument vom in der EBNF angegebenen Typen; der Name des Typs wird automatisch generiert.
+NodeEdges mit dem Typ \gqq{KEYWORD} werden zum Schlüsselwort der generierten Sprache, indem für sie eine Methode generiert wird, die den Bezeichner aus der EBNF als Methodennamen verwendet (weitergereicht als String im Node in Abbildung~\ref{FIG:GraphTypes}). Folgt solch einer NodeEdge eine vom Typ \gqq{Type}, wird diese zu einem Argument vom in der EBNF angegebenen Typen; der Name des Typs wird automatisch generiert.
 
 NodeEdges vom Typ \gqq{NON\_TERMINAL} entsprechen Nicht-Terminalen in der EBNF und werden benötigt, um die Nicht-Terminalen durch die entsprechenden Regeln zu ersetzen. Dazu wird für jede Regel der EBNF ein eigener Graph aufgebaut und anschließend die Nicht-Terminalen Kanten durch deren entsprechenden Graphen ersetzt.
 \begin{figure}[ht]
@@ -164,7 +164,7 @@ Tritt eine Sequenz von Knoten auf, muss für jeden Knoten ein Interface mit eine
 \end{figure}
 
 \subsection{Kante mit Alternativen}\label{SEC:Alternative}
-Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen Knoten abgebildet werden (siehe Abbildung~\ref{FIG:DiagramAlternativeNodeVariant}). Bei dieser Variante erhält jede Alternative einen eigenen End-Knoten. Das hat jedoch den Nachteil, dass wenn der Alternative in einer Sequenz weiter Elemente folgen, diese auf allen Pfaden der jeweiligen Alternativen dupliziert werden müssen.
+Alternativen in der EBNF können auf zwei Kanten von einem zu zwei verschiedenen Knoten abgebildet werden (siehe Abbildung~\ref{FIG:DiagramAlternativeNodeVariant}). Bei dieser Variante erhält jede Alternative einen eigenen End-Knoten. Das hat jedoch den Nachteil, dass, wenn der Alternative in einer Sequenz weiter Elemente folgen, diese auf allen Pfaden der jeweiligen Alternativen dupliziert werden müssen.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -210,7 +210,7 @@ Deshalb werden stattdessen die Alternativen auf parallele Kanten zwischen zwei K
 \end{figure}
 
 \subsection{Optionales Element}\label{SEC:Optional}
-Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein und auch der nächstfolgende Methodenaufruf verfügbar sein. Das wird dadurch erreicht, indem das erste Interface vom folgenden erbt. Im Graphen wird das durch eine parallele Kante eines anderen Typen (OptionalEdge in Abbildung~\ref{FIG:DiagramOptionalNode}) repräsentiert. Listing~\ref{LST:JInterfaceOptionalNode}) ist, bis auf die Vererbung, gleich zu Listing~\ref{LST:JInterfaceOneElementNode}.
+Im Falle eines optionalen Elementes muss auch der Methodenaufruf optional sein und auch der nächstfolgende Methodenaufruf verfügbar sein. Das wird dadurch erreicht, indem das erste Interface vom folgenden erbt. Im Graphen wird das durch eine parallele Kante eines anderen Typen (OptionalEdge in Abbildung~\ref{FIG:DiagramOptionalNode}) repräsentiert. Listing~\ref{LST:JInterfaceOptionalNode} ist, bis auf die Vererbung, gleich zu Listing~\ref{LST:JInterfaceOneElementNode}.
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -228,14 +228,14 @@ Im Falle eines optionalen Elementes, muss auch der Methodenaufruf optional sein 
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer optionalen Kante},label={LST:JInterfaceOptionalNode}]{Scope_optional.java}
   \end{subfigure}
-  \caption[Abbildung eines optionalen Elements (\texttt{<rule> = [NodeEdgeA];})]{Ein optionales Element (\texttt{<rule> = [NodeEdgeA];}) wird auf ein Interface mit einer Methode, die das Folge-Interface zurück gibt, abgebildet. Das Interface erbt auch vom Folge-Interface um den Methodenaufruf zu überspringen.}
+  \caption[Abbildung eines optionalen Elements (\texttt{<rule> = [NodeEdgeA];})]{Ein optionales Element (\texttt{<rule> = [NodeEdgeA];}) wird auf ein Interface mit einer Methode, die das Folge-Interface zurück gibt, abgebildet. Das Interface erbt auch vom Folge-Interface, um den Methodenaufruf zu überspringen.}
   \label{FIG:OptionalNode}
 \end{figure}
 
 \subsection{Kante mit optionaler Schleife}\label{SEC:OptionalLoop}
-Da die Wiederholung bei EBNF optional ist (beliebig oft oder keinmal auftreten darf), gibt es hier, wie beim optionalen Element eine Kante vom Typ OptionalEdge. Dadurch kann der Methodenaufruf übersprungen werden.
+Da die Wiederholung bei EBNF optional ist (beliebig oft oder keinmal auftreten darf), gibt es hier, wie beim optionalen Element, eine Kante vom Typ OptionalEdge. Dadurch kann der Methodenaufruf übersprungen werden.
 
-Um den Methodenaufruf wiederholbar zu machen kann man nicht einfach eine parallele, optionale Kante in die entgegengesetzte Richtung einfügen, weil diese ebenfalls in eine Vererbung umgesetzt würde; dadurch würde zwischen beiden Interfaces eine zirkuläre Abhängigkeit entstehen, die in Java verboten ist.
+Um den Methodenaufruf wiederholbar zu machen, kann man nicht einfach eine parallele, optionale Kante in die entgegengesetzte Richtung einfügen, weil diese ebenfalls in eine Vererbung umgesetzt würde; dadurch würde zwischen beiden Interfaces eine zirkuläre Abhängigkeit entstehen, die in Java verboten ist.
 
 Stattdessen wird bei der optionalen Wiederholung die Kante, die den Methodenaufruf repräsentiert, eine Schleife zum Knoten selbst. Somit kann die Methode beliebig oft aufgerufen werden, bevor die in B deklarierte Methode aufgerufen wird (Abbildung~\ref{FIG:DiagramLoopNode}).
 \begin{figure}[ht]
@@ -279,7 +279,7 @@ Eine zweite Variante benötigt einen Hilfsknoten (Knoten B in Abbildung~\ref{FIG
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlt}]{Scope_loop_alt.java}
   \end{subfigure}
-  \caption[Abbildung einer optionalen Schleife (Variante 2)]{Eine optionale Schleifen (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilf-Interface, das vom eigentlichen erbt, das zweite enthält die Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
+  \caption[Abbildung einer optionalen Schleife (Variante 2)]{Eine optionale Schleife (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilfs-Interface, das vom eigentlichen erbt, das zweite enthält die Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
   \label{FIG:LoopNodeAlt}
 \end{figure}
 

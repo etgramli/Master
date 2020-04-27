@@ -38,7 +38,7 @@ Bei der Entwicklung einer eigenen DSL läuft man aber auch Gefahr, dass diese nu
 Im Folgenden werden wichtige Terme über DSLs vorgestellt und erklärt.
 
 \subsection{Domäne}
-DSLs werden für einen bestimmten Fachbereich entwickelt, der aus der Informatik selbst kommen kann oder ein fremder sein kann. Beispiele aus der Informatik sind Build-Systeme (Make, Maven, ...) und SQL.
+DSLs werden für einen bestimmten Fachbereich entwickelt, der aus der Informatik selbst kommen oder ein fremder sein kann. Beispiele aus der Informatik sind Build-Systeme (Make, Maven, ...) und SQL.
 
 \subsection{Hostsprache}
 Eine Hostsprache ist eine General-Purpose Programmiersprache, in die eine interne DSL eingebettet ist.
@@ -47,17 +47,17 @@ Eine Hostsprache ist eine General-Purpose Programmiersprache, in die eine intern
 Die konkrete Syntax legt durch eine Notation (Schlüsselworte, Symbole, \ldots) fest, wie etwas formuliert werden kann. Dazu können reguläre Ausdrücke oder EBNF-Gram"-ma"-tiken verwendet werden.
 
 \subsection{Abstrakte Syntax}
-Die abstrakte Syntax beschreibt die Struktur der Sprache, bzw. was mit ihr formuliert werden kann. Sie kann durch abstrakten Syntax-Baum dargestellt werden.
+Die abstrakte Syntax beschreibt die Struktur der Sprache, bzw. was mit ihr formuliert werden kann. Sie kann durch einen abstrakten Syntax-Baum dargestellt werden.
 
 \subsection{Statische Semantik}
-Die statische Semantik sind zusätzliche Einschränkungen für die Wohlgeformtheit von Formulierungen. Konsistenzregeln für abstrakte Syntaxgrafen, die zur Übersetzungszeit geprüft werden könne. Zum Beispiel müssen alle Bezeichner in einem Bereich eindeutig sein-
+Die statische Semantik sind zusätzliche Einschränkungen für die Wohlgeformtheit von Formulierungen. Sie sind Konsistenzregeln für abstrakte Syntaxgrafen, die zur Übersetzungszeit geprüft werden können. Zum Beispiel müssen alle Bezeichner in einem Bereich eindeutig sein.
 
 \subsection{Dynamische Semantik}
-Die dynamische Semantik regelt die Bedeutung von Formulierungen, und welches Verhalten von den Formulierungen erzeugt wird. Zum Beispiel wird aus einer Variablendefinition durch den Compiler eine Speicherreservierung.
+Die dynamische Semantik regelt die Bedeutung von Formulierungen und welches Verhalten von den Formulierungen erzeugt wird. Zum Beispiel wird aus einer Variablendefinition durch den Compiler eine Speicherreservierung.
 
 
 \section{Probleme und Anwendungsfälle}
-DSLs können zum Beispiel für spezielle Unternehmensbereiche (Fakturierung, Lohnabrechnung, ...) oder auch für spezielle Probleme in der Informatik (Datenbankabfragesprachen, Build-Systeme).
+DSLs können zum Beispiel für spezielle Unternehmensbereiche (Fakturierung, Lohnabrechnung, ...) oder auch für spezielle Probleme in der Informatik (Datenbankabfragesprachen, Build-Systeme) infrage kommen.
 
 Ein Problem kann sein, dass eine DSL nur für eine Nische entwickelt wird und kaum angewandt wird oder nicht rentabel ist. Auch können ähnliche DSLs für denselben Anwendungsfall erstellt worden sein und konkurrieren direkt miteinander. Ein weiteres Problem kann schon beim Design der DSL auftreten, etwa dass die Domäne nicht richtig von der Hostsprache abgegrenzt wurde und mehr als nur Probleme der Hostsprache formuliert werden können.
 
@@ -66,7 +66,7 @@ Ein Problem kann sein, dass eine DSL nur für eine Nische entwickelt wird und ka
 Domänenspezifische Sprachen lassen sich auf zwei Arten kategorisieren. Man kann sie einerseits in externe und interne DSLs einteilen, zum Anderen kann man sie in ihrer Notation (Abschnitt~\ref{SEC:Notation}) unterscheiden.
 
 \subsection{Externe DSLs}
-Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die Konkrete Syntax und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) erbracht werden, was für agile Softwareentwicklung nicht optimal ist. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
+Externe DSLs sind eigenständige, neu entwickelte Sprachen. Die konkrete Syntax und Semantik können selbst festgelegt werden und gelten deshalb als mächtiger. Allerdings muss mehr Aufwand für die Erstellung der Tools (Parser, Interpreter/Compiler, \acs{IDE}-Unterstützung) erbracht werden, was für agile Softwareentwicklung nicht optimal ist. Beispiele für externe DSLs sind LaTeX, Awk und SQL.
 
 \subsection{Interne DSLs}
 Interne DSLs werden innerhalb einer Hostsprache definiert und können deshalb dessen Tools mitbenutzen, wodurch der Implementierungsaufwand sinkt. Je nach verwendeter Hostsprache ähneln interne DSLs eher einer Bibliothek oder wirken wie eine eigene Sprache. Da der Aufwand bei internen DSLs geringer ist, eignen sie sich besser als Prototyp in agilen Umgebungen.~\cite{butting2018deriving}
@@ -80,6 +80,7 @@ Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und S
 	\item Method Chaining
 	\item Object Scoping
 	\item Method Sequence
+	\item Fluent Interface
 \end{itemize}
 Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
 
@@ -96,7 +97,7 @@ String string = new StringBuilder.append("Hallo ").append("Welt").append('!').to
 Beim Object Scoping werden Methoden in Interfaces bzw. Objekten gekapselt, von denen geerbt werden kann. Dadurch können Methoden auch nur deklariert und später manuell definiert werden; durch die Vererbung kann auch die Wiederholung und optionalen Elemente modelliert werden.
 
 \subsection{Method Sequence}
-Die Method Sequence ist eine Aufrufreihenfolge von globalen Funktionen und hat den Nachteil, dass die Funktionen global sind und nicht auf Objekten operieren. Dadurch sind die Daten, nicht wie beim Object Scoping und Method Chaining, nicht gekapselt. Üblicherweise wird von globalen Variablen und Funktionen abgeraten, auch Fowler schätzt das Method Chaining als wenigst nützlich ein~\cite[S. 352]{Fowler.2010}. Auch im Prototypen wird auf Method Sequences verzichtet und stattdessen auf Method Chaining und hauptsächlich Object Scoping gesetzt.
+Die Method Sequence ist eine Aufrufreihenfolge von globalen Funktionen und hat den Nachteil, dass die Funktionen global sind und nicht auf Objekten operieren. Dadurch sind die Daten, anders als beim Object Scoping und Method Chaining, nicht gekapselt. Üblicherweise wird von globalen Variablen und Funktionen abgeraten, auch Fowler schätzt das Method Chaining als am wenigsten nützlich ein~\cite[S. 352]{Fowler.2010}. Auch im Prototypen wird auf Method Sequences verzichtet und stattdessen auf Method Chaining und hauptsächlich Object Scoping gesetzt.
 
 \chapter{Grammatiken}\label{SEC:Grammars}
 Programmiersprachen liegen formale Sprachen zugrunde, die in der Chomsky-Hie"-rar"-chie (Abbildung~\ref{fig:chomkskyhierarchie}) gruppiert werden können. Diese formalen Sprachen legen durch Regeln fest, welche Zeichenketten gültig sind und damit zur Sprache gehören. Jede Klasse von Grammatiken beinhaltet auch die Grammatiken tiefer in der Chomsky-Hierarchie. (Überführung ineinander?)
@@ -118,7 +119,7 @@ Kontextfreie Grammatiken erlauben auf der rechten Seite der Bildungsregeln eine 
 Kontextsensitive Grammatiken erlauben auf der linken Seite der Bildungsregeln links und rechts von dem Nicht-Terminal weitere Terminal- und Nicht-Terminal-Symbole. Dadurch können diese Nicht-Terminale nur im Kontext zu anderen Symbolen auftreten. Auch sollte die rechte Seite der Bildungsregel mindestens gleich lang sein wie die linke. Analog wie bei Regulären Grammatiken (siehe Abschnitt~\ref{sec:refulaeregrammatik}) gibt es links-kontextsensitive und rechts-kontextsensitive Grammatiken, bei denen links respektive rechts vom Nicht-Terminal-Symbol weitere Symbole stehen.
 
 \section{Typ-0-Grammatiken}\label{sec:beliebigegrammatik}
-Beliebige formale Grammatik haben keine Einschränkungen, außer dass bei keiner Bildungsregel auf der linke Seite die leere Zeichenkette stehen darf. Der einzige Unterschied zu kontextsensitiven Grammatiken ist der, dass das Nicht-Terminal-Symbol neben einem Kontext auf der rechten Seite auch der leere String werden darf.
+Beliebige formale Grammatiken haben keine Einschränkungen, außer dass bei keiner Bildungsregel auf der linke Seite die leere Zeichenkette stehen darf. Der einzige Unterschied zu kontextsensitiven Grammatiken ist der, dass das Nicht-Terminal-Symbol neben einem Kontext auf der rechten Seite auch der leere String werden darf.
 
 
 \section{Notation}\label{SEC:Notation}
