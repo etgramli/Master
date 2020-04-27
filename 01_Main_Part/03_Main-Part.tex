@@ -279,7 +279,7 @@ Eine zweite Variante benötigt einen Hilfsknoten (Knoten B in Abbildung~\ref{FIG
   \begin{subfigure}[c]{0.49\textwidth}
     \lstinputlisting[language=Java,caption={Java-Interface aus einer Schleifen-Kante (Variante 2)},label={LST:JInterfaceLoopNodeAlt}]{Scope_loop_alt.java}
   \end{subfigure}
-  \caption[Abbildung einer optionalen Schleife (Variante 2)]{Eine optionale Schleife (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilfs-Interface, das vom eigentlichen erbt, das zweite enthält die Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
+  \caption[Abbildung einer optionalen Schleife (Variante 2)]{Eine optionale Schleife (\texttt{<rule> = \{NodeEdge\};}) kann auf zwei Interfaces abgebildet werden. Das erste ist ein Hilfs-Interface, das vom zweiten erbt; das zweite enthält die eigentliche Methode, die das Interface selbst als Rückgabewert zurück gibt. (Variante 2)}
   \label{FIG:LoopNodeAlt}
 \end{figure}
 
@@ -288,7 +288,7 @@ Eine zweite Variante benötigt einen Hilfsknoten (Knoten B in Abbildung~\ref{FIG
 In diesem Abschnitt wird darauf eingegangen, wie die Rekursion der ENBF-Konstrukte behandelt werden können. Die Fälle von Alternative und Schleifen in einer Sequenz werden aus Trivialität übersprungen. Hier soll nur auf Fälle eingegangen werden, die nicht aus den vorherigen Beispielen ersichtlich sind.
 
 \subsubsection{Sequenz in einer Schleife}
-Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine Schleife zum Ziel-Knoten (Abbildung~\ref{FIG:DiagramSequenceInLoop}) der Schleife analog zur trivialen Variante der Schleife (siehe Abbildung~\ref{FIG:DiagramLoopNode}).
+Befindet sich eine Sequenz in einer Schleife, bilden die Knoten und Kanten eine Schleife zum Ziel-Knoten (Abbildung~\ref{FIG:DiagramSequenceInLoop}) der Schleife - analog zur trivialen Variante der Schleife (siehe Abbildung~\ref{FIG:DiagramLoopNode}).
 \begin{figure}[ht]
 \centering
   \begin{subfigure}[c]{0.49\textwidth}
@@ -395,7 +395,7 @@ Befinden sich mehrere Schleifen innerhalb einer Alternative, werden mehrere ausg
     \label{FIG:DiagramLoopsInAlternative}
   \end{subfigure}
   \begin{subfigure}[c]{0.49\textwidth}
-    \lstinputlisting[language=Java,caption={[Java-Interface aus zwei Schleifen innerhalb einer Alternative]Java-Interface aus zwei Schleifen innerhalb einer Alternative. Da hier mehrere ausgehende optionale Kanten bei einem Knoten auftreten wird von mehreren Interfaces geerbt.},label={LST:JInterfaceLoopsInAlternative}]{Alternative_with_inner_loops.java}
+    \lstinputlisting[language=Java,caption={[Java-Interface aus zwei Schleifen innerhalb einer Alternative]Java-Interface aus zwei Schleifen innerhalb einer Alternative. Da hier mehrere ausgehende optionale Kanten bei einem Knoten auftreten, wird von mehreren Interfaces geerbt.},label={LST:JInterfaceLoopsInAlternative}]{Alternative_with_inner_loops.java}
   \end{subfigure}
   \caption[Abbildung mehrere Schleifen innerhalb einer Alternative]{Diagramm und Interface einer Schleife innerhalb einer Alternative (\texttt{<rule> = \{NodeEdgeA\} | NodeEdgeB | \{NodeEdgeC\};})}
   \label{FIG:LoopsInAlternative}
@@ -404,7 +404,7 @@ Befinden sich mehrere Schleifen innerhalb einer Alternative, werden mehrere ausg
 \subsection{Scala}
 Da es in Scala keine Interfaces gibt, kommen entweder abstrakte Klassen oder Traits infrage. Da mehrere Schleifen in einer Alternative Mehrfachvererbung voraussetzen (siehe Abbildung~\ref{FIG:LoopsInAlternative}), scheiden die abstrakten Klassen aus.
 
-Es werden also Traits generiert, die die selben Methoden wie die Interface-Pendants haben und (bis auf void, das auf Unit abgebildet wird) die gleichen Parameter- und Rückgabetypen haben, da die Java-Typen verwendet werden können.
+Es werden also Traits generiert, die dieselben Methoden wie die Interface-Pendants haben und (bis auf void, das auf Unit abgebildet wird) die gleichen Parameter- und Rückgabetypen haben, da die Java-Typen verwendet werden können.
 
 Beispielhaft wird hier noch einmal die optionale Schleife aufgeführt (Abbildung~\ref{FIG:ScalaLoopNodeAlt}), um den generierten Scala-Code zu zeigen, weil bei der Schleife Methoden und Vererbung vorkommen.
 \begin{figure}[ht]
@@ -434,9 +434,9 @@ Beispielhaft wird hier noch einmal die optionale Schleife aufgeführt (Abbildung
 \section{Generierung der Interfaces}
 Die Java-Interfaces und Scala-Traits werden mit StringTemplate generiert, die aus dem ANTLR-Projekt hervorging~\cite{stringtemplate.github} und die von Parr auch vorgeschlagen werden~\cite[S. 313 ff]{Parr.2010}. Zwar gibt es auch andere Template-Engines (z.B. Apache Velocity\footnote{\url{http://velocity.apache.org/}}), aber StringTemplate biete eine bessere Trennung von Daten und Template~\cite{parr2004enforcing}.
 
-Listing~\ref{LST:STJavaInterface} zeigt das Template für Java-Interfaces das ein Interface mit beliebig vielen Super-Interfaces und Methoden erzeugen kann. Das Template für Scala-Traits ist analog aufgebaut, mit dem Unterschied, dass die Reihenfolge der Argumentnamen und -typen unterschiedlich ist und das Interface durch Trait ersetzt wurde.
+Listing~\ref{LST:STJavaInterface} zeigt das Template für Java-Interfaces, das ein Interface mit beliebig vielen Super-Interfaces und Methoden erzeugen kann. Das Template für Scala-Traits ist analog aufgebaut, mit dem Unterschied, dass die Reihenfolge der Argumentnamen und -typen unterschiedlich ist und das Interface durch Trait ersetzt wurde.
 
-Um das Template zu instantiieren muss die Template-Datei geladen und eine Instanz eines Templates (per Namen) erstellt werden (Listing~\ref{LST:STInstantiation}, Zeilen 2 und 3); danach können die Argumente des Templates gesetzt werden (Listing~\ref{LST:STJavaInterface} Zeile 1, Listing~\ref{LST:STInstantiation} Zeilen 4-7). Da StringTemplate die Argument per Lazy Evaluation anwendet wird der Text erst beim Aufruf der Render-Methode ersetzt (Listing~\ref{LST:STInstantiation} Zeile 8) und somit Kollisionen mit dem Inhalt der Argumente vermieden.
+Um das Template zu instantiieren, muss die Template-Datei geladen und eine Instanz eines Templates (per Namen) erstellt werden (Listing~\ref{LST:STInstantiation}, Zeilen 2 und 3); danach können die Argumente des Templates gesetzt werden (Listing~\ref{LST:STJavaInterface} Zeile 1, Listing~\ref{LST:STInstantiation} Zeilen 4-7). Da StringTemplate die Argument per Lazy Evaluation anwendet, wird der Text erst beim Aufruf der Render-Methode ersetzt (Listing~\ref{LST:STInstantiation} Zeile 8) und somit Kollisionen mit dem Inhalt der Argumente vermieden.
 \begin{lstlisting}[language=,caption={String-Template für ein Java-Interface mit Methoden},label=LST:STJavaInterface]
 javaInterface(package,interfaceName,parents,methods) ::= <<
 package <package>;
@@ -470,9 +470,9 @@ Durch die in der EBNF gewählten Bezeichner können Kollisionen mit den Schlüss
 Vor dem Speichern der Interfaces wird geprüft, ob die Interface-, Methoden- und Argumentnamen Schlüsselworte oder Typen von Java und Scala sind. Bei Kollisionen von Interfacenamen wird der interne Bezeichner angehängt, bei Methodennamen kann \gqq{Method} angehängt werden, und bei Argumentnamen wird ein \gqq{an} vorangestellt und der eigentliche Name im Camelcase angehängt. Die Argument-Typen dürfen auch Typen der Hostsprache sein, aber kein Schlüsselwort.
 
 \subsection{Benennung der Interfaces}
-Die Scopes erhalten im Graphen interne, eindeutige Bezeichner; diese könnten als Namen für die Interfaces verwendet werden, da bis auf das Start-Interfaces alle nicht instantiiert werden, sondern nur deren Methoden aufgerufen oder implementiert werden. Da der Start- und End-Scope des Graphen eindeutig bestimmbar sind, werden diese mit BeginScope respekive EndScope benannt.
+Die Scopes erhalten im Graphen interne, eindeutige Bezeichner; diese könnten als Namen für die Interfaces verwendet werden, da bis auf das Start-Interfaces keins vom Anwender instantiiert werden, sondern nur deren Methoden aufgerufen oder implementiert werden. Da der Start- und End-Scope des Graphen eindeutig bestimmbar sind, werden diese mit BeginScope respektive EndScope benannt.
 
-Um die restlichen Interfaces trotzdem mit sprechenden Namen zu versehen, werden die Namen der Methoden und \gqq{Scope} aneinander gehängt, wobei die Namenskonvention von Java (Camelcase) eingehalten wird. Dabei gibt es, bis auf eine Ausnahme, für jedes Interface mindestens eine Methode, die zur Namensgenerierung verwendet werden kann (siehe Abschnitte~\ref{SEC:OneNode}~bis~\ref{SEC:OptionalLoop}). Nur die Scopes, die direkt vor einer optionalen Wiederholung auftreten, haben keine ausgehende Kante vom Typ NodeEdge (seihe Abschnitt~\ref{SEC:OptionalLoop}); für diese Interfaces muss der interne Bezeichner aus dem Graphen als Interfacename gewählt werden.
+Um die restlichen Interfaces trotzdem mit sprechenden Namen zu versehen, werden die Namen der Methoden und \gqq{Scope} aneinander gehängt, wobei die Namenskonvention von Java (Camelcase) eingehalten wird. Dabei gibt es, bis auf eine Ausnahme, für jedes Interface mindestens eine Methode, die zur Namensgenerierung verwendet werden kann (siehe Abschnitte~\ref{SEC:OneNode}~bis~\ref{SEC:OptionalLoop}). Nur die Scopes, die direkt vor einer optionalen Wiederholung auftreten, haben keine ausgehende Kante vom Typ NodeEdge (siehe Abschnitt~\ref{SEC:OptionalLoop}); für diese Interfaces muss der interne Bezeichner aus dem Graphen als Interfacename gewählt werden.
 
 Auch können Kollisionen vorkommen, etwa wenn ein Nicht-Terminal oder ein Keyword mehrfach vorkommt. Dann wäre der Name für das Interface nicht mehr eindeutig und es wird der interne Bezeichner des Scopes aus dem Graphen an das beschriebene Schema angehängt. Somit bleibt der Name des Interfaces eindeutig, da die Bezeichner innerhalb des Graphen eindeutig gewählt wurden.
 
@@ -492,7 +492,7 @@ Die EBNF-Grammatik kann nicht beliebig formuliert sein, es gibt folgende Einschr
 \begin{itemize}
 	\item Für alle Nicht-Terminale muss es eine Regel mit demselben Namen geben
 	\item Eine Kante vom Typ \gqq{Type} muss einer vom Typ \gqq{Keyword} vorangehen,
-	\item Eine Methoden kann höchstens ein Argument haben
+	\item Eine Methode kann höchstens ein Argument haben
 	\item Eine Start-Regel muss definiert werden
 	\item Lexer-Regeln für die Umsetzung der Tokens
 	\item Methodennamen können nicht beliebig gewählt werden
@@ -501,13 +501,13 @@ Die EBNF-Grammatik kann nicht beliebig formuliert sein, es gibt folgende Einschr
 \subsection{Nicht-Terminale}
 Alle Nicht-Terminale, die in der Grammatik vorkommen, müssen in derselben Grammatik eine entsprechende Regel haben. Diese Regel muss den gleichen Namen wie das zu ersetzende Nicht-Terminal haben, damit es durch die Regel ersetzt werden kann. Da in dem Prototypen nicht mehrere Grammatiken verarbeitet werden können, muss die Regel in der gleichen Grammatik stehen.
 
-Ansonsten muss sich die zu ersetzende Regel an die restlichen (folgenden) Einschränkungen halten. Auch muss beachtet werden, dass nach dem Ersetzen einer Regel nicht zwei Kanten vom Typ \gqq{TYPE} nicht aufeinander folgen.
+Ansonsten muss sich die zu ersetzende Regel an die restlichen (folgenden) Einschränkungen halten. Auch muss beachtet werden, dass nach dem Ersetzen einer Regel nicht zwei Kanten vom Typ \gqq{TYPE} aufeinander folgen.
 
 \subsubsection{Folge von Type auf Keyword}\label{SEC:TypeFollowsKeyword}
 Um die Schlüsselworte der Sprache umzusetzen, werden die Keywords aus der EBNF auf Methoden abgebildet, und die Typen aus der EBNF auf Typen der Hostsprache (oder eigens definierte Typen). Deshalb ergibt es innerhalb der in diesem Kontext geschriebener EBNF keinen Sinn, wenn ein Keyword nicht einem Typ vorangeht.
 
 \subsubsection{Methode mit einem Argument}
-Mit Abschnitt~\ref{SEC:TypeFollowsKeyword} hängt das Auftreten und die Anzahl der Argumente zusammen. Die einfachste Möglichkeit ist es nur ein Argument zuzulassen, indem einem Keyword nur ein Typ folgen darf, der das Argument darstellt. Es ist auch möglich eine Folge von Typen an ein Keyword anzuhängen, das wird vom Prototypen aber noch nicht unterstützt.
+Mit Abschnitt~\ref{SEC:TypeFollowsKeyword} hängt das Auftreten und die Anzahl der Argumente zusammen. Die einfachste Möglichkeit ist es, nur ein Argument zuzulassen, indem einem Keyword nur ein Typ folgen darf, der das Argument darstellt. Es ist auch möglich eine Folge von Typen an ein Keyword anzuhängen, das wird vom Prototypen aber noch nicht unterstützt.
 
 \subsubsection{Startregel}
 In der Grammatik muss eine Startregel definiert sein, die auf der rechten Seite nur ein Nicht-Terminal beinhaltet. Diese Regel wird als Einstiegspunkt für das Ersetzen der Graphen der Nicht-Terminalen verwendet.
@@ -518,13 +518,13 @@ Für jede Lexer-Regel sollte es eine entsprechende Parser-Regel geben, die nur d
 Falls eine Regel innerhalb einer anderen vorkommt, ohne ein Trennsymbol zu einer anderen, darf es ebenfalls keine Lexer-Regel sein, um vom Listener erkannt zu werden.
 
 \subsubsection{Methodennamen}
-Die Schlüsselwörter in der EBNF, die auf Methodennamen abgebildet werden, können nicht beliebig gewählt werden, da Kollisionen mit der Hostsprache auftreten dürfen. Schlüsselworte und (benutzerdefinierte) Typen dürfen nicht verwendet werden. Schlüsselworte von Java uns Scala und die primitiven Datentypen werden erkannt und erzeugen eine Fehlermeldung. Benutzerdefinierte Typen müssen schon beim Schreiben der Grammatik selbst vermieden werden.
+Die Schlüsselwörter in der EBNF, die auf Methodennamen abgebildet werden, können nicht beliebig gewählt werden, da Kollisionen mit der Hostsprache auftreten dürfen. Schlüsselworte und (benutzerdefinierte) Typen dürfen nicht verwendet werden. Schlüsselworte von Java und Scala und die primitiven Datentypen werden erkannt und erzeugen eine Fehlermeldung. Benutzerdefinierte Typen müssen schon beim Schreiben der Grammatik selbst vermieden werden.
 
 
 \subsection{Behandlung der Rekursion}
 Die in der EBNF-Grammatik vorkommende Rekursion (Alternative in Wiederholung in Sequenz in Alternative) wird korrekt behandelt, um den korrekten Parse-Tree zu erstellen. Auch können die Nicht-Terminale durch ihre Repräsentation aus derselben Grammatik richtig ersetzt werden.
 
-Jedoch können Grammatiken nicht ineinander geschachtelt werden; das könnte dazu verwendet werden um durch eine Grammatik einen Typen zu generieren, der in einer anderen als Typ eines Arguments vorkommt.
+Jedoch können Grammatiken nicht ineinander geschachtelt werden; das könnte dazu verwendet werden, um durch eine Grammatik einen Typen zu generieren, der in einer anderen als Typ eines Arguments vorkommt.
 
 Stattdessen kann man mit dem Prototypen eine Grammatik verarbeiten, dessen letztes Interface mit der End-Methode ein Objekt vom einem spezifiziertem Typ zurück liefert (siehe Parameter~\gqq{-r}\footnote{\url{https://github.com/etgramli/AntlrTest}}). Diesen Rückgabetyp kann man als Typ für ein Argument in einer anderen Grammatik verwenden.
 
@@ -562,9 +562,9 @@ Der Prototyp kann entweder als eigenständige Anwendung in der Kommandozeile ver
 \end{table}
 
 \section{Mathematische Ausdrücke}
-Das erste Beispiel, an dem der Prototyp demonstriert wird, soll ein gängiges sein. Deswegen wurde dafür mathematische Ausdrücke ausgewählt. Listing~\ref{LST:EXPRBNF} zeigt die Definition der Ausdrücke als EBNF. Hier wird für jede Grundrechenart eine Regel deklariert, die die je eine Alternative mit dem Typ Double und Expr enthält, der als Rückgabetyp des Programms angegeben werden kann.
+Das erste Beispiel, an dem der Prototyp demonstriert wird, soll ein gängiges sein. Deswegen wurden dafür mathematische Ausdrücke ausgewählt. Listing~\ref{LST:EXPRBNF} zeigt die Definition der Ausdrücke als EBNF. Hier wird für jede Grundrechenart eine Regel deklariert, die die je eine Alternative mit dem Typ Double und Expr enthält, der als Rückgabetyp des Programms angegeben werden kann.
 
-Mit dem Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} kann mit einem Aufruf auch ein Graphen wie in Abbildung~\ref{FIG:ExprGraph} generiert werden. Der Aufruf kann zum Beispiel so aussehen:
+Mit dem Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} kann mit einem Aufruf auch ein Graph wie in Abbildung~\ref{FIG:ExprGraph} generiert werden. Der Aufruf kann zum Beispiel so aussehen:
 \begin{lstlisting}
 java -jar antlr-test-1.6.1-jar-with-dependencies.jar -d targetDir -p com.package.expr -g expr.bnf -s exprGraph.dot -r Expr
 \end{lstlisting}
@@ -573,7 +573,7 @@ java -jar antlr-test-1.6.1-jar-with-dependencies.jar -d targetDir -p com.package
 \lstinputlisting[language=Java,caption={Expression-EBNF (expr.bnf)},label={LST:EXPRBNF}]{expr.bnf}
 \end{figure}
 
-Der generierte DOT-Graph kann mit z.B. einem Online-Tool\footnote{\url{https://dreampuf.github.io/GraphvizOnline/}} visualisiert werden, um einen Überblick über die Aufruf-Reihenfolge zu erhalten. Der Graph in Abbildung~\ref{FIG:ExprGraph} zeigt den aus der EBNF-Grammatik generierten Graphen. Wie zuvor beschrieben wurden hierfür alle Nicht-Terminale durch ihre entsprechenden Regeln ersetzt wodurch nur ein zusammenhängender Graph entsteht; die Regel \verb|<expr>| diente hierbei als Einstiegs-Regel.
+Der generierte DOT-Graph kann mit z.B. einem Online-Tool\footnote{\url{https://dreampuf.github.io/GraphvizOnline/}} visualisiert werden, um einen Überblick über die Aufruf-Reihenfolge zu erhalten. Der Graph in Abbildung~\ref{FIG:ExprGraph} zeigt den aus der EBNF-Grammatik generierten Graphen. Wie zuvor beschrieben wurden hierfür alle Nicht-Terminale durch ihre entsprechenden Regeln ersetzt, wodurch nur ein zusammenhängender Graph entsteht; die Regel \verb|<expr>| diente hierbei als Einstiegs-Regel.
 
 \begin{figure}[ht]
 \centering
@@ -582,7 +582,7 @@ Der generierte DOT-Graph kann mit z.B. einem Online-Tool\footnote{\url{https://d
 \label{FIG:ExprGraph}
 \end{figure}
 
-In diesem Graphen werden noch keine sprechenden Namen verwendet, sondern es werden die graph-internen Bezeichnungen der Scopes verwendet. Die aussagekräftigen Namen werden erst beim Generieren der Interfaces generiert, da erst hier auf Kollisionen mit Typen und Schlüsselworten der Hostsprache überprüft wird. Tabelle~\ref{TAB:MappingExpressionScopeToInterface} zeigt welche Namen der Interfaces im Vergleich mit den Namen der zugehörigen Scopes.
+In diesem Graphen werden noch keine sprechenden Namen verwendet, sondern es werden die graph-internen Bezeichnungen der Scopes verwendet. Die aussagekräftigen Namen werden erst beim Generieren der Interfaces generiert, da erst hier auf Kollisionen mit Typen und Schlüsselworten der Hostsprache überprüft wird. Tabelle~\ref{TAB:MappingExpressionScopeToInterface} zeigt, wie die Namen der Scopes auf die Namen der Interfaces abgebildet wurden.
 
 Man sieht hier auch, dass nicht zu jedem Knoten des Graphen ein eigenes Interfaces generiert wird. Da die Kanten vom Typ \gqq{KEYWORD} auf Methoden abgebildet werden, werden folgende TYP-Kanten auf Argumente abgebildet; der Knoten dazwischen repräsentiert also kein Interface und erhält auch keinen sprechenden Namen. Knoten, die nur ausgehende, optionale Kanten haben (z.B. Scope3 in Abbildung~\ref{FIG:ExprGraph}), erhalten ebenfalls keinen sprechenden Namen, da es für diese Knoten keine Methoden gibt, aus denen der Name generiert wird. Der End-Scope ohne ausgehende Kanten würde nach der Regel ebenfalls keinen Namen erhalten, wird aber stets \gqq{EndScope} genannt, da es nur einen solchen Scope gibt (siehe~\ref{SEC:Alternative}).
 
@@ -614,7 +614,7 @@ Listing ~\ref{LST:ExprDivideMinusPlusTimesScope} zeigt das generierte Interface 
     \lstinputlisting[language=Java,caption={Expression: DividedMinusPlusTimesScope.java},label={LST:ExprDivideMinusPlusTimesScope}]{expr/DividedMinusPlusTimesScope.java}
 \end{figure}
 
-Die End-Methode im EndScope (Zeile 4 in Listing~\ref{LST:ExprEndScope}) hat keine Entsprechung im Graphen, wurde aber eingeführt um einen (hier eigenen) Typen zurückgeben zu können.
+Die End-Methode im EndScope (Zeile 4 in Listing~\ref{LST:ExprEndScope}) hat keine Entsprechung im Graphen, wurde aber eingeführt, um einen (hier eigenen) Typen zurückgeben zu können.
 \begin{figure}[ht]
     \lstinputlisting[language=Java,caption={Expression: EndScope.java},label={LST:ExprEndScope}]{expr/EndScope.java}
 \end{figure}
@@ -634,7 +634,7 @@ Abbildung~\ref{FIG:JoiGraph} zeigt den vom Prototypen generierte Graph; hier fä
 \label{FIG:JoiGraph}
 \end{figure}
 
-An diesem Beispiel sieht man auch das Verhalten bei Kollisionen von Interface-Namen, da mehrere Nicht-Termiale mehrfach vorkommen. Dadurch treten mehrere Scopes auf, die Interfaces mit gleichen Methoden erzeugen und somit die gleichen Interface-Namen generierten. Um bei diesen Kollisionen immer noch eindeutige Namen für die Interfaces zu erhalten, werden die Namen der Scoes aus dem Graphen angehängt (Tabelle~\ref{TAB:MappingJoiScopeToInterface}: Scope4, -7, -6, -10).
+An diesem Beispiel sieht man auch das Verhalten bei Kollisionen von Interface-Namen, da mehrere Nicht-Termiale mehrfach vorkommen. Dadurch treten mehrere Scopes auf, die Interfaces mit gleichen Methoden erzeugen und somit die gleichen Interface-Namen generierten. Um bei diesen Kollisionen immer noch eindeutige Namen für die Interfaces zu erhalten, werden die Namen der Scopes aus dem Graphen angehängt (Tabelle~\ref{TAB:MappingJoiScopeToInterface}: Scope4, -7, -6, -10).
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
@@ -660,7 +660,7 @@ Am Prototypen gibt es noch diverse Möglichkeiten zur Optimierung. Einerseits k�
 Der Prototyp kann aktuell nur eine Datei mit einer Grammatik verarbeiten. Dadurch ergeben sich die folgenden zwei Einschränkungen.
 
 \subsubsection{Regeln in verschiedene Grammatiken aufteilen}
-Alle Regeln für Nicht-Terminale müssen in der Grammatik-Datei stehen, die dem Prototypen als Argument übergeben wird. Es wäre einfach möglich, mehrere Dateien als Kommandozeilenargumente zuzulassen, wodurch man eine Grammatik in mehrere einzelne Dateien aufteile könnte um etwa alle Nicht-Terminale in eine eigene Datei zu schreiben oder die Regeln anderweitig zu gruppieren.
+Alle Regeln für Nicht-Terminale müssen in der Grammatik-Datei stehen, die dem Prototypen als Argument übergeben wird. Es wäre einfach möglich, mehrere Dateien als Kommandozeilenargumente zuzulassen, wodurch man eine Grammatik in mehrere einzelne Dateien aufteilen könnte um etwa alle Nicht-Terminale in eine eigene Datei zu schreiben oder die Regeln anderweitig zu gruppieren.
 
 \subsubsection{Rekursion}
 Um Rekursive Grammatiken zu verarbeiten, kann über den Parameter \verb|-r| ein Rückgabe-Typ der Grammatik angegeben werden, der in der Grammatik selbst verwendet wird. Sollen mehrere Grammatiken verwendet werden, deren Rückgabewert gegenseitig verwendet werden, müssen für sie jeweils in einem eigenen Durchlauf des Prototypen Interfaces generiert werden.
@@ -687,7 +687,7 @@ Um mehrere Argumente in der EBNF zu notieren, müsste auf eine Keyword-Kante meh
 \label{FIG:DiagramMethodTwoArguments}
 \end{figure}
 
-Mehrere Kombinationen von Argumenten werden ebenfalls nicht unterstützt, wenn nur die Typen in der EBNF in einer Alternative vorkommen. Will man eine Methode mit verschiedenen Argumenten überladen, muss man bisher (wie in Listing~\ref{LST:EXPRBNF}) den Namen der Methode und Typ zusammen in alternativen zusammenfassen. Ein solches Konstrukt könnte auf einen Graphen wie in Abbildung~\ref{FIG:DiagramMethodTwoCombinationsArguments} abgebildet werden.
+Mehrere Kombinationen von Argumenten werden ebenfalls nicht unterstützt, wenn nur die Typen in der EBNF in einer Alternative vorkommen. Will man eine Methode mit verschiedenen Argumenten überladen, muss man bisher (wie in Listing~\ref{LST:EXPRBNF}) den Namen der Methode und Typ zusammen in Alternativen zusammenfassen. Ein solches Konstrukt könnte auf einen Graphen wie in Abbildung~\ref{FIG:DiagramMethodTwoCombinationsArguments} abgebildet werden.
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
