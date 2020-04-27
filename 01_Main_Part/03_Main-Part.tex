@@ -540,6 +540,27 @@ Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Int
 \chapter{Testlauf mit anschaulichem Beispiel}\label{SEC:Example}
 In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} anhand von zwei Beispielen dokumentiert. Zuerst werden Interfaces für mathematische Ausdrücke generiert, und dann ein Beispiel eines Typsystems vorgestellt.
 
+\section{Verwendung des Prototypen}
+Der Prototyp kann entweder als eigenständige Anwendung in der Kommandozeile verwendet oder als Maven-Abhängigkeit eingebunden werden\footnote{\url{https://github.com/etgramli/AntlrTest/packages/145801}}. Die Abhängigkeit kann zum Beispiel verwendet werden um die Klasse, die die Interfaces bzw. Traits als Dateien schreibt, für eine neue Hostsprache zu erweitern. In diesem Kapitel wird nur die Benutzung des Prototypen beschrieben; die Kommandozeilenargumente sind in Tabelle~\ref{TAB:PrototypeCMD} aufgeführt (und werden auf der Projektseite\footnote{\url{https://github.com/etgramli/AntlrTest}} genauer beschrieben). Für die hier vorgestellten Beispiele sind nur die ersten vier Parameter wichtig. Zusätzlich werden die mit der Option -s generierten Graphen angegeben, für die Funktionalität des Prototyps selbst ist sie aber nicht wichtig.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llll}
+\multicolumn{2}{c|}{\textbf{Option}} & & \\
+\textbf{Kurz} & \multicolumn{1}{c|}{\textbf{Lang}} & \textbf{Argument} & \textbf{Pflicht}\\\hline
+-d & --directory    & Pfad zu Ordner  & Ja\\
+-p & --package      & Java-Package    & Ja\\
+-g & --grammar      & Grammatik-Datei & Ja\\
+-r & --return-type  & String          & Nein\\
+-j & --java         & <keins>         & Nein\\
+-c & --scala        & <keins>         & Nein\\
+-s & --sketch-graph & Dateiname       & Nein\\
+-h & --help         & <keins>         & Nein\\
+\end{tabular}
+\caption{Kommandozeilenargumente des Prototypen}
+\label{TAB:PrototypeCMD}
+\end{table}
+
 \section{Mathematische Ausdrücke}
 Das erste Beispiel, an dem der Prototyp demonstriert wird, soll ein gängiges sein. Deswegen wurde dafür mathematische Ausdrücke ausgewählt. Listing~\ref{LST:EXPRBNF} zeigt die Definition der Ausdrücke als EBNF. Hier wird für jede Grundrechenart eine Regel deklariert, die die je eine Alternative mit dem Typ Double und Expr enthält, der als Rückgabetyp des Programms angegeben werden kann.
 
@@ -690,7 +711,8 @@ Mehrere Kombinationen von Argumenten werden ebenfalls nicht unterstützt, wenn n
 
 \subsection{Unterstützung für Scala-spezifische Konstrukte}
 \subsubsection{Operator-Überladung}
-\subsubsection{Klammerung}
+\subsubsection{Klammerung und Punkte}
+\subsubsection{Implizite und explizite Typumwandlung}
 
 
 \end{document}
