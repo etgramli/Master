@@ -18,7 +18,7 @@ Für das Parsen der Grammatik wurde ANTLR4 verwendet, der adaptive LL(*)-Parser 
 
 Um die Grammatiken zu notieren verwendet ANTLR eine Syntax die sich nicht an der ISO-Norm sondern an einer alten EBNF-Variante orientiert. In dieser Syntax wurde eine Grammatik erstellt, um die in Abschnitt~\ref{SEC:SetSyntax} festgelegte Notation der EBNF zu parsen (Listing~\ref{LST:EBNFGrammar}). Der Hauptgrund zum Erstellen einer neuen Syntax für Grammatiken, statt die von ANTLR zu verwenden, ist der, dass die Mächtigkeit von ANTLR für den Anwendungsfall nicht benötigt wird; es werden verschiedene Optionen, Importe, Token und Aktionen bereitgestellt~\cite[S. 265ff]{Parr.2012}, mit denen man den von ANTLR generierten Code beeinflussen kann. Die notwendigen Optionen werden beim Aufruf vom Prototypen selbst angegeben.
 
-Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmiersprache) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33).
+Beim verfassen der Grammatik wurde schon darauf Rücksicht genommen, dass man Schlüsselworte und Typen (einer Programmiersprache) angeben kann (siehe Listing~\ref{LST:EBNFGrammar} Zeile 24-33)~\cite{FluentAPI.lukaseder}. Damit soll klargestellt werden, welches Symbol der Grammatik auf eine Methode und welches auf ein Argument in der DSL abgebildet wird.
 
 \subsection{Festgelegte Syntax}\label{SEC:SetSyntax}
 Die abstrakte Syntax entspricht der EBNF mit Sequenzen, Gruppierungen, optionalen Elementen und Wiederholungen. Die konkrete Syntax bzw. Notation der EBNF orientiert sich an der ISO-Norm~\cite[S. 7]{scowen1996international}, unterscheidet sich aber leicht davon (Tabelle~\ref{TAB:EBNFSyntax}). So gibt es in der Sequenz keine Trennzeichen (im ISO-Standard das Komma) und es werden keine Kommentare und keine Ausnahmen unterstützt. Die Nicht-Terminale werden, wie in der BNF~\cite[S. 3]{crocker1997augmented}, in spitzen Klammern notiert, um sie von Schlüsselworten und Typen zu unterscheiden (siehe Listing~\ref{LST:EBNFGrammar}, Zeilen 28-33). In Listing~\ref{LST:EbnfNumbers} wurde eine Grammatik für ganze Zahlen definiert, um die Notation an einem gängigen Beispiel zu zeigen.
@@ -629,7 +629,7 @@ Dieses Beispiel zeigt eine Grammatik, mit der man Objekte modellieren kann, dene
 Abbildung~\ref{FIG:JoiGraph} zeigt den vom Prototypen generierte Graph; hier fällt auf, dass sich zwischen den beiden optionalen Schleifen (Scope 10 und 12) nur eine optionale Kante befindet und nicht zwei, wie man aus dem Beispiel aus Abschnitt~\ref{SEC:OptionalLoop} erwarten könnte. Dieser Scope würde ein leeres Interface generieren, das ein anderes erweitert, und das von nur einem anderen erweitert wird. Da dieses Interface überflüssig wäre und auch schon der Scope keine Informationen trägt, wird er schon beim Aufbau des Graphen verworfen.
 \begin{figure}[ht]
 \centering
-\resizebox{0.45\linewidth}{!}{\input{\main/10_Pictures/joi.tex}}
+\resizebox{0.5\linewidth}{!}{\input{\main/10_Pictures/joi.tex}}
 \caption{Graph generiert aus der Joi-EBNF}
 \label{FIG:JoiGraph}
 \end{figure}

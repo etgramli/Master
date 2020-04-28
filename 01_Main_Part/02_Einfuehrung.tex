@@ -75,14 +75,12 @@ Interne DSLs können zum Beispiel als Fluent-\acs{API} umgesetzt werden.
 
 
 \section{Formulierung innerhalb der Hostsprache}
-Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freihet beim Design der Sprache als etwa Java. In Java werden DSLs als (fluent) API umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Beispiele sind:
+Interne DSLs kann man, je nach Hostsprache, unterschiedlich umsetzen. Ruby und Scala erlauben mehr Freiheit beim Design der Sprache als etwa Java. In Java werden DSLs als Fluent Interfafe~\cite{FluentInterface.Wikipedia} umgesetzt, die ähnlich wie Bibliotheken sind, aber in der Formulierung mit Methoden DSLs ähneln. Mit den folgenden Techniken können Fluent Interfaces umgesetzt werden, deren Vor- und Nachteile in den kommenden Abschnitten erklärt werden:
 \begin{itemize}
 	\item Method Chaining
 	\item Object Scoping
 	\item Method Sequence
-	\item Fluent Interface
 \end{itemize}
-Im Folgenden wird kurz auf die Vor- und Nachteile der einzelnen Konstrukte eingegangen.
 
 \subsection{Method Chaining}
 Beim Method Chaining werden mehrere Methoden, die ein Objekt manipulieren, direkt nacheinander aufgerufen (z.B. iostream in C++ oder StringBuilder in Java~\ref{LST:StringBuilder}). Nach Fowler ist Method Chaining eine wichtige Methode zur Implementierung von internen DSLs~\cite[S.~373]{Fowler.2010}. Im Prototypen wird deshalb auch direkt Method Chaining angewandt.
