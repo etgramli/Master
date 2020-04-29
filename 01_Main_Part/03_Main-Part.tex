@@ -506,8 +506,10 @@ Ansonsten muss sich die zu ersetzende Regel an die restlichen (folgenden) Einsch
 \subsubsection{Folge von Type auf Keyword}\label{SEC:TypeFollowsKeyword}
 Um die Schlüsselworte der Sprache umzusetzen, werden die Keywords aus der EBNF auf Methoden abgebildet, und die Typen aus der EBNF auf Typen der Hostsprache (oder eigens definierte Typen). Deshalb ergibt es innerhalb der in diesem Kontext geschriebener EBNF keinen Sinn, wenn ein Keyword nicht einem Typ vorangeht.
 
-\subsubsection{Methode mit einem Argument}
+\subsubsection{Methode mit einem Parameter}
 Mit Abschnitt~\ref{SEC:TypeFollowsKeyword} hängt das Auftreten und die Anzahl der Argumente zusammen. Die einfachste Möglichkeit ist es, nur ein Argument zuzulassen, indem einem Keyword nur ein Typ folgen darf, der das Argument darstellt. Es ist auch möglich eine Folge von Typen an ein Keyword anzuhängen, das wird vom Prototypen aber noch nicht unterstützt.
+
+Da der Typ des Parameters ein Typ der Hostsprache sein kann, wird dadurch Literale und Ausdrücke der Hostsprache in die DSL selbst eingebettet werden. Da der Typ auch ein eigener sein kann, kann eine Rekursion erreicht werden, indem der mit dem Parameter (an den Prototypen) spezifizierte Typ verwendet wird. Somit wird die Mächtigkeit einer kontextfreien Sprache erreicht.
 
 \subsubsection{Startregel}
 In der Grammatik muss eine Startregel definiert sein, die auf der rechten Seite nur ein Nicht-Terminal beinhaltet. Diese Regel wird als Einstiegspunkt für das Ersetzen der Graphen der Nicht-Terminalen verwendet.
