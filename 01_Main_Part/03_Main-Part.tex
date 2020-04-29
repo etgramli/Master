@@ -589,7 +589,8 @@ Man sieht hier auch, dass nicht zu jedem Knoten des Graphen ein eigenes Interfac
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
-\textbf{Name des Scopes} & \textbf{Name des Interfaces}\\\hline
+\multicolumn{2}{c}{\textbf{Name des}}\\
+\textbf{Scopes} & \textbf{Interfaces}\\\hline
 Scope0 & BeginScope\\
 Scope3 & Scope3\\
 Scope5 & DividedMinusPlusTimesScope\\
@@ -638,7 +639,8 @@ An diesem Beispiel sieht man auch das Verhalten bei Kollisionen von Interface-Na
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
-\textbf{Name des Scopes} & \textbf{Name des Interfaces}\\\hline
+\multicolumn{2}{c}{\textbf{Name des}}\\
+\textbf{Scopes} & \textbf{Interfaces}\\\hline
 Scope0  & BeginScope\\
 Scope4  & ImplScopeScope4\\
 Scope5  & Scope5\\
@@ -723,9 +725,9 @@ Punkte bei Methodenaufrufen sind in Scala optional, wodurch die Lesbarkeit besse
 Im Falle eines einzelnen Parameters können bei einem Methodenaufruf auch die runden Klammern weggelassen werden. Im aktuellen Prototypen ist nur ein Parameter pro Methode erlaubt, wodurch die Klammern in jedem Fall weggelassen werden können. Falls man sich entscheidet mehrere Parameter zuzulassen, müssen bei diesen Methodenaufrufen die Klammern geschrieben werden, während sie bei einzelnen Parameter immer noch weggelassen werden können. Dann wäre aber die Notation der internen DSL in Scala nicht mehr einheitlich.
 
 \subsubsection{Operator-Überladung}
-Scala bietet die Möglichkeit die Operatoren (+, -, *, /) für Klassen zu überladen.
+Scala bietet die Möglichkeit die Operatoren (+, -, *, /) für Klassen zu überladen da diese Zeichen zulässige Methodennamen sind~\cite{operators.scaladoc}. Somit dienen sie nur der besseren Lesbarkeit. Um die gleiche Grammatik zur Generierung von Java- und Scala-Code verwenden zu können, kann ein einfaches Mapping von bestimmten von Methodennamen auf die Symbole vorgenommen werden (z.B. wird aus dem Methodennamen \gqq{plus} das Symbol $+$).
 
 \subsubsection{Implizite Klassen}
-In Scala gibt es seit Version 2.10 implizite Klassen~\cite{implicitclasses.scaladoc}, die für den Parameter-Typ des Konstruktors eine implizite Typkonvertierung anbietet.
+In Scala gibt es seit Version 2.10 implizite Klassen~\cite{implicitclasses.scaladoc}, die für den Parameter-Typ des Konstruktors eine implizite Typkonvertierung anbietet. Das kann zum Beispiel für Einheiten aus der Physik verwendet werden, die automatisch aus einem Zahlen-Typ einen Typ erstellt, der einer physikalischen Einheit entspricht. Squants~\cite{squants.github} ist ein Beispiel, das implizite Klassen verwendet.
 
 \end{document}
