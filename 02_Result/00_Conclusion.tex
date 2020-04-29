@@ -3,12 +3,24 @@
 \begin{document}
 
 \chapter{Fazit}
+Wie an den Beispielen in Abschnitt~\ref{SEC:Examples} vorgeführt wurde, kann aus einer eingeschränkten EBNF-Grammatik sowohl Java-Interfaces als auch Scala-Traits generiert werden. Dabei wurden die nötigen Einschränkungen, um eine Fluent API zu beschreiben, aufgezeigt. Also wurde das gesetzte Ziel, interne DSLs für verschiedene Hostsprachen zu generieren, erreicht.
 
-\chapter{Ausblick}
-\section{Methoden mit mehreren Argumenten}
-\section{Rekursive Grammatiken}
-Automatisch mehrere Grammatiken, eine davon als Rückgabetyp für andere
+Dabei wurden Features von Scala, die sich besonders für interne DSLs anbieten, nicht verwendet. Welche Sprachfeatures hätten verwendet werden können und weiteres Potential zur Verbesserung es gibt wird im folgenden Abschnitt dargestellt.
 
-\section{Weiter Hostsprachen}
+\section{Ausblick}
+Wie in Abschnitt~\ref{SEC:Improvements} schon angesprochen wurde gibt es an mehreren Stellen Möglichkeiten zur Verbesserung, einerseits beim Prototypen selbst und andererseits konzeptuell. Konkrete Verbesserungsvorschläge werden in den folgenden Abschnitten dargelegt.
+
+\subsection{Methoden mit mehreren Argumenten}
+Wie bereits erwähnt unterstützt der Prototyp nur ein Argument pro Methode. Das lässt sich einfach beheben, indem für jede von der Methoden-Kanten ausgehende Typ-Kante alle weiteren Typ-Kanten traversiert werden und für jede ein weiteres Argument erstellt wird. Im einfachsten Fall kommt in jeder Kette nur eine weitere Typ-Kante und keine Alternative mit anderen Kanten vor. Will man Methoden mit einer unterschiedlichen Anzahl an Argumenten überladen, muss man auch Alternativen mit verschiedenen Kanten erlauben.
+
+\subsection{Grammatik in mehrere Dateien aufteilen}
+Um die Übersichtlichkeit der Grammatik-Datei zu erhöhen, könnte sie in mehrere Dateien aufgeteilt werden. Dazu kann entweder ein Schlüsselwort für die Grammatik-Datei eingeführt werden, mit dem eine andere Datei eingebunden wird, oder nur dem Prototypen per Argument mehrere Dateien übergeben werden.
+
+\subsection{Sprachspezifische Features benutzen}
+Es gibt in Programmiersprachen Features, die sich speziell für interne DSLs eignen; in Abschnitt~\ref{SEC:ScalaFeatures} wurden Scala-spezifische Konstrukte beschrieben.
+Es kann auch evaluiert werden, ob solche sprachspezifische Features, für einzelne Sprachen verwendet werden können während die Kompatibilität zu den bisher unterstützten Sprachen gewahrt beleibt.
+
+\subsection{Weitere Hostsprachen}
+Es könnten auch weitere Hostsprachen unterstützt werden, dabei kommen grundsätzlich alle objektorientierten Sprachen infrage. Insbesondere kann auch Kotlin hinzugefügt werden, da es auch eine JVM-Sprache ist und durch die Java-Interoperabilität einfach ausgetauscht werden kann. Unter Android ist aktuell Kotlin die bevorzugte Sprache~\cite{kotlin.androiddevelopers}; da Java aber auch noch verbreitet ist, könnte eine DSL zuerst für Java und nach einem Umstieg auf für Kotlin generiert werden.
 
 \end{document}

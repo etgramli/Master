@@ -537,7 +537,7 @@ Die Sopes werden zunächst durch den Graphen selbst erstellt und nummeriert. Die
 Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Interfaces bestimmt und diese aneinander gehängt werden. Da das zu Kollisionen führen kann, wird in dem Fall der (eindeutige) Name des Scopes aus dem Graphen am Schluss angehängt.
 
 
-\chapter{Testlauf mit anschaulichem Beispiel}\label{SEC:Example}
+\chapter{Testlauf mit anschaulichen Beispielen}\label{SEC:Examples}
 In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} anhand von zwei Beispielen dokumentiert. Zuerst werden Interfaces für mathematische Ausdrücke generiert, und dann ein Beispiel eines Typsystems vorgestellt.
 
 \section{Verwendung des Prototypen}
@@ -686,9 +686,12 @@ Scope1  & EndScope\\
 \label{TAB:MappingJoiScopeToInterface}
 \end{table}
 
-Das BeginInterface (Listing~\ref{LST:JOIBeginScope}) zeigt, dass die Konsistenzregeln für den gesamten Graph gelten, denn die Regel \verb|componentName| (Listing~\ref{LST:JOIBNF}, Zeilen 10-12) beinhaltet nur den Typen für jeweils die Komponente oder den Singleton (vgl. Zeile 5).
+Das BeginInterface (Listing~\ref{LST:JOIBeginScopeJava}) zeigt, dass die Konsistenzregeln für den gesamten Graph gelten, denn die Regel \verb|componentName| (Listing~\ref{LST:JOIBNF}, Zeilen 10-12) beinhaltet nur den Typen für jeweils die Komponente oder den Singleton (vgl. Zeile 5). Abbildung~\ref{LST:JOIBeginScopeScala} zeigt, dass statt einem Java-Interface auch ein Trait aus der Sprache Scala generiert werden kann.
 \begin{figure}[ht]
-    \lstinputlisting[language=Java,caption={BeginScope},label={LST:JOIBeginScope}]{joi/BeginScope.java}
+    \lstinputlisting[language=Java,caption={BeginScope als Java-Interface},label={LST:JOIBeginScopeJava}]{joi/BeginScope.java}
+\end{figure}
+\begin{figure}[ht]
+    \lstinputlisting[language=Scala,caption={BeginScope als Scala-Trait},label={LST:JOIBeginScopeScala}]{joi/BeginScope.scala}
 \end{figure}
 
 \section{Optimierungspotenzial}\label{SEC:Improvements}
@@ -747,7 +750,7 @@ Mehrere Kombinationen von Argumenten werden ebenfalls nicht unterstützt, wenn n
 \end{figure}
 
 
-\subsection{Unterstützung für Scala-spezifische Konstrukte}
+\subsection{Unterstützung für Scala-spezifische Konstrukte}\label{SEC:ScalaFeatures}
 Da in dieser Arbeit Java als Hostsprache im Vordergrund steht, wurde nicht auf Eingenschaften von Scala eingegangen, die sich besonders für die Implementierung von DSLs eignen. Die folgenden Abschnitte beleuchten kurz Aspekte von Scala, die sich besonders für die Implementierung von DSLs anbieten.
 
 \subsubsection{Klammerung und Punkte}
