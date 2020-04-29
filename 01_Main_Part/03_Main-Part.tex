@@ -541,7 +541,7 @@ Um trotzdem sprechende Namen zu vergeben, können die Namen der Methoden des Int
 In diesem Kapitel wird die Benutzung des Prototypen\footnote{\url{https://github.com/etgramli/AntlrTest}} anhand von zwei Beispielen dokumentiert. Zuerst werden Interfaces für mathematische Ausdrücke generiert, und dann ein Beispiel eines Typsystems vorgestellt.
 
 \section{Verwendung des Prototypen}
-Der Prototyp kann entweder als eigenständige Anwendung in der Kommandozeile verwendet oder als Maven-Abhängigkeit eingebunden werden\footnote{\url{https://github.com/etgramli/AntlrTest/packages/145801}}. Die Abhängigkeit kann zum Beispiel verwendet werden um die Klasse, die die Interfaces bzw. Traits als Dateien schreibt, für eine neue Hostsprache zu erweitern. In diesem Kapitel wird nur die Benutzung des Prototypen beschrieben; die Kommandozeilenargumente sind in Tabelle~\ref{TAB:PrototypeCMD} aufgeführt (und werden auf der Projektseite\footnote{\url{https://github.com/etgramli/AntlrTest}} genauer beschrieben). Für die hier vorgestellten Beispiele sind nur die ersten vier Parameter wichtig. Zusätzlich werden die mit der Option -s generierten Graphen angegeben, für die Funktionalität des Prototyps selbst ist sie aber nicht wichtig.
+Der Prototyp kann entweder als eigenständige Anwendung in der Kommandozeile verwendet oder als Maven-Abhängigkeit eingebunden werden\footnote{\url{https://github.com/etgramli/AntlrTest/packages/145801}}. Die Abhängigkeit kann zum Beispiel verwendet werden um die Klasse, die die Interfaces bzw. Traits als Dateien schreibt, für eine neue Hostsprache zu erweitern. In diesem Kapitel wird nur die Benutzung des Prototypen beschrieben; die Kommandozeilenargumente sind in Tabelle~\ref{TAB:PrototypeCMD} aufgeführt (und werden auf der Projektseite\footnote{\url{https://github.com/etgramli/AntlrTest}} genauer beschrieben). Für die hier vorgestellten Beispiele sind nur die ersten vier Parameter wichtig. Zusätzlich werden die mit der Option -s generierten Graphen angegeben, für die Funktionalität des Prototyps selbst ist sie aber nicht wichtig. Die generierte Graph-Datei kann mit dem Online-Tool GraphVizOnline\footnote{\url{https://dreampuf.github.io/GraphvizOnline/}} visualisiert werden um einen Überblick über die Aufrufreihenfolge zu erhalten.
 
 \begin{table}[ht]
 \centering
@@ -573,7 +573,38 @@ java -jar antlr-test-1.6.1-jar-with-dependencies.jar -d targetDir -p com.package
 \lstinputlisting[language=Java,caption={Expression-EBNF (expr.bnf)},label={LST:EXPRBNF}]{expr.bnf}
 \end{figure}
 
-Der generierte DOT-Graph kann mit z.B. einem Online-Tool\footnote{\url{https://dreampuf.github.io/GraphvizOnline/}} visualisiert werden, um einen Überblick über die Aufruf-Reihenfolge zu erhalten. Der Graph in Abbildung~\ref{FIG:ExprGraph} zeigt den aus der EBNF-Grammatik generierten Graphen. Wie zuvor beschrieben wurden hierfür alle Nicht-Terminale durch ihre entsprechenden Regeln ersetzt, wodurch nur ein zusammenhängender Graph entsteht; die Regel \verb|<expr>| diente hierbei als Einstiegs-Regel.
+\subsection{Graph}
+Der Graph in Abbildung~\ref{FIG:ExprGraph} zeigt den aus der EBNF-Grammatik generierten Graphen. Wie zuvor beschrieben wurden hierfür alle Nicht-Terminale durch ihre entsprechenden Regeln ersetzt, wodurch nur ein zusammenhängender Graph entsteht; die Regel \verb|<expr>| diente hierbei als Einstiegs-Regel.
+
+Abbildungen~\ref{FIG:ExprSubGraphsOne}~und~\ref{FIG:ExprSubGraphsTwo} zeigen einige Graphen, die aus den Regeln erstellt werden, bevor sie zu dem Gesamtgraphen zusammengesetzt werden. Abbildung~\ref{FIG:ExprStartRule} zeigt die obligatorische Startregel, dessen Ziel-Knoten (Scope1) sich als End-Knoten des gesamten Graphen in Abbildung~\ref{FIG:ExprGraph} wiederfindet. In Abbildung~\ref{FIG:ExprRule} werden die Operatoren (inkl. Alternative für verschiedene Datentypen) eingesetzt. Die Rechenoperationen sind analog wie Abbildung~\ref{FIG:ExprAlternativeTypes} aufgebaut mit einem alternativen Strang für den Typ Double und Expr. Da in der Schleife viele Alternativen vorkommen ergeben sich die Abbildung~\ref{FIG:ExprGraph} vielen alternativen Schleifen.
+
+\begin{figure}[ht]
+\centering
+  \begin{subfigure}[b]{0.3\textwidth}
+  	\includegraphics[width=\textwidth]{Expr_Rule_00}
+  	\caption{Start-Regel (Expr)}
+  	\label{FIG:ExprStartRule}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\textwidth}
+  	\includegraphics[width=\textwidth]{Expr_Rule_01}
+  	\caption{Regel eines Ausdrucks (startExpr)}
+  	\label{FIG:ExprRule}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\textwidth}
+  	\includegraphics[width=\textwidth]{Expr_Rule_02}
+  	\caption{Alternative für Datentypen (lhs)}
+  	\label{FIG:ExprAlternativeTypes}
+  \end{subfigure}
+  \caption{Regeln für den Einstieg, Ausdruck und Alternative für Datentypen}
+  \label{FIG:ExprSubGraphsOne}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{Expr_Rule_03}
+	\caption{Regel der Alternative für verschiedene Rechenarten (operatorRhs)}
+	\label{FIG:ExprSubGraphsTwo}
+\end{figure}
 
 \begin{figure}[ht]
 \centering
